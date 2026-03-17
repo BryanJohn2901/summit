@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth overflow-x-hidden w-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Summit Personal Trainer Academy | O Maior Evento do Brasil</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#050505',        
+                            surface: '#1A1A1A',   
+                            primary: '#FEC000',   
+                            primaryHover: '#FFD633',
+                            accent: '#00867D',    
+                            textPrimary: '#FFFFFF',
+                            textSecondary: '#A7AAAD',
+                            textMuted: '#475467',
+                            border: 'rgba(255, 255, 255, 0.05)'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        heading: ['Oswald', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'shimmer': 'shimmer 2s infinite',
+                    },
+                    keyframes: {
+                        shimmer: {
+                            '100%': { transform: 'translateX(100%)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Oswald:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        .glass-strong {
+            background: rgba(26, 26, 26, 0.6);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .bg-grid {
+            background-size: 40px 40px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+        }
+
+        @media (min-width: 1024px) {
+            body { cursor: none; }
+            a, button, input, select, textarea, details, summary { cursor: none !important; }
+        }
+
+        .custom-cursor {
+            position: fixed;
+            top: 0; left: 0;
+            width: 32px; height: 32px;
+            border: 1px solid rgba(254, 192, 0, 0.4);
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 9999;
+            transform: translate(-50%, -50%);
+            transition: width 0.3s, height 0.3s, background-color 0.3s, border-color 0.3s;
+            box-shadow: 0 0 15px rgba(254, 192, 0, 0.1);
+        }
+        .custom-cursor-dot {
+            position: fixed;
+            top: 0; left: 0;
+            width: 6px; height: 6px;
+            background-color: #FEC000;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 10000;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(254, 192, 0, 0.8);
+        }
+        .custom-cursor.hover {
+            width: 50px; height: 50px;
+            background-color: rgba(254, 192, 0, 0.1);
+            border-color: rgba(254, 192, 0, 0.8);
+        }
+
+        details > summary { list-style: none; }
+        details > summary::-webkit-details-marker { display: none; }
+    </style>
+</head>
+<body class="bg-brand-bg text-brand-textPrimary font-sans antialiased selection:bg-brand-primary selection:text-black overflow-x-hidden w-full relative">
+
+    <div class="custom-cursor hidden lg:block" id="cursor"></div>
+    <div class="custom-cursor-dot hidden lg:block" id="cursor-dot"></div>
+
+    <nav class="hidden md:block fixed top-6 left-0 right-0 z-50 px-4 md:px-0" data-aos="fade-down" data-aos-duration="1000">
+        <div class="container mx-auto max-w-6xl">
+            <div class="relative flex items-center justify-between px-6 py-3 rounded-full bg-[#050505]/80 backdrop-blur-xl border border-white/10 shadow-[0_8px_32px_0_rgba(0,0,0,0.5)] transition-all duration-300 hover:border-brand-primary/30">
+                <a href="#hero" class="block hover:opacity-80 transition-opacity duration-300">
+                    <span class="text-white font-black text-xl tracking-widest uppercase font-heading">SUMMIT<span class="text-brand-primary">PTA</span></span>
+                </a>
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#sobre" class="text-[11px] font-bold uppercase tracking-[0.15em] text-gray-400 hover:text-white transition-colors duration-300">O Evento</a>
+                    <a href="#palestrantes" class="text-[11px] font-bold uppercase tracking-[0.15em] text-gray-400 hover:text-white transition-colors duration-300">Palestrantes</a>
+                    <a href="#publico" class="text-[11px] font-bold uppercase tracking-[0.15em] text-gray-400 hover:text-white transition-colors duration-300">Público</a>
+                    <a href="#conteudo" class="text-[11px] font-bold uppercase tracking-[0.15em] text-gray-400 hover:text-white transition-colors duration-300">Conteúdo</a>
+                    <a href="#ingressos" class="text-[11px] font-bold uppercase tracking-[0.15em] text-gray-400 hover:text-white transition-colors duration-300">Ingressos</a>
+                </div>
+                <button type="button" onclick="abrirPopup();" class="group relative inline-flex items-center justify-center overflow-hidden rounded-full bg-brand-primary px-8 py-2.5 transition-all duration-300 hover:shadow-[0_0_20px_rgba(254,192,0,0.6)] hover:scale-105 cursor-pointer border-0 gap-2">
+                    <span class="relative text-[10px] font-black uppercase tracking-[0.2em] text-black">Garantir Vaga</span>
+                    <i class="fas fa-arrow-right text-[10px] text-black relative group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <header id="hero" class="relative min-h-[95vh] flex items-center pt-24 pb-16 overflow-hidden w-full">
+        <div class="absolute inset-0 z-0 bg-grid opacity-50"></div>
+        <div class="absolute inset-0 z-0">
+            <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?q=80&w=1920&auto=format&fit=crop" alt="Background Evento" class="w-full h-full object-cover opacity-10" loading="eager">
+            <div class="absolute inset-0 bg-gradient-to-r from-brand-bg via-brand-bg/95 to-transparent"></div>
+            <div class="absolute inset-0 bg-gradient-to-t from-brand-bg via-transparent to-transparent"></div>
+        </div>
+        
+        <div class="absolute top-1/4 -left-32 w-96 h-96 bg-brand-primary/20 rounded-full blur-[150px] pointer-events-none z-0"></div>
+
+        <div class="container mx-auto px-6 relative z-10 flex flex-col justify-center h-full">
+            <div class="w-full lg:max-w-[50%] flex flex-col items-start text-left space-y-8" data-aos="fade-right">
+                
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full border border-brand-primary/30 bg-brand-primary/10 text-brand-primary text-xs font-bold uppercase tracking-[0.15em] backdrop-blur-sm">
+                    <span class="w-2 h-2 rounded-full bg-brand-primary animate-pulse"></span>
+                    O Maior Evento Presencial do Brasil
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl md:text-6xl font-heading font-black uppercase leading-[1.05] text-white">
+                    Participe da experiência que <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-[#FFF0B3]">Transformará sua Carreira</span>
+                </h1>
+                
+                <p class="text-lg md:text-xl text-brand-textSecondary max-w-2xl font-medium leading-relaxed">
+                    Aprenda com os maiores especialistas, conecte-se com profissionais de alto nível e acesse conteúdos exclusivos que vão revolucionar sua jornada como Personal Trainer.
+                </p>
+
+                <div class="flex flex-wrap items-center gap-6 md:gap-8 p-5 md:p-6 rounded-2xl bg-brand-surface border border-white/5">
+                    <div class="flex items-center gap-4">
+                        <span class="w-12 h-12 rounded-xl bg-brand-bg border border-white/10 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-calendar-alt text-lg text-brand-primary"></i>
+                        </span>
+                        <div>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-brand-textMuted block mb-0.5">Data Oficial</span>
+                            <span class="text-brand-textPrimary font-bold text-base md:text-lg">28 e 29 de Junho</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-4">
+                        <span class="w-12 h-12 rounded-xl bg-brand-bg border border-white/10 flex items-center justify-center flex-shrink-0">
+                            <i class="fas fa-map-marker-alt text-lg text-brand-primary"></i>
+                        </span>
+                        <div>
+                            <span class="text-[10px] font-black uppercase tracking-widest text-brand-textMuted block mb-0.5">Localização</span>
+                            <span class="text-brand-textPrimary font-bold text-base md:text-lg">Indaiatuba - SP</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="pt-4 w-full sm:w-auto flex flex-col sm:flex-row gap-6 items-center">
+                    <button onclick="abrirPopup()" class="group w-full sm:w-auto bg-brand-primary hover:bg-brand-primaryHover text-black font-black uppercase tracking-[0.1em] py-5 px-10 rounded-xl transition-all duration-300 shadow-[0_10px_30px_rgba(254,192,0,0.3)] hover:shadow-[0_15px_40px_rgba(254,192,0,0.6)] hover:-translate-y-1 flex items-center justify-center gap-3">
+                        Quero Garantir o Meu Ingresso
+                        <i class="fas fa-arrow-right text-black text-sm transition-transform group-hover:translate-x-1"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="sobre" class="py-32 bg-brand-surface relative overflow-hidden border-y border-white/5 w-full">
+        <div class="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-primary/5 rounded-full blur-[150px] pointer-events-none"></div>
+        <div class="absolute -bottom-24 -left-24 w-96 h-96 bg-brand-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 max-w-7xl relative z-10">
+            <div class="grid lg:grid-cols-2 gap-16 items-center mb-24">
+                <div data-aos="fade-right">
+                    <h2 class="text-brand-primary text-[10px] font-heading font-black uppercase tracking-[0.5em] mb-4">The Next Level</h2>
+                    <h3 class="text-4xl md:text-6xl font-heading font-black uppercase text-white leading-[1.1] mb-8">
+                        SUMMIT DA <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-[#FFF0B3]">PERSONAL TRAINER ACADEMY</span>
+                    </h3>
+                    <div class="h-1 w-20 bg-brand-primary mb-8 rounded-full"></div>
+                </div>
+                <div data-aos="fade-left">
+                    <p class="text-brand-textSecondary text-lg md:text-xl leading-relaxed font-light">
+                        O maior evento presencial do Brasil voltado para Personal Trainers que buscam <span class="text-white font-bold">resultados extraordinários</span>. Uma imersão intensiva desenhada para formar profissionais que dominam a estética e a saúde articular com maestria.
+                    </p>
+                </div>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="group relative" data-aos="fade-up" data-aos-delay="100">
+                    <div class="absolute inset-0 bg-brand-primary/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative glass-strong p-10 rounded-[40px] border border-white/10 hover:border-brand-primary/50 hover:-translate-y-2 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(254,192,0,0.15)] h-full overflow-hidden flex flex-col">
+                        <div class="absolute right-4 top-4 text-7xl font-heading font-black text-white/10 group-hover:text-brand-primary/20 transition-colors pointer-events-none select-none z-0">01</div>
+                        
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 rounded-2xl bg-brand-bg border border-white/10 flex items-center justify-center text-brand-primary text-3xl mb-8 group-hover:bg-brand-primary group-hover:text-black transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(254,192,0,0.5)]">
+                                <i class="fas fa-dumbbell"></i>
+                            </div>
+                            <h4 class="text-2xl font-black text-white uppercase mb-4 tracking-tight">Conteúdo Prático</h4>
+                            <p class="text-brand-textSecondary text-sm leading-relaxed">
+                                Aprenda a aplicação real do conhecimento no campo de batalha. Revelamos o <span class="text-white">baú dos segredos</span> com erros para evitar e acertos para copiar imediatamente.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative" data-aos="fade-up" data-aos-delay="200">
+                    <div class="absolute inset-0 bg-brand-primary/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative glass-strong p-10 rounded-[40px] border border-white/10 hover:border-brand-primary/50 hover:-translate-y-2 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(254,192,0,0.15)] h-full overflow-hidden flex flex-col">
+                        <div class="absolute right-4 top-4 text-7xl font-heading font-black text-white/10 group-hover:text-brand-primary/20 transition-colors pointer-events-none select-none z-0">02</div>
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 rounded-2xl bg-brand-bg border border-white/10 flex items-center justify-center text-brand-primary text-3xl mb-8 group-hover:bg-brand-primary group-hover:text-black transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(254,192,0,0.5)]">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <h4 class="text-2xl font-black text-white uppercase mb-4 tracking-tight">Networking Elite</h4>
+                            <p class="text-brand-textSecondary text-sm leading-relaxed">
+                                Conecte-se com donos de academias e líderes do setor fitness. A oportunidade definitiva para <span class="text-white">parcerias estratégicas</span> que mudarão sua carreira.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative" data-aos="fade-up" data-aos-delay="300">
+                    <div class="absolute inset-0 bg-brand-primary/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative glass-strong p-10 rounded-[40px] border border-white/10 hover:border-brand-primary/50 hover:-translate-y-2 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(254,192,0,0.15)] h-full overflow-hidden flex flex-col">
+                        <div class="absolute right-4 top-4 text-7xl font-heading font-black text-white/10 group-hover:text-brand-primary/20 transition-colors pointer-events-none select-none z-0">03</div>
+                        <div class="relative z-10">
+                            <div class="w-16 h-16 rounded-2xl bg-brand-bg border border-white/10 flex items-center justify-center text-brand-primary text-3xl mb-8 group-hover:bg-brand-primary group-hover:text-black transition-all duration-500 group-hover:shadow-[0_0_30px_rgba(254,192,0,0.5)]">
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <h4 class="text-2xl font-black text-white uppercase mb-4 tracking-tight">Experiência Imersiva</h4>
+                            <p class="text-brand-textSecondary text-sm leading-relaxed">
+                                Não é apenas um curso, é o local onde você encontra quem compartilha seus interesses. Sinta o suporte de uma <span class="text-white">comunidade focada em alta performance</span>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center flex justify-center" data-aos="fade-up">
+                <button onclick="abrirPopup()" class="group w-full sm:w-auto bg-brand-primary hover:bg-brand-primaryHover text-black font-black uppercase tracking-[0.1em] py-4 px-10 rounded-xl transition-all duration-300 shadow-[0_10px_30px_rgba(254,192,0,0.3)] hover:shadow-[0_15px_40px_rgba(254,192,0,0.6)] hover:-translate-y-1 flex items-center justify-center gap-3">
+                    Quero Evoluir Minha Carreira
+                    <i class="fas fa-arrow-right text-black text-sm transition-transform group-hover:translate-x-1"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="palestrantes" class="py-32 bg-brand-bg relative overflow-hidden w-full">
+        <div class="absolute top-1/4 -right-20 w-[600px] h-[600px] bg-brand-primary/5 rounded-full blur-[150px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 max-w-7xl relative z-10">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-20 gap-8" data-aos="fade-up">
+                <div class="max-w-2xl">
+                    <h2 class="text-brand-primary text-[10px] font-heading font-black uppercase tracking-[0.5em] mb-4">A Elite do Mercado</h2>
+                    <h3 class="text-4xl md:text-6xl font-heading font-black uppercase text-white leading-tight">
+                        Presenças <br>
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-[#FFF0B3]">Confirmadas</span>
+                    </h3>
+                </div>
+                <p class="text-brand-textSecondary text-sm md:text-base max-w-xs mb-2 border-l border-brand-primary/30 pl-6">
+                    Aprenda com quem domina o campo de batalha e dita as regras do mercado fitness.
+                </p>
+            </div>
+            
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="group relative rounded-[40px] overflow-hidden bg-[#0b0c13] border border-white/5 transition-all duration-700 hover:-translate-y-2 hover:border-brand-primary/50 hover:shadow-[0_20px_50px_rgba(254,192,0,0.15)]" data-aos="fade-up" data-aos-delay="100">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10 opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                    <img src="https://images.unsplash.com/photo-1594824436998-fdf92bf2201e?q=80&w=600&auto=format&fit=crop" alt="Bruno" class="w-full aspect-[4/5] object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                    <div class="absolute inset-0 z-20 flex flex-col justify-end p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <div class="overflow-hidden mb-2">
+                            <h4 class="text-4xl font-heading font-black text-white uppercase leading-none transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">Bruno</h4>
+                        </div>
+                        <div class="h-1 w-0 bg-brand-primary group-hover:w-12 transition-all duration-700 delay-200 mb-4 rounded-full"></div>
+                        <div class="text-brand-primary text-[10px] font-black uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-300">Especialista Notável</div>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-[40px] overflow-hidden bg-[#0b0c13] border border-white/5 transition-all duration-700 hover:-translate-y-2 hover:border-brand-primary/50 hover:shadow-[0_20px_50px_rgba(254,192,0,0.15)]" data-aos="fade-up" data-aos-delay="200">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10 opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                    <img src="https://images.unsplash.com/photo-1568602471122-7832951cc4c5?q=80&w=600&auto=format&fit=crop" alt="Aurélio" class="w-full aspect-[4/5] object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                    <div class="absolute inset-0 z-20 flex flex-col justify-end p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <div class="overflow-hidden mb-2">
+                            <h4 class="text-4xl font-heading font-black text-white uppercase leading-none transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">Aurélio</h4>
+                        </div>
+                        <div class="h-1 w-0 bg-brand-primary group-hover:w-12 transition-all duration-700 delay-200 mb-4 rounded-full"></div>
+                        <div class="text-brand-primary text-[10px] font-black uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-300">Especialista Notável</div>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-[40px] overflow-hidden bg-[#0b0c13] border border-white/5 transition-all duration-700 hover:-translate-y-2 hover:border-brand-primary/50 hover:shadow-[0_20px_50px_rgba(254,192,0,0.15)]" data-aos="fade-up" data-aos-delay="300">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10 opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=600&auto=format&fit=crop" alt="Santiago" class="w-full aspect-[4/5] object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                    <div class="absolute inset-0 z-20 flex flex-col justify-end p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <div class="overflow-hidden mb-2">
+                            <h4 class="text-4xl font-heading font-black text-white uppercase leading-none transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">Santiago</h4>
+                        </div>
+                        <div class="h-1 w-0 bg-brand-primary group-hover:w-12 transition-all duration-700 delay-200 mb-4 rounded-full"></div>
+                        <div class="text-brand-primary text-[10px] font-black uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-300">Especialista Notável</div>
+                    </div>
+                </div>
+
+                <div class="group relative rounded-[40px] overflow-hidden bg-[#0b0c13] border border-white/5 transition-all duration-700 hover:-translate-y-2 hover:border-brand-primary/50 hover:shadow-[0_20px_50px_rgba(254,192,0,0.15)]" data-aos="fade-up" data-aos-delay="400">
+                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/20 to-transparent z-10 opacity-80 group-hover:opacity-100 transition-opacity"></div>
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop" alt="Zanon" class="w-full aspect-[4/5] object-cover grayscale group-hover:grayscale-0 group-hover:scale-110 transition-all duration-700">
+                    <div class="absolute inset-0 z-20 flex flex-col justify-end p-8 translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                        <div class="overflow-hidden mb-2">
+                            <h4 class="text-4xl font-heading font-black text-white uppercase leading-none transform translate-y-full group-hover:translate-y-0 transition-transform duration-500">Zanon</h4>
+                        </div>
+                        <div class="h-1 w-0 bg-brand-primary group-hover:w-12 transition-all duration-700 delay-200 mb-4 rounded-full"></div>
+                        <div class="text-brand-primary text-[10px] font-black uppercase tracking-[0.3em] opacity-0 group-hover:opacity-100 transition-opacity duration-700 delay-300">Especialista Notável</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center flex justify-center" data-aos="fade-up">
+                <button onclick="abrirPopup()" class="group w-full sm:w-auto bg-brand-primary hover:bg-brand-primaryHover text-black font-black uppercase tracking-[0.1em] py-4 px-10 rounded-xl transition-all duration-300 shadow-[0_10px_30px_rgba(254,192,0,0.3)] hover:shadow-[0_15px_40px_rgba(254,192,0,0.6)] hover:-translate-y-1 flex items-center justify-center gap-3">
+                    Aprender com a Elite
+                    <i class="fas fa-arrow-right text-black text-sm transition-transform group-hover:translate-x-1"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="publico" class="py-32 bg-[#050505] relative overflow-hidden border-y border-white/5 w-full">
+        <div class="absolute top-1/4 -left-20 w-[600px] h-[600px] bg-brand-primary/10 rounded-full blur-[150px] animate-pulse pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 max-w-7xl relative z-10">
+            <div class="text-center mb-24" data-aos="fade-up">
+                <div class="inline-block py-1 px-4 mb-6 rounded-full border border-brand-primary/20 bg-brand-primary/5">
+                    <span class="text-brand-primary text-[10px] font-black uppercase tracking-[0.5em]">Target Audience</span>
+                </div>
+                <h3 class="text-5xl md:text-7xl font-heading font-black uppercase text-white leading-[0.9] mb-8">
+                    A PROFISSIONALIZAÇÃO É O <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-b from-brand-primary via-brand-primary to-white">ÚNICO CAMINHO.</span>
+                </h3>
+                <div class="w-24 h-1 bg-brand-primary mx-auto mb-8 rounded-full shadow-[0_0_20px_rgba(254,192,0,0.5)]"></div>
+                <p class="text-brand-textSecondary max-w-2xl mx-auto text-lg md:text-xl font-light leading-relaxed">
+                    Não importa seu tempo de mercado. O Summit é o ecossistema desenhado para <span class="text-white font-bold">escalar seus resultados</span> e consolidar sua autoridade.
+                </p>
+            </div>
+
+            <div class="grid lg:grid-cols-3 gap-8 items-stretch">
+                <div class="group relative p-px rounded-[40px] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(254,192,0,0.15)]" data-aos="fade-up" data-aos-delay="100">
+                    <div class="absolute inset-0 rounded-[40px] bg-gradient-to-b from-white/10 to-transparent group-hover:from-brand-primary/40 transition-all duration-500"></div>
+                    <div class="relative h-full bg-[#0b0c13]/90 backdrop-blur-2xl rounded-[39px] p-10 md:p-12 flex flex-col overflow-hidden">
+                        <div class="absolute right-4 top-4 text-7xl font-black text-white/[0.03] group-hover:text-brand-primary/[0.1] transition-all duration-700 select-none z-0">01</div>
+                        <div class="relative z-10">
+                            <div class="inline-flex w-16 h-16 rounded-2xl bg-white/5 border border-white/10 items-center justify-center text-brand-primary text-2xl mb-8 group-hover:bg-brand-primary group-hover:text-black transition-all duration-500">
+                                <i class="fas fa-graduation-cap"></i>
+                            </div>
+                            <h4 class="text-2xl font-black text-white uppercase mb-6 tracking-tight">Se é Estudante</h4>
+                            <p class="text-brand-textSecondary leading-relaxed text-base">
+                                Domine o <span class="text-white">campo de batalha</span> antes mesmo de se formar. Absorva a prática real para conquistar seus primeiros clientes com autoridade de veterano.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative p-px rounded-[40px] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(254,192,0,0.2)] lg:-top-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="absolute inset-0 rounded-[40px] bg-gradient-to-b from-brand-primary via-brand-primary/50 to-transparent shadow-[0_0_40px_rgba(254,192,0,0.15)]"></div>
+                    <div class="relative h-full bg-[#0d0e16] rounded-[39px] p-10 md:p-12 flex flex-col overflow-hidden">
+                        <div class="absolute right-4 top-4 text-7xl font-black text-brand-primary/[0.07] select-none z-0">02</div>
+                        <div class="relative z-10">
+                            <div class="inline-flex w-16 h-16 rounded-2xl bg-brand-primary items-center justify-center text-black text-2xl mb-8 shadow-[0_0_25px_rgba(254,192,0,0.4)]">
+                                <i class="fas fa-certificate"></i>
+                            </div>
+                            <h4 class="text-2xl font-black text-white uppercase mb-6 tracking-tight">Se já é Formado</h4>
+                            <p class="text-gray-300 leading-relaxed text-base">
+                                <span class="text-brand-primary font-bold">Potencialize seu ticket.</span> Aprenda a fidelizar clientes e cobrar o que você realmente vale, aplicando as estratégias que dominam o mercado atual.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="group relative p-px rounded-[40px] transition-all duration-500 hover:-translate-y-2 hover:shadow-[0_15px_40px_rgba(254,192,0,0.15)]" data-aos="fade-up" data-aos-delay="300">
+                    <div class="absolute inset-0 rounded-[40px] bg-gradient-to-b from-white/10 to-transparent group-hover:from-brand-primary/40 transition-all duration-500"></div>
+                    <div class="relative h-full bg-[#0b0c13]/90 backdrop-blur-2xl rounded-[39px] p-10 md:p-12 flex flex-col overflow-hidden">
+                        <div class="absolute right-4 top-4 text-7xl font-black text-white/[0.03] group-hover:text-brand-primary/[0.1] transition-all duration-700 select-none z-0">03</div>
+                        <div class="relative z-10">
+                            <div class="inline-flex w-16 h-16 rounded-2xl bg-white/5 border border-white/10 items-center justify-center text-brand-primary text-2xl mb-8 group-hover:bg-brand-primary group-hover:text-black transition-all duration-500">
+                                <i class="fas fa-trophy"></i>
+                            </div>
+                            <h4 class="text-2xl font-black text-white uppercase mb-6 tracking-tight">Se é Experiente</h4>
+                            <p class="text-brand-textSecondary leading-relaxed text-base">
+                                Expanda seu <span class="text-white">Networking de Elite.</span> Tenha acesso direto às mentes que moldam o treinamento de força no país e atualize-se com o que há de mais avançado.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-16 text-center flex justify-center" data-aos="fade-up">
+                <button onclick="abrirPopup()" class="group w-full sm:w-auto bg-brand-primary hover:bg-brand-primaryHover text-black font-black uppercase tracking-[0.1em] py-4 px-10 rounded-xl transition-all duration-300 shadow-[0_10px_30px_rgba(254,192,0,0.3)] hover:shadow-[0_15px_40px_rgba(254,192,0,0.6)] hover:-translate-y-1 flex items-center justify-center gap-3">
+                    Garantir Meu Lugar no Evento
+                    <i class="fas fa-arrow-right text-black text-sm transition-transform group-hover:translate-x-1"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="conteudo" class="py-32 bg-brand-bg relative overflow-hidden w-full">
+        <div class="absolute top-0 left-1/4 w-[600px] h-[600px] bg-brand-primary/5 rounded-full blur-[150px] pointer-events-none"></div>
+
+        <div class="container mx-auto px-6 max-w-7xl relative z-10">
+            <div class="text-center mb-24" data-aos="fade-up">
+                <h2 class="text-brand-primary text-[10px] font-heading font-black uppercase tracking-[0.4em] mb-4">Ementa de Alto Nível</h2>
+                <h3 class="text-4xl md:text-6xl font-heading font-black uppercase text-white leading-tight">
+                    O que você vai <br>
+                    <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-primary to-[#FFF0B3]">Aprender na Prática?</span>
+                </h3>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="relative group p-10 rounded-[32px] bg-[#0b0c13] border border-white/5 hover:border-brand-primary/50 hover:-translate-y-2 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(254,192,0,0.15)] overflow-hidden" data-aos="fade-up">
+                    <div class="absolute inset-0 bg-brand-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary text-2xl mb-8 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(254,192,0,0.3)] transition-all duration-500">
+                            <i class="fas fa-magnet"></i>
+                        </div>
+                        <h4 class="text-xl font-heading font-black text-white uppercase mb-4 tracking-wide group-hover:text-brand-primary transition-colors">Conquistar novos alunos</h4>
+                        <p class="text-brand-textSecondary text-sm leading-relaxed">
+                            Tenha contato com grandes profissionais que vão te ensinar como conquistar novos clientes de Personal Training de alto ticket.
+                        </p>
+                    </div>
+                </div>
+                
+                <div class="relative group p-10 rounded-[32px] bg-[#0b0c13] border border-white/5 hover:border-brand-primary/50 hover:-translate-y-2 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(254,192,0,0.15)] overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <div class="absolute inset-0 bg-brand-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary text-2xl mb-8 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(254,192,0,0.3)] transition-all duration-500">
+                            <i class="fas fa-sync-alt"></i>
+                        </div>
+                        <h4 class="text-xl font-heading font-black text-white uppercase mb-4 tracking-wide group-hover:text-brand-primary transition-colors">Atualizações do mercado</h4>
+                        <p class="text-brand-textSecondary text-sm leading-relaxed">
+                            Aprenda na prática as últimas inovações em hipertrofia, emagrecimento e estética para alunos com dores ou lesões articulares.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative group p-10 rounded-[32px] bg-[#0b0c13] border border-white/5 hover:border-brand-primary/50 hover:-translate-y-2 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(254,192,0,0.15)] overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <div class="absolute inset-0 bg-brand-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary text-2xl mb-8 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(254,192,0,0.3)] transition-all duration-500">
+                            <i class="fas fa-tools"></i>
+                        </div>
+                        <h4 class="text-xl font-heading font-black text-white uppercase mb-4 tracking-wide group-hover:text-brand-primary transition-colors">Adaptações de exercícios</h4>
+                        <p class="text-brand-textSecondary text-sm leading-relaxed">
+                            Economize anos de erros na sua carreira, tendo como referência o caminho já trilhado pelos maiores especialistas do país.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative group p-10 rounded-[32px] bg-[#0b0c13] border border-white/5 hover:border-brand-primary/50 hover:-translate-y-2 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(254,192,0,0.15)] overflow-hidden" data-aos="fade-up">
+                    <div class="absolute inset-0 bg-brand-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary text-2xl mb-8 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(254,192,0,0.3)] transition-all duration-500">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h4 class="text-xl font-heading font-black text-white uppercase mb-4 tracking-wide group-hover:text-brand-primary transition-colors">Marketing Digital</h4>
+                        <p class="text-brand-textSecondary text-sm leading-relaxed">
+                            Construa autoridade. Conquiste novos alunos (presencial e online) e seja um profissional bem pago através do seu posicionamento.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative group p-10 rounded-[32px] bg-[#0b0c13] border border-white/5 hover:border-brand-primary/50 hover:-translate-y-2 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(254,192,0,0.15)] overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <div class="absolute inset-0 bg-brand-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary text-2xl mb-8 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(254,192,0,0.3)] transition-all duration-500">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h4 class="text-xl font-heading font-black text-white uppercase mb-4 tracking-wide group-hover:text-brand-primary transition-colors">Aumentar Faturamento</h4>
+                        <p class="text-brand-textSecondary text-sm leading-relaxed">
+                            Acelere os seus resultados e aprenda a gerir sua carreira como um negócio lucrativo com estratégias validadas.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="relative group p-10 rounded-[32px] bg-[#0b0c13] border border-white/5 hover:border-brand-primary/50 hover:-translate-y-2 transition-all duration-500 hover:shadow-[0_15px_40px_rgba(254,192,0,0.15)] overflow-hidden" data-aos="fade-up" data-aos-delay="200">
+                    <div class="absolute inset-0 bg-brand-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div class="relative z-10">
+                        <div class="w-14 h-14 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary text-2xl mb-8 group-hover:scale-110 group-hover:shadow-[0_0_20px_rgba(254,192,0,0.3)] transition-all duration-500">
+                            <i class="fas fa-trophy"></i>
+                        </div>
+                        <h4 class="text-xl font-heading font-black text-white uppercase mb-4 tracking-wide group-hover:text-brand-primary transition-colors">Grandes Resultados</h4>
+                        <p class="text-brand-textSecondary text-sm leading-relaxed">
+                            Saiba o que os grandes players do mercado fazem para entregar alta performance e ter resultados extraordinários com os alunos.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-20 text-center flex justify-center" data-aos="zoom-in">
+                <button onclick="abrirPopup()" class="group relative w-full sm:w-auto bg-brand-primary hover:bg-brand-primaryHover text-black font-black uppercase tracking-[0.1em] py-5 px-10 rounded-xl transition-all duration-300 shadow-[0_10px_30px_rgba(254,192,0,0.3)] hover:shadow-[0_15px_40px_rgba(254,192,0,0.6)] hover:-translate-y-1 flex items-center justify-center gap-3 overflow-hidden">
+                    <span class="relative z-10">Quero Ser um Personal de Elite</span>
+                    <i class="fas fa-arrow-right text-black text-sm relative z-10 group-hover:translate-x-1 transition-transform"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="ingressos" class="py-24 bg-brand-bg relative overflow-hidden w-full">
+        <div class="absolute inset-0 z-0 bg-grid opacity-30"></div>
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-primary/5 rounded-full blur-[150px] pointer-events-none z-0"></div>
+
+        <div class="container mx-auto px-6 max-w-7xl relative z-10">
+            <div class="text-center mb-16" data-aos="fade-up">
+                <h2 class="text-brand-primary text-xs font-heading font-bold uppercase tracking-[0.2em] mb-4">A hora de decidir é agora!</h2>
+                <h3 class="text-4xl md:text-5xl font-heading font-black uppercase mb-4 text-white">Vagas <span class="text-brand-primary">Limitadas</span></h3>
+            </div>
+            
+            <div class="grid lg:grid-cols-3 gap-8 items-end">
+                
+                <div class="bg-[#0b0c13] rounded-3xl p-8 border-2 border-brand-primary shadow-[0_0_40px_rgba(254,192,0,0.2)] relative flex flex-col h-full transform lg:scale-105 z-10 hover:-translate-y-2 hover:shadow-[0_15px_50px_rgba(254,192,0,0.4)] transition-all duration-500" data-aos="fade-right">
+                    <div class="absolute -top-4 left-1/2 -translate-x-1/2 bg-brand-primary text-black text-[10px] font-black uppercase tracking-[0.2em] py-2 px-6 rounded-full shadow-[0_0_15px_rgba(254,192,0,0.5)]">Lote Atual</div>
+                    <div class="text-center mt-6 mb-8 border-b border-white/10 pb-8">
+                        <span class="text-sm text-brand-textMuted mb-1 block">Acesso Standard</span>
+                        <div class="text-4xl font-black text-white mb-2">12x <span class="text-brand-primary">24,70</span></div>
+                        <span class="text-xs text-brand-textSecondary font-medium">ou R$ 247,00 à vista</span>
+                    </div>
+                    <ul class="space-y-4 text-sm text-brand-textSecondary mb-10 flex-1">
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-brand-primary mt-1"></i> Acesso ao evento</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-brand-primary mt-1"></i> Certificado</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-brand-primary mt-1"></i> Pasta para anotações</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-brand-primary mt-1"></i> Caneta</li>
+                    </ul>
+                    
+                    <button onclick="abrirPopup()" class="group w-full bg-brand-primary hover:bg-brand-primaryHover text-black font-black uppercase tracking-[0.1em] py-5 px-10 rounded-xl transition-all duration-300 shadow-[0_10px_30px_rgba(254,192,0,0.3)] hover:shadow-[0_15px_40px_rgba(254,192,0,0.6)] hover:-translate-y-1 flex items-center justify-center gap-3">
+                        Garantir Agora
+                        <i class="fas fa-arrow-right text-black text-sm transition-transform group-hover:translate-x-1"></i>
+                    </button>
+                </div>
+
+                <div class="bg-brand-surface/30 rounded-3xl p-8 border border-white/5 opacity-60 relative flex flex-col h-full grayscale pointer-events-none overflow-hidden" data-aos="fade-up" data-aos-delay="100">
+                    <div class="absolute top-6 right-[-30px] bg-red-600 text-white text-[10px] font-black uppercase tracking-widest py-1.5 px-10 rotate-45 shadow-lg">Esgotado</div>
+                    <div class="text-center mb-8 border-b border-white/10 pb-8">
+                        <span class="text-sm text-brand-textMuted mb-1 block">Acesso Gold</span>
+                        <div class="text-4xl font-black text-white/50 mb-2 line-through">12x 34,70</div>
+                        <span class="text-xs text-brand-textSecondary font-medium">ou R$ 347,00 à vista</span>
+                    </div>
+                    <ul class="space-y-4 text-sm text-brand-textSecondary/70 mb-10 flex-1">
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-white/30 mt-1"></i> Acesso ao evento</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-white/30 mt-1"></i> Certificado, Pasta e Caneta</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-white/30 mt-1"></i> MiniBand PTA</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-white/30 mt-1"></i> Curso biomecânica na prática</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-white/30 mt-1"></i> Open Bar (20h às 22h)</li>
+                    </ul>
+                    <button disabled class="w-full bg-white/5 text-brand-textMuted font-bold uppercase py-4 rounded-xl">100% Esgotado</button>
+                </div>
+
+                <div class="bg-brand-surface/30 rounded-3xl p-8 border border-white/5 opacity-60 relative flex flex-col h-full grayscale pointer-events-none overflow-hidden" data-aos="fade-left" data-aos-delay="200">
+                    <div class="absolute top-6 right-[-30px] bg-red-600 text-white text-[10px] font-black uppercase tracking-widest py-1.5 px-10 rotate-45 shadow-lg">Esgotado</div>
+                    <div class="text-center mb-8 border-b border-white/10 pb-8">
+                        <span class="text-sm text-brand-textMuted mb-1 block">Acesso VIP</span>
+                        <div class="text-4xl font-black text-white/50 mb-2 line-through">12x 77,70</div>
+                        <span class="text-xs text-brand-textSecondary font-medium">ou R$ 779,00 à vista</span>
+                    </div>
+                    <ul class="space-y-4 text-sm text-brand-textSecondary/70 mb-10 flex-1">
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-white/30 mt-1"></i> Tudo do acesso Gold</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-white/30 mt-1"></i> Caneta de Osso</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-white/30 mt-1"></i> Livro Hipertrofia Máxima</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-white/30 mt-1"></i> Coffee Break</li>
+                        <li class="flex items-start gap-3"><i class="fas fa-check text-white/30 mt-1"></i> Acesso aos professores no backstage</li>
+                    </ul>
+                    <button disabled class="w-full bg-white/5 text-brand-textMuted font-bold uppercase py-4 rounded-xl">100% Esgotado</button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <footer class="relative bg-[#020101] border-t border-white/5 pt-20 pb-10 overflow-hidden w-full">
+        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-brand-primary/30 to-transparent"></div>
+        
+        <div class="container mx-auto px-6 max-w-7xl relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
+                
+                <div class="text-left">
+                    <div class="text-white font-black text-3xl tracking-widest uppercase italic mb-4">
+                        SUMMIT<span class="text-brand-primary">PTA</span>
+                    </div>
+                    <p class="text-brand-textMuted text-sm leading-relaxed mb-6">
+                        O ecossistema desenhado para Personal Trainers que buscam alavancar a carreira, dominar o mercado e escalar resultados de forma extraordinária.
+                    </p>
+                    <div class="flex items-center gap-4">
+                        <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-brand-primary hover:text-black hover:border-brand-primary transition-all duration-300 group shadow-[0_0_15px_rgba(254,192,0,0)] hover:shadow-[0_0_20px_rgba(254,192,0,0.3)]">
+                            <i class="fab fa-instagram group-hover:scale-110 transition-transform"></i>
+                        </a>
+                        <a href="#" aria-label="YouTube" class="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-gray-400 hover:bg-brand-primary hover:text-black hover:border-brand-primary transition-all duration-300 group shadow-[0_0_15px_rgba(254,192,0,0)] hover:shadow-[0_0_20px_rgba(254,192,0,0.3)]">
+                            <i class="fab fa-youtube group-hover:scale-110 transition-transform"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Links Úteis</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#sobre" class="text-brand-textMuted hover:text-brand-primary transition-colors text-sm">O Evento</a></li>
+                        <li><a href="#palestrantes" class="text-brand-textMuted hover:text-brand-primary transition-colors text-sm">Palestrantes</a></li>
+                        <li><a href="#conteudo" class="text-brand-textMuted hover:text-brand-primary transition-colors text-sm">Conteúdo da Ementa</a></li>
+                        <li><a href="#ingressos" class="text-brand-textMuted hover:text-brand-primary transition-colors text-sm">Comprar Ingresso</a></li>
+                        <li><a href="#faq" class="text-brand-textMuted hover:text-brand-primary transition-colors text-sm">Perguntas Frequentes</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Políticas</h4>
+                    <ul class="space-y-3">
+                        <li><a href="#" class="text-brand-textMuted hover:text-brand-primary transition-colors text-sm">Termos de Uso</a></li>
+                        <li><a href="#" class="text-brand-textMuted hover:text-brand-primary transition-colors text-sm">Política de Privacidade</a></li>
+                        <li><a href="#" class="text-brand-textMuted hover:text-brand-primary transition-colors text-sm">Aviso Legal</a></li>
+                        <li><a href="#" class="text-brand-textMuted hover:text-brand-primary transition-colors text-sm">Política de Reembolso</a></li>
+                    </ul>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6 text-sm">Fale Conosco</h4>
+                    <ul class="space-y-4">
+                        <li class="flex items-start gap-3">
+                            <i class="fab fa-whatsapp text-brand-primary mt-1"></i>
+                            <span class="text-brand-textMuted text-sm">Suporte via WhatsApp<br>
+                                <a href="https://wa.me/5541996814165" class="text-white hover:text-brand-primary transition-colors">(41) 99681-4165</a>
+                            </span>
+                        </li>
+                        <li class="flex items-start gap-3">
+                            <i class="fas fa-envelope text-brand-primary mt-1"></i>
+                            <span class="text-brand-textMuted text-sm">Dúvidas gerais<br>
+                                <a href="mailto:contato@summitpta.com.br" class="text-white hover:text-brand-primary transition-colors">contato@summitpta.com.br</a>
+                            </span>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="border-t border-white/5 pt-8 flex flex-col md:flex-row justify-between items-center gap-6">
+                <div class="text-center md:text-left">
+                    <p class="text-brand-textMuted text-xs font-medium mb-1">
+                        Copyright &copy; 2026 Personal Trainer Academy. Todos os direitos reservados.
+                    </p>
+                    <p class="text-brand-textMuted text-[10px]">
+                        CNPJ: 00.000.000/0001-00 | Curitiba, PR - Brasil
+                    </p>
+                </div>
+                
+                <div class="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+                    <div class="flex items-center gap-2 text-[10px] font-black uppercase tracking-[0.2em] text-gray-500">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> Ambiente Seguro 256-bit SSL
+                    </div>
+                    <div class="flex items-center gap-3 opacity-30 grayscale hover:opacity-100 hover:grayscale-0 transition-all duration-500">
+                        <i class="fab fa-cc-visa text-2xl"></i>
+                        <i class="fab fa-cc-mastercard text-2xl"></i>
+                        <i class="fab fa-pix text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <div id="popup-captura" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-[#050505]/90 backdrop-blur-xl" aria-hidden="true">
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-brand-primary/20 rounded-full blur-[100px] pointer-events-none"></div>
+
+        <div class="relative bg-[#111] border border-white/10 rounded-3xl shadow-[0_0_80px_rgba(254,192,0,0.15)] max-w-md w-full p-8 md:p-10 animate-[fadeIn_0.3s_ease-out]">
+            <button type="button" onclick="fecharPopup()" class="absolute top-6 right-6 w-10 h-10 rounded-full bg-white/5 border border-white/10 hover:bg-brand-primary hover:text-black flex items-center justify-center text-gray-400 transition-all duration-300" aria-label="Fechar">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <div class="text-center mb-8">
+                <div class="text-brand-primary text-[10px] font-heading font-black uppercase tracking-[0.2em] mb-2">Quase lá</div>
+                <h3 class="font-heading font-black text-2xl text-white uppercase tracking-tight mb-2">Garanta sua Vaga</h3>
+                <p class="text-sm text-brand-textSecondary">Preencha os dados para avançar ao pagamento seguro.</p>
+            </div>
+            
+            <form id="form-summit" class="space-y-4 mt-6 popup-form">
+                <div>
+                    <label for="lead-nome" class="block text-sm font-medium text-gray-300 mb-1">Nome</label>
+                    <input type="text" id="lead-nome" name="nome" required placeholder="Seu nome completo"
+                        class="w-full px-4 py-3 rounded-lg bg-brand-bg border border-white/10 text-white placeholder-gray-500 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition">
+                </div>
+                <div>
+                    <label for="lead-email" class="block text-sm font-medium text-gray-300 mb-1">Email</label>
+                    <input type="email" id="lead-email" name="email" required placeholder="seu@email.com"
+                        class="w-full px-4 py-3 rounded-lg bg-brand-bg border border-white/10 text-white placeholder-gray-500 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition">
+                </div>
+                <div>
+                    <label for="lead-phone" class="block text-sm font-medium text-gray-300 mb-1">Telefone</label>
+                    <div class="flex rounded-lg overflow-hidden border border-white/10 focus-within:border-brand-primary focus-within:ring-1 focus-within:ring-brand-primary bg-brand-bg">
+                        <span class="inline-flex items-center px-4 py-3 bg-brand-primary text-black font-bold select-none shrink-0">+55</span>
+                        <input type="tel" id="lead-phone" name="phone" required placeholder="(11) 99999-9999" maxlength="15" autocomplete="tel"
+                            class="flex-1 px-4 py-3 bg-transparent text-white placeholder-gray-500 outline-none min-w-0 mask-telefone">
+                    </div>
+                    <p class="error-msg text-red-400 text-xs mt-1 hidden">Informe o DDD e o número completo.</p>
+                </div>
+                <button type="submit" class="w-full bg-brand-primary text-black font-sans font-black py-4 rounded-xl uppercase tracking-widest hover:shadow-[0_0_20px_rgba(254,192,0,0.6)] transition btn-submit mt-2 flex items-center justify-center gap-2">
+                    Avançar para Pagamento
+                    <i class="fas fa-arrow-right text-black text-sm"></i>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Inicializa AOS
+        AOS.init({ once: true, offset: 50, duration: 800, easing: 'ease-out-cubic' });
+
+        // Cursor Customizado Desktop
+        if (window.innerWidth >= 1024) {
+            const cursor = document.getElementById('cursor');
+            const cursorDot = document.getElementById('cursor-dot');
+            
+            document.addEventListener('mousemove', (e) => {
+                cursorDot.style.left = e.clientX + 'px';
+                cursorDot.style.top = e.clientY + 'px';
+                setTimeout(() => {
+                    cursor.style.left = e.clientX + 'px';
+                    cursor.style.top = e.clientY + 'px';
+                }, 40);
+            });
+
+            document.querySelectorAll('a, button, input, summary').forEach(el => {
+                el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+                el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+            });
+        }
+
+        // Controle do Popup
+        const popup = document.getElementById('popup-captura');
+        function abrirPopup() {
+            popup.classList.remove('hidden');
+            popup.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+        function fecharPopup() {
+            popup.classList.add('hidden');
+            popup.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+        popup.addEventListener('click', (e) => {
+            if (e.target === popup) fecharPopup();
+        });
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') fecharPopup();
+        });
+
+        // Máscara de Telefone
+        const telInput = document.getElementById('lead-phone');
+        telInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, ''); 
+            if (value.startsWith('55') && value.length > 2) value = value.slice(2); 
+            value = value.slice(0, 11); 
+
+            let formatado = value;
+            if (value.length > 2) {
+                formatado = `(${value.slice(0, 2)}) ` + value.slice(2);
+            }
+            if (value.length > 7) {
+                formatado = formatado.slice(0, 10) + '-' + formatado.slice(10);
+            }
+            e.target.value = formatado;
+            
+            const errorMsg = document.querySelector('.error-msg');
+            if (errorMsg) errorMsg.classList.add('hidden');
+        });
+
+        // Lógica do Formulário (Sem Webhook / Sem Redirect)
+        const form = document.getElementById('form-summit');
+        form.addEventListener('submit', function(e) {
+            e.preventDefault(); 
+            
+            const btnSubmit = this.querySelector('.btn-submit');
+            const errorMsg = this.querySelector('.error-msg');
+            const rawPhone = telInput.value.replace(/\D/g, '');
+            
+            if (rawPhone.length < 10) {
+                errorMsg.classList.remove('hidden');
+                telInput.focus();
+                return;
+            }
+
+            btnSubmit.disabled = true;
+            btnSubmit.innerHTML = '<i class="fas fa-spinner fa-spin text-black mr-2"></i> Processando...';
+
+            setTimeout(() => {
+                btnSubmit.classList.remove('bg-brand-primary', 'text-black');
+                btnSubmit.classList.add('bg-green-500', 'text-white');
+                btnSubmit.innerHTML = '<i class="fas fa-check mr-2"></i> Sucesso! Aguarde...';
+                
+                setTimeout(() => {
+                    fecharPopup();
+                    form.reset();
+                    btnSubmit.disabled = false;
+                    btnSubmit.classList.add('bg-brand-primary', 'text-black');
+                    btnSubmit.classList.remove('bg-green-500', 'text-white');
+                    btnSubmit.innerHTML = 'Avançar para Pagamento <i class="fas fa-arrow-right text-black text-sm ml-2"></i>';
+                }, 2000);
+            }, 1500);
+        });
+    </script>
+</body>
+</html>
