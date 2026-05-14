@@ -1,0 +1,393 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="scroll-smooth overflow-x-hidden w-full">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Patrocinadores | Summit Personal Trainer Academy</title>
+    <meta name="description"
+        content="Conheça as marcas que apoiam o maior evento para personal trainers do Sul do Brasil.">
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+
+    <link rel="icon" type="image/svg+xml" href="assets/logoPTA.svg">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            bg: '#000000',
+                            surface: '#000000',
+                            primary: '#F8C100',
+                            primaryHover: '#F8C100',
+                            accent: '#F8C100',
+                            textPrimary: '#FFFFFF',
+                            textSecondary: '#FFFFFF',
+                            textMuted: '#FFFFFF',
+                            darkgray: '#000000',
+                            success: '#F8C100',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Gilroy', 'Inter', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                        heading: ['Agharti', 'Oswald', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+                    },
+                    animation: {
+                        'float': 'float 8s ease-in-out infinite',
+                        'float-delayed': 'float 10s ease-in-out infinite 2s',
+                        'marquee': 'marquee 35s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0) scale(1)' },
+                            '50%': { transform: 'translateY(-30px) scale(1.05)' }
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&family=Oswald:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.rawgit.com/mfd/09b70eb47474836f25a21660282ce0fd/raw/e06a670afcb2b861ed2ac4a1ef752d062ef6b46b/Gilroy.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        @font-face {
+            font-family: 'Agharti';
+            src: url('assets/fonts/Agharti-Black.woff2') format('woff2'),
+                 url('assets/fonts/Agharti-Black.woff') format('woff');
+            font-weight: 900;
+            font-display: swap;
+        }
+
+        @font-face {
+            font-family: 'Agharti';
+            src: url('assets/fonts/Agharti-Bold.woff2') format('woff2'),
+                 url('assets/fonts/Agharti-Bold.woff') format('woff');
+            font-weight: 700;
+            font-display: swap;
+        }
+
+        h1, h2, h3, h4, h5, h6, .font-heading {
+            font-family: 'Agharti', 'Oswald', sans-serif !important;
+        }
+
+        body {
+            background-color: #000000;
+        }
+
+        .glass-premium {
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border: 1px solid rgba(248, 193, 0, 0.08);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .bg-grid-gold {
+            background-size: 50px 50px;
+            background-image: linear-gradient(to right, rgba(212, 175, 55, 0.02) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(212, 175, 55, 0.02) 1px, transparent 1px);
+        }
+
+        .bg-noise {
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+            opacity: 0.04;
+            pointer-events: none;
+        }
+
+        .text-gradient-gold {
+            background: linear-gradient(to right, #F8C100, #F8C100);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        ::-webkit-scrollbar {
+            width: 10px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #000000;
+            border-left: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #F8C100;
+            border-radius: 5px;
+            border: 2px solid #000000;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #F8C100;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-brand-bg text-brand-textPrimary font-sans antialiased selection:bg-brand-primary selection:text-black overflow-x-hidden w-full relative">
+
+    <nav class="fixed top-6 left-0 right-0 z-50 px-4 md:px-0" data-aos="fade-down"
+        data-aos-duration="1000">
+        <div class="container mx-auto max-w-[1300px]">
+            <div
+                class="relative flex items-center justify-between px-6 py-2 rounded-full glass-premium shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] transition-all duration-500 hover:border-brand-primary/20">
+
+                <a href="index.html" class="block hover:opacity-80 transition-opacity duration-300 flex items-center shrink-0">
+                    <img src="assets/logoPTA.svg" alt="Personal Trainer Academy" class="h-14 w-auto opacity-90">
+                </a>
+
+                <div class="hidden md:flex items-center gap-6">
+                    <a href="index.html" class="text-white hover:text-brand-primary transition-colors duration-300 font-medium tracking-wider uppercase text-sm">Voltar ao Evento</a>
+                </div>
+
+                <a href="index.html#ingressos"
+                    class="inline-flex items-center justify-center bg-brand-primary text-brand-bg py-4 px-6 whitespace-nowrap rounded-xl font-black uppercase tracking-[0.2em] text-sm hover:bg-brand-primaryHover hover:scale-105 transition-all duration-300 shadow-xl cursor-pointer">
+                    <span class="relative">
+                        Garantir Vaga
+                    </span>
+                </a>
+
+            </div>
+        </div>
+    </nav>
+
+    <header class="relative pt-40 pb-20 overflow-hidden w-full">
+        <div class="absolute inset-0 bg-noise z-0 mix-blend-overlay"></div>
+        <div class="absolute inset-0 bg-grid-gold opacity-15 z-10 pointer-events-none"></div>
+
+        <div
+            class="absolute top-1/4 left-1/4 w-[400px] h-[400px] bg-brand-primary/10 rounded-full blur-[150px] pointer-events-none z-0 animate-float">
+        </div>
+
+        <div class="container mx-auto px-6 max-w-[1300px] relative z-20 flex flex-col justify-center items-center text-center">
+            <div data-aos="fade-up" class="flex items-center justify-center gap-4 w-full mb-6">
+                <div class="h-px w-12 bg-gradient-to-r from-transparent to-brand-primary/50"></div>
+                <span class="text-brand-primary text-xs font-bold uppercase tracking-[0.4em]">Nossos Parceiros</span>
+                <div class="h-px w-12 bg-gradient-to-l from-transparent to-brand-primary/50"></div>
+            </div>
+            
+            <h1 class="text-5xl md:text-7xl uppercase font-light tracking-tight leading-[1.1] text-brand-textPrimary mb-6" data-aos="fade-up" data-aos-delay="100">
+                Patrocinadores <br class="hidden md:block">
+                <span class="font-bold text-gradient-gold">Oficiais</span>
+            </h1>
+
+            <p class="text-xl text-brand-textSecondary max-w-2xl mx-auto font-light leading-relaxed mb-10" data-aos="fade-up" data-aos-delay="200">
+                Marcas que acreditam na transformação do mercado e apoiam o Summit Personal Trainer Academy 2026.
+            </p>
+        </div>
+    </header>
+
+    <section class="py-20 bg-brand-bg relative z-10 w-full overflow-hidden">
+        <div class="container mx-auto px-6 max-w-[1300px] mb-16 text-center">
+            <h2 class="text-3xl font-black uppercase tracking-widest text-brand-textPrimary opacity-80" data-aos="fade-up">Marcas que fazem acontecer</h2>
+        </div>
+
+        <!-- Marquee Container -->
+        <div class="w-full relative py-10 flex">
+            <!-- Fade edges -->
+            <div class="absolute top-0 left-0 w-32 md:w-64 h-full bg-gradient-to-r from-brand-bg to-transparent z-20 pointer-events-none"></div>
+            <div class="absolute top-0 right-0 w-32 md:w-64 h-full bg-gradient-to-l from-brand-bg to-transparent z-20 pointer-events-none"></div>
+
+            <div class="flex whitespace-nowrap animate-marquee w-max group hover:[animation-play-state:paused] transition-all duration-500">
+                <!-- First Set -->
+                <div class="flex items-center gap-16 px-8 shrink-0">
+                    <!-- Master -->
+                    <div class="glass-premium p-10 rounded-[24px] flex items-center justify-center border border-brand-primary/20 hover:border-brand-primary/60 w-[300px] h-[160px] cursor-pointer transition-all duration-500 hover:shadow-[0_0_30px_rgba(248,193,0,0.15)] hover:-translate-y-1 group">
+                        <div class="flex items-center gap-4 text-white/40 transition-all duration-500 group-hover:text-brand-primary">
+                            <svg class="w-14 h-14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            <span class="font-heading font-black text-4xl tracking-widest uppercase mt-1">Nexus</span>
+                        </div>
+                    </div>
+                    <!-- Gold 1 -->
+                    <div class="glass-premium p-8 rounded-[20px] flex items-center justify-center border border-white/5 hover:border-white/20 w-[240px] h-[120px] cursor-pointer transition-all duration-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:-translate-y-1 group">
+                        <div class="flex items-center gap-3 text-white/30 transition-all duration-500 group-hover:text-white">
+                            <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="9" r="5"></circle>
+                                <circle cx="15" cy="9" r="5"></circle>
+                                <circle cx="12" cy="15" r="5"></circle>
+                            </svg>
+                            <span class="font-heading font-black text-2xl tracking-widest uppercase mt-1">Aura</span>
+                        </div>
+                    </div>
+                    <!-- Gold 2 -->
+                    <div class="glass-premium p-8 rounded-[20px] flex items-center justify-center border border-white/5 hover:border-white/20 w-[240px] h-[120px] cursor-pointer transition-all duration-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:-translate-y-1 group">
+                        <div class="flex items-center gap-3 text-white/30 transition-all duration-500 group-hover:text-white">
+                            <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+                                <polygon points="12 3 20 18 4 18"></polygon>
+                                <polygon points="12 10 17 18 7 18" stroke-dasharray="2 2"></polygon>
+                            </svg>
+                            <span class="font-heading font-black text-2xl tracking-widest uppercase mt-1">Vertex</span>
+                        </div>
+                    </div>
+                    <!-- Silver 1 -->
+                    <div class="glass-premium p-6 rounded-[16px] flex items-center justify-center border border-white/5 hover:border-white/10 w-[180px] h-[90px] cursor-pointer transition-all duration-500 hover:-translate-y-1 group">
+                        <div class="flex items-center gap-2 text-white/20 transition-all duration-500 group-hover:text-white">
+                            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                <rect x="5" y="5" width="14" height="14" transform="rotate(45 12 12)"></rect>
+                                <line x1="12" y1="2" x2="12" y2="4"></line>
+                                <line x1="12" y1="20" x2="12" y2="22"></line>
+                                <line x1="2" y1="12" x2="4" y2="12"></line>
+                                <line x1="20" y1="12" x2="22" y2="12"></line>
+                            </svg>
+                            <span class="font-heading font-bold text-lg tracking-widest uppercase mt-1">Lumina</span>
+                        </div>
+                    </div>
+                    <!-- Silver 2 -->
+                    <div class="glass-premium p-6 rounded-[16px] flex items-center justify-center border border-white/5 hover:border-white/10 w-[180px] h-[90px] cursor-pointer transition-all duration-500 hover:-translate-y-1 group">
+                        <div class="flex items-center gap-2 text-white/20 transition-all duration-500 group-hover:text-white">
+                            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 8a4 4 0 1 0 0 8 4 4 0 0 0 4-4 4 4 0 0 1 4-4 4 4 0 1 1 0 8 4 4 0 0 1-4-4"></path>
+                            </svg>
+                            <span class="font-heading font-bold text-lg tracking-widest uppercase mt-1">Omni</span>
+                        </div>
+                    </div>
+                    <!-- Silver 3 -->
+                    <div class="glass-premium p-6 rounded-[16px] flex items-center justify-center border border-white/5 hover:border-white/10 w-[180px] h-[90px] cursor-pointer transition-all duration-500 hover:-translate-y-1 group">
+                        <div class="flex items-center gap-2 text-white/20 transition-all duration-500 group-hover:text-white">
+                            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                <line x1="4" y1="6" x2="20" y2="6"></line>
+                                <line x1="8" y1="12" x2="20" y2="12"></line>
+                                <line x1="4" y1="18" x2="16" y2="18"></line>
+                            </svg>
+                            <span class="font-heading font-bold text-lg tracking-widest uppercase mt-1">Strata</span>
+                        </div>
+                    </div>
+                    <!-- Silver 4 -->
+                    <div class="glass-premium p-6 rounded-[16px] flex items-center justify-center border border-white/5 hover:border-white/10 w-[180px] h-[90px] cursor-pointer transition-all duration-500 hover:-translate-y-1 group">
+                        <div class="flex items-center gap-2 text-white/20 transition-all duration-500 group-hover:text-white">
+                            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="8"></line>
+                                <polyline points="8 12 12 8 16 12"></polyline>
+                            </svg>
+                            <span class="font-heading font-bold text-lg tracking-widest uppercase mt-1">Zenith</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Duplicate Set for infinite loop -->
+                <div class="flex items-center gap-16 px-8 shrink-0">
+                    <!-- Master -->
+                    <div class="glass-premium p-10 rounded-[24px] flex items-center justify-center border border-brand-primary/20 hover:border-brand-primary/60 w-[300px] h-[160px] cursor-pointer transition-all duration-500 hover:shadow-[0_0_30px_rgba(248,193,0,0.15)] hover:-translate-y-1 group">
+                        <div class="flex items-center gap-4 text-white/40 transition-all duration-500 group-hover:text-brand-primary">
+                            <svg class="w-14 h-14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path>
+                                <circle cx="12" cy="12" r="3"></circle>
+                            </svg>
+                            <span class="font-heading font-black text-4xl tracking-widest uppercase mt-1">Nexus</span>
+                        </div>
+                    </div>
+                    <!-- Gold 1 -->
+                    <div class="glass-premium p-8 rounded-[20px] flex items-center justify-center border border-white/5 hover:border-white/20 w-[240px] h-[120px] cursor-pointer transition-all duration-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:-translate-y-1 group">
+                        <div class="flex items-center gap-3 text-white/30 transition-all duration-500 group-hover:text-white">
+                            <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <circle cx="9" cy="9" r="5"></circle>
+                                <circle cx="15" cy="9" r="5"></circle>
+                                <circle cx="12" cy="15" r="5"></circle>
+                            </svg>
+                            <span class="font-heading font-black text-2xl tracking-widest uppercase mt-1">Aura</span>
+                        </div>
+                    </div>
+                    <!-- Gold 2 -->
+                    <div class="glass-premium p-8 rounded-[20px] flex items-center justify-center border border-white/5 hover:border-white/20 w-[240px] h-[120px] cursor-pointer transition-all duration-500 hover:shadow-[0_0_20px_rgba(255,255,255,0.05)] hover:-translate-y-1 group">
+                        <div class="flex items-center gap-3 text-white/30 transition-all duration-500 group-hover:text-white">
+                            <svg class="w-10 h-10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round">
+                                <polygon points="12 3 20 18 4 18"></polygon>
+                                <polygon points="12 10 17 18 7 18" stroke-dasharray="2 2"></polygon>
+                            </svg>
+                            <span class="font-heading font-black text-2xl tracking-widest uppercase mt-1">Vertex</span>
+                        </div>
+                    </div>
+                    <!-- Silver 1 -->
+                    <div class="glass-premium p-6 rounded-[16px] flex items-center justify-center border border-white/5 hover:border-white/10 w-[180px] h-[90px] cursor-pointer transition-all duration-500 hover:-translate-y-1 group">
+                        <div class="flex items-center gap-2 text-white/20 transition-all duration-500 group-hover:text-white">
+                            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                <rect x="5" y="5" width="14" height="14" transform="rotate(45 12 12)"></rect>
+                                <line x1="12" y1="2" x2="12" y2="4"></line>
+                                <line x1="12" y1="20" x2="12" y2="22"></line>
+                                <line x1="2" y1="12" x2="4" y2="12"></line>
+                                <line x1="20" y1="12" x2="22" y2="12"></line>
+                            </svg>
+                            <span class="font-heading font-bold text-lg tracking-widest uppercase mt-1">Lumina</span>
+                        </div>
+                    </div>
+                    <!-- Silver 2 -->
+                    <div class="glass-premium p-6 rounded-[16px] flex items-center justify-center border border-white/5 hover:border-white/10 w-[180px] h-[90px] cursor-pointer transition-all duration-500 hover:-translate-y-1 group">
+                        <div class="flex items-center gap-2 text-white/20 transition-all duration-500 group-hover:text-white">
+                            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M8 8a4 4 0 1 0 0 8 4 4 0 0 0 4-4 4 4 0 0 1 4-4 4 4 0 1 1 0 8 4 4 0 0 1-4-4"></path>
+                            </svg>
+                            <span class="font-heading font-bold text-lg tracking-widest uppercase mt-1">Omni</span>
+                        </div>
+                    </div>
+                    <!-- Silver 3 -->
+                    <div class="glass-premium p-6 rounded-[16px] flex items-center justify-center border border-white/5 hover:border-white/10 w-[180px] h-[90px] cursor-pointer transition-all duration-500 hover:-translate-y-1 group">
+                        <div class="flex items-center gap-2 text-white/20 transition-all duration-500 group-hover:text-white">
+                            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round">
+                                <line x1="4" y1="6" x2="20" y2="6"></line>
+                                <line x1="8" y1="12" x2="20" y2="12"></line>
+                                <line x1="4" y1="18" x2="16" y2="18"></line>
+                            </svg>
+                            <span class="font-heading font-bold text-lg tracking-widest uppercase mt-1">Strata</span>
+                        </div>
+                    </div>
+                    <!-- Silver 4 -->
+                    <div class="glass-premium p-6 rounded-[16px] flex items-center justify-center border border-white/5 hover:border-white/10 w-[180px] h-[90px] cursor-pointer transition-all duration-500 hover:-translate-y-1 group">
+                        <div class="flex items-center gap-2 text-white/20 transition-all duration-500 group-hover:text-white">
+                            <svg class="w-8 h-8" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <circle cx="12" cy="12" r="10"></circle>
+                                <line x1="12" y1="16" x2="12" y2="8"></line>
+                                <polyline points="8 12 12 8 16 12"></polyline>
+                            </svg>
+                            <span class="font-heading font-bold text-lg tracking-widest uppercase mt-1">Zenith</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Become a Sponsor CTA -->
+    <section class="py-24 bg-brand-primary relative overflow-hidden w-full text-black">
+        <div class="absolute inset-0 bg-pattern-dots opacity-20 z-0 pointer-events-none filter invert"></div>
+        <div class="container mx-auto px-6 max-w-[1300px] relative z-10 text-center">
+            <h2 class="text-4xl md:text-6xl font-black uppercase tracking-tight mb-6" data-aos="fade-up">Seja um Patrocinador</h2>
+            <p class="text-xl font-medium max-w-2xl mx-auto mb-10 opacity-80" data-aos="fade-up" data-aos-delay="100">
+                Conecte sua marca à elite dos Personal Trainers do Brasil. Entre em contato para conhecer nossas cotas de patrocínio.
+            </p>
+            <a href="mailto:contato@summitpta.com.br" data-aos="fade-up" data-aos-delay="200"
+                class="inline-flex items-center justify-center bg-black text-brand-primary py-5 px-10 rounded-xl font-black uppercase tracking-[0.2em] text-sm hover:scale-105 transition-all duration-300 shadow-xl cursor-pointer">
+                Entrar em Contato
+            </a>
+        </div>
+    </section>
+
+    <footer class="bg-black text-white py-10 border-t border-white/10 text-center">
+        <p class="text-white/50 text-sm font-medium">
+            &copy; 2026 Summit PTA. Todos os direitos reservados.
+        </p>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({ once: true, offset: 30, duration: 1000, easing: 'ease-out-cubic' });
+    </script>
+</body>
+</html>
