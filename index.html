@@ -1430,7 +1430,8 @@
 
             <form class="space-y-5 mt-6 popup-form"
                 data-produto="E-SUM"
-                data-webhook="https://hook.us1.make.com/bj1q14346ezeybpcqjb9ctea89aoatvn?produto=E-SUM">
+                data-webhook="https://hook.us1.make.com/bj1q14346ezeybpcqjb9ctea89aoatvn?produto=E-SUM"
+                data-redirect="https://sndflw.com/i/summit2026">
                 <div>
                     <label class="block text-[11px] font-medium text-brand-textSecondary uppercase tracking-widest mb-2">Nome</label>
                     <input type="text" name="nome" required placeholder="Seu nome completo"
@@ -1470,6 +1471,8 @@
                     <h3 class="font-light text-2xl text-brand-textPrimary tracking-wide mb-2">Cadastro recebido</h3>
                     <p class="text-xs text-brand-textSecondary font-light leading-relaxed">Nossa equipe entra em contato em breve com os próximos passos.</p>
                 </div>
+
+
                 <button type="button" onclick="fecharPopup()"
                     class="w-full border border-white/15 text-white font-bold py-3.5 rounded-xl uppercase tracking-[0.15em] text-xs hover:bg-white/5 transition-all duration-300">
                     Fechar
@@ -1483,12 +1486,20 @@
         // Agora o AOS.init rodará sem dar erro de "not defined"
         AOS.init({ once: true, offset: 30, duration: 1000, easing: 'ease-out-cubic' });
 
-        (function captureTracking() {
+        function getSearchParamInsensitive(searchParams, key) {
+            const want = key.toLowerCase();
+            for (const [k, v] of searchParams.entries()) {
+                if (k.toLowerCase() === want && v != null && String(v).length) return String(v);
+            }
+            return '';
+        }
+
+        function syncTrackingFields() {
             const utmKeys = ['utm_source', 'utm_term', 'utm_campaign', 'utm_medium', 'utm_content'];
             const params = new URLSearchParams(window.location.search);
 
             utmKeys.forEach(key => {
-                const fromUrl = params.get(key);
+                const fromUrl = getSearchParamInsensitive(params, key);
                 if (fromUrl) {
                     try { sessionStorage.setItem(key, fromUrl); } catch (e) {}
                 }
@@ -1502,7 +1513,9 @@
 
             const urlEl = document.getElementById('url');
             if (urlEl) urlEl.value = window.location.href;
-        })();
+        }
+
+        syncTrackingFields();
 
         if (window.innerWidth >= 1024) {
             const cursor = document.getElementById('cursor');
@@ -1552,6 +1565,7 @@
 
         function abrirPopup() {
             if (!popupLead) return;
+            syncTrackingFields();
             resetPopupCard(popupLead.querySelector('.popup-card'));
             popupLead.classList.remove('hidden');
             popupLead.classList.add('flex');
@@ -1590,6 +1604,21 @@
             });
         });
 
+        function buildRedirectUrlWithLead(redirectBase, lead) {
+            const u = new URL(redirectBase);
+            const q = u.searchParams;
+            q.set('name', lead.name);
+            q.set('email', lead.email);
+            q.set('phone', lead.phone);
+            q.set('utm_source', lead.utm_source);
+            q.set('utm_term', lead.utm_term);
+            q.set('utm_campaign', lead.utm_campaign);
+            q.set('utm_medium', lead.utm_medium);
+            q.set('utm_content', lead.utm_content);
+            q.set('url', lead.url);
+            return u.href;
+        }
+
         document.querySelectorAll('.popup-form').forEach(form => {
             form.addEventListener('submit', async function (e) {
                 e.preventDefault();
@@ -1611,6 +1640,15 @@
 
                 if (sendErr) sendErr.classList.add('hidden');
 
+                syncTrackingFields();
+
+                const utm_source = document.getElementById('utm_source')?.value || '';
+                const utm_term = document.getElementById('utm_term')?.value || '';
+                const utm_campaign = document.getElementById('utm_campaign')?.value || '';
+                const utm_medium = document.getElementById('utm_medium')?.value || '';
+                const utm_content = document.getElementById('utm_content')?.value || '';
+                const pageUrl = document.getElementById('url')?.value || window.location.href;
+
                 btnSubmit.disabled = true;
                 btnSubmit.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> Processando...';
                 btnSubmit.classList.add('opacity-70');
@@ -1622,18 +1660,31 @@
                     email: email,
                     telefone: telefone,
                     produto: produto,
-                    utm_source: document.getElementById('utm_source')?.value || '',
-                    utm_term: document.getElementById('utm_term')?.value || '',
-                    utm_campaign: document.getElementById('utm_campaign')?.value || '',
-                    utm_medium: document.getElementById('utm_medium')?.value || '',
-                    utm_content: document.getElementById('utm_content')?.value || '',
-                    url: document.getElementById('url')?.value || window.location.href
+                    utm_source: utm_source,
+                    utm_term: utm_term,
+                    utm_campaign: utm_campaign,
+                    utm_medium: utm_medium,
+                    utm_content: utm_content,
+                    url: pageUrl
                 };
 
                 const webhookUrl = this.dataset.webhook;
+                const redirectUrl = (this.dataset.redirect || '').trim();
                 const card = this.closest('.popup-card');
                 const successEl = card?.querySelector('.popup-success');
                 const intro = card?.querySelector('.popup-intro');
+
+                const leadForRedirect = {
+                    name: nome,
+                    email: email,
+                    phone: telefone,
+                    utm_source: utm_source,
+                    utm_term: utm_term,
+                    utm_campaign: utm_campaign,
+                    utm_medium: utm_medium,
+                    utm_content: utm_content,
+                    url: pageUrl
+                };
 
                 let ok = false;
                 try {
@@ -1647,6 +1698,10 @@
                     console.error('Erro no webhook:', error);
                     ok = false;
                 } finally {
+                    if (ok && redirectUrl) {
+                        window.location.href = buildRedirectUrlWithLead(redirectUrl, leadForRedirect);
+                        return;
+                    }
                     btnSubmit.disabled = false;
                     btnSubmit.innerHTML = SUBMIT_BTN_HTML;
                     btnSubmit.classList.remove('opacity-70');
