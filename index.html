@@ -1655,11 +1655,11 @@
             });
         });
 
-        function buildLeadQueryParams(lead) {
+        function buildMakeQueryParams(lead) {
             const q = new URLSearchParams();
-            if (lead.name) q.set('name', lead.name);
+            if (lead.nome) q.set('nome', lead.nome);
             if (lead.email) q.set('email', lead.email);
-            if (lead.phone) q.set('phone', lead.phone);
+            if (lead.telefone) q.set('telefone', lead.telefone);
             q.set('utm_source', lead.utm_source || '');
             q.set('utm_term', lead.utm_term || '');
             q.set('utm_campaign', lead.utm_campaign || '');
@@ -1671,14 +1671,22 @@
 
         function buildWebhookUrl(baseUrl, lead) {
             const u = new URL(baseUrl);
-            const q = buildLeadQueryParams(lead);
-            q.forEach((value, key) => u.searchParams.set(key, value));
+            buildMakeQueryParams(lead).forEach((value, key) => u.searchParams.set(key, value));
             return u.href;
         }
 
         function buildRedirectUrlWithLead(redirectBase, lead) {
             const u = new URL(redirectBase);
-            buildLeadQueryParams(lead).forEach((value, key) => u.searchParams.set(key, value));
+            const q = u.searchParams;
+            if (lead.name) q.set('name', lead.name);
+            if (lead.email) q.set('email', lead.email);
+            if (lead.phone) q.set('phone', lead.phone);
+            q.set('utm_source', lead.utm_source || '');
+            q.set('utm_term', lead.utm_term || '');
+            q.set('utm_campaign', lead.utm_campaign || '');
+            q.set('utm_medium', lead.utm_medium || '');
+            q.set('utm_content', lead.utm_content || '');
+            q.set('url', lead.url || window.location.href);
             return u.href;
         }
 
@@ -1721,7 +1729,13 @@
                     url: document.getElementById('url')?.value || window.location.href
                 };
 
-                const leadForWebhook = {
+                const webhookUrl = buildWebhookUrl(this.dataset.webhook, payload);
+                const redirectUrl = (this.dataset.redirect || '').trim();
+                const card = this.closest('.popup-card');
+                const successEl = card?.querySelector('.popup-success');
+                const intro = card?.querySelector('.popup-intro');
+
+                const leadForRedirect = {
                     name: nome,
                     email: email,
                     phone: telefone,
@@ -1732,14 +1746,6 @@
                     utm_content: payload.utm_content,
                     url: payload.url
                 };
-
-                const webhookUrl = buildWebhookUrl(this.dataset.webhook, leadForWebhook);
-                const redirectUrl = (this.dataset.redirect || '').trim();
-                const card = this.closest('.popup-card');
-                const successEl = card?.querySelector('.popup-success');
-                const intro = card?.querySelector('.popup-intro');
-
-                const leadForRedirect = { ...leadForWebhook };
 
                 let ok = false;
                 try {

@@ -885,11 +885,11 @@
         const popupPatrocinio = document.getElementById('popup-patrocinio');
         const SUBMIT_BTN_HTML = 'Continuar para o WhatsApp';
 
-        function buildLeadQueryParams(lead) {
+        function buildMakeQueryParams(lead) {
             const q = new URLSearchParams();
-            if (lead.name) q.set('name', lead.name);
+            if (lead.nome) q.set('nome', lead.nome);
             if (lead.email) q.set('email', lead.email);
-            if (lead.phone) q.set('phone', lead.phone);
+            if (lead.telefone) q.set('telefone', lead.telefone);
             q.set('utm_source', lead.utm_source || '');
             q.set('utm_term', lead.utm_term || '');
             q.set('utm_campaign', lead.utm_campaign || '');
@@ -901,7 +901,7 @@
 
         function buildWebhookUrl(baseUrl, lead) {
             const u = new URL(baseUrl);
-            buildLeadQueryParams(lead).forEach((value, key) => u.searchParams.set(key, value));
+            buildMakeQueryParams(lead).forEach((value, key) => u.searchParams.set(key, value));
             return u.href;
         }
 
@@ -1020,19 +1020,7 @@
                     url: document.getElementById('url')?.value || window.location.href
                 };
 
-                const leadForWebhook = {
-                    name: nome,
-                    email: email,
-                    phone: telefone,
-                    utm_source: payload.utm_source,
-                    utm_term: payload.utm_term,
-                    utm_campaign: payload.utm_campaign,
-                    utm_medium: payload.utm_medium,
-                    utm_content: payload.utm_content,
-                    url: payload.url
-                };
-
-                const webhookUrl = buildWebhookUrl(this.dataset.webhook, leadForWebhook);
+                const webhookUrl = buildWebhookUrl(this.dataset.webhook, payload);
                 const leadForWhatsApp = { name: nome, email, phone: telefone };
 
                 let ok = false;
