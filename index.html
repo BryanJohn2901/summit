@@ -106,14 +106,16 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800&family=Oswald:wght@300;400;500;600;700&display=swap"
         rel="stylesheet">
-    <link href="https://cdn.rawgit.com/mfd/09b70eb47474836f25a21660282ce0fd/raw/e06a670afcb2b861ed2ac4a1ef752d062ef6b46b/Gilroy.css" rel="stylesheet">
+    <link
+        href="https://cdn.rawgit.com/mfd/09b70eb47474836f25a21660282ce0fd/raw/e06a670afcb2b861ed2ac4a1ef752d062ef6b46b/Gilroy.css"
+        rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         @font-face {
             font-family: 'Agharti';
             src: url('assets/fonts/Agharti-Black.woff2') format('woff2'),
-                 url('assets/fonts/Agharti-Black.woff') format('woff');
+                url('assets/fonts/Agharti-Black.woff') format('woff');
             font-weight: 900;
             font-display: swap;
         }
@@ -121,7 +123,7 @@
         @font-face {
             font-family: 'Agharti';
             src: url('assets/fonts/Agharti-Bold.woff2') format('woff2'),
-                 url('assets/fonts/Agharti-Bold.woff') format('woff');
+                url('assets/fonts/Agharti-Bold.woff') format('woff');
             font-weight: 700;
             font-display: swap;
         }
@@ -250,29 +252,36 @@
             transition: max-height 0.45s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
             opacity: 0;
         }
+
         .faq-item.active .faq-answer {
             max-height: 400px;
             opacity: 1;
         }
+
         .faq-icon {
             transition: transform 0.4s ease;
         }
+
         .faq-item.active .faq-icon {
             transform: rotate(45deg);
             color: #F8C100;
-            border-color: rgba(248,193,0,0.4);
+            border-color: rgba(248, 193, 0, 0.4);
         }
+
         .faq-item {
             transition: border-color 0.3s ease, box-shadow 0.3s ease;
         }
+
         .faq-item.active {
             border-color: rgba(248, 193, 0, 0.25) !important;
-            box-shadow: 0 0 0 1px rgba(248,193,0,0.08), 0 8px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 0 0 1px rgba(248, 193, 0, 0.08), 0 8px 40px rgba(0, 0, 0, 0.4);
         }
+
         .faq-trigger {
             cursor: pointer;
             user-select: none;
         }
+
         .faq-num {
             font-variant-numeric: tabular-nums;
             min-width: 2rem;
@@ -296,6 +305,84 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #F8C100;
         }
+
+        .hero-video-container {
+            position: absolute;
+            inset: 0;
+            overflow: hidden;
+            background: #000;
+        }
+
+        .hero-youtube-player-slot,
+        .hero-youtube-player-slot iframe {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 177.78vh;
+            height: 100vh;
+            min-width: 100vw;
+            min-height: 56.25vw;
+            transform: translate(-50%, -50%) scale(1.02);
+            border: 0;
+            pointer-events: none;
+        }
+
+        .hero-video-overlay {
+            background: linear-gradient(180deg,
+                    rgba(0, 0, 0, 0.42) 0%,
+                    rgba(0, 0, 0, 0.28) 50%,
+                    rgba(0, 0, 0, 0.38) 100%);
+        }
+
+        .hero-video-overlay::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.18);
+        }
+
+        .schedule-break {
+            background: rgba(248, 193, 0, 0.04) !important;
+            border-style: dashed !important;
+            border-color: rgba(248, 193, 0, 0.15) !important;
+        }
+
+        .schedule-break p.text-brand-textPrimary {
+            color: rgba(255, 255, 255, 0.65);
+            font-style: italic;
+        }
+
+        .schedule-break .schedule-num {
+            display: none;
+        }
+
+        #cronograma .schedule-days-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 2rem;
+            align-items: start;
+            width: 100%;
+        }
+
+        @media (min-width: 1024px) {
+            #cronograma .schedule-days-grid {
+                grid-template-columns: 1fr 1fr;
+                gap: 2.5rem;
+            }
+        }
+
+        #cronograma .schedule-day {
+            min-width: 0;
+        }
+
+        #cronograma .schedule-row {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        #cronograma .schedule-row>div:first-child {
+            width: 100%;
+        }
     </style>
 </head>
 
@@ -305,14 +392,15 @@
     <div class="custom-cursor hidden lg:block" id="cursor"></div>
     <div class="custom-cursor-dot hidden lg:block" id="cursor-dot"></div>
 
-    <nav class="fixed top-6 left-0 right-0 z-50 px-4 md:px-0 hidden md:block" data-aos="fade-down"
+    <nav id="nav" class="fixed top-6 left-0 right-0 z-50 px-4 md:px-0 hidden md:block" data-aos="fade-down"
         data-aos-duration="1000">
         <div class="container mx-auto max-w-[1300px]">
             <div
-                class="relative flex items-center justify-between px-6 py-2 rounded-full glass-strong shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] transition-all duration-500 hover:border-brand-primary/20 hover:shadow-[0_12px_40px_0_rgba(212,175,55,0.08)]">
+                class="relative flex items-center justify-between px-8 py-4 md:px-10 md:py-5 rounded-full glass-strong shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] transition-all duration-500 hover:border-brand-primary/20 hover:shadow-[0_12px_40px_0_rgba(212,175,55,0.08)]">
 
                 <a href="#" class="block hover:opacity-80 transition-opacity duration-300 flex items-center shrink-0">
-                    <img src="assets/logoPTA.svg" alt="Personal Trainer Academy" class="h-14 w-auto opacity-90">
+                    <img src="assets/logoSummit.svg" alt="Summit Personal Trainer Academy"
+                        class="h-12 md:h-14 w-auto object-contain">
                 </a>
 
                 <div class="hidden md:flex items-center gap-6">
@@ -346,7 +434,7 @@
                 </div>
 
                 <a href="patrocinadores.html"
-                    class="inline-flex items-center justify-center bg-brand-primary text-brand-bg py-4 px-6 md:py-5 md:px-8 whitespace-nowrap rounded-xl font-black uppercase tracking-[0.2em] text-sm md:text-base hover:bg-brand-primaryHover hover:scale-105 transition-all duration-300 shadow-xl cursor-pointer">
+                    class="inline-flex items-center justify-center bg-brand-primary text-brand-bg py-2.5 px-5 md:py-3 md:px-6 whitespace-nowrap rounded-xl font-black uppercase tracking-[0.15em] text-xs md:text-sm hover:bg-brand-primaryHover hover:scale-105 transition-all duration-300 shadow-xl cursor-pointer">
                     <span class="relative">
                         Patrocinadores
                     </span>
@@ -356,21 +444,12 @@
         </div>
     </nav>
 
-    <header id="hero" class="relative min-h-screen flex items-center pt-20 pb-16 overflow-hidden w-full">
+    <header id="hero" class="relative min-h-screen flex flex-col pt-20 overflow-hidden w-full">
         <div class="absolute inset-0 z-0 overflow-hidden bg-brand-bg">
-            <div class="absolute inset-0 w-full h-full opacity-75 pointer-events-none overflow-hidden">
-                <video
-                    autoplay
-                    loop
-                    muted
-                    playsinline
-                    width="1920"
-                    height="1080"
-                    class="w-full h-full object-cover absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
-                >
-                    <source src="assets/bg-video.mp4" type="video/mp4">
-                </video>
+            <div class="hero-video-container pointer-events-none" aria-hidden="true">
+                <div id="hero-youtube-player" class="hero-youtube-player-slot"></div>
             </div>
+            <div class="hero-video-overlay absolute inset-0 z-[1] pointer-events-none" aria-hidden="true"></div>
 
             <div class="absolute inset-0 bg-grid-gold opacity-15 z-10"></div>
             <div class="absolute inset-0 bg-gradient-to-r from-brand-bg/92 via-brand-bg/55 to-brand-bg/92 z-10"></div>
@@ -385,10 +464,11 @@
         </div>
 
         <div
-            class="container mx-auto px-6 max-w-[1300px] relative z-10 flex flex-col justify-center items-center h-full pt-10">
-            <div class="w-full lg:max-w-[95%] flex flex-col items-center text-center space-y-8">
+            class="container mx-auto px-6 max-w-[1300px] relative z-10 flex flex-col flex-1 min-h-0 w-full pt-6 md:pt-10">
+            <div
+                class="w-full lg:max-w-[95%] mx-auto flex flex-col items-center text-center space-y-6 md:space-y-7 flex-1 justify-center">
 
-                <img src="assets/logoSummit.svg" alt="Summit Logo" class="h-24 md:h-32 w-auto object-contain"
+                <img src="assets/logoSummit.svg" alt="Summit Logo" class="h-24 w-auto object-contain md:hidden"
                     data-aos="fade-down" data-aos-duration="1500" data-aos-delay="100">
 
                 <div class="flex items-center justify-center gap-4 w-full" data-aos="fade-up" data-aos-duration="1500"
@@ -400,21 +480,31 @@
                     <div class="h-px w-12 bg-gradient-to-l from-transparent to-brand-primary/50"></div>
                 </div>
 
-                <h1 class="text-4xl sm:text-5xl md:text-[60px] lg:text-[70px] uppercase font-light tracking-tight leading-[1.1] text-brand-textPrimary"
+                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] xl:text-5xl uppercase font-light tracking-tight leading-[1.15] text-brand-textPrimary max-w-5xl mx-auto"
                     data-aos="fade-up" data-aos-duration="1500" data-aos-delay="900">
-                    O evento que transforma <br class="hidden md:block">
-                    <span class="font-bold text-gradient-gold">bons profissionais em profissionais reconhecidos.</span>
+                    O evento que transforma
+                    <span class="font-bold text-gradient-gold"> bons profissionais em profissionais reconhecidos.</span>
                 </h1>
 
-                <p class="text-lg md:text-xl text-brand-textSecondary max-w-3xl mx-auto font-light leading-relaxed"
+                <p class="text-base sm:text-lg md:text-xl text-brand-textSecondary max-w-5xl lg:max-w-6xl xl:max-w-[78rem] mx-auto font-light leading-snug md:leading-relaxed"
                     data-aos="fade-up" data-aos-duration="1500" data-aos-delay="1300">
                     O Summit Personal Trainer Academy 2026 reúne os maiores nomes do mercado para te entregar, em 2
                     dias, o método completo de posicionamento, conteúdo e vendas que os personais que mais crescem no
                     Brasil estão usando agora.
                 </p>
 
-                <div class="flex flex-col md:flex-row items-center justify-center mt-16 mb-8 w-full gap-12 md:gap-0"
-                    data-aos="fade-up" data-aos-duration="1500" data-aos-delay="1700">
+                <div class="pt-2 w-full flex flex-col sm:flex-row items-center justify-center" data-aos="fade-up"
+                    data-aos-duration="1500" data-aos-delay="1500">
+                    <button onclick="abrirPopup()"
+                        class="w-full sm:w-auto inline-flex items-center justify-center bg-brand-primary text-brand-bg py-4 px-6 md:py-5 md:px-8 whitespace-nowrap rounded-xl font-black uppercase tracking-[0.2em] text-sm md:text-base hover:bg-brand-primaryHover hover:scale-105 transition-all duration-300 shadow-xl cursor-pointer">
+                        Solicitar Convite
+                    </button>
+                </div>
+            </div>
+
+            <div class="w-full pb-10 md:pb-14 lg:pb-16 mt-auto shrink-0" data-aos="fade-up" data-aos-duration="1500"
+                data-aos-delay="1700">
+                <div class="flex flex-col md:flex-row items-center justify-center w-full gap-12 md:gap-0">
                     <div class="flex-1 flex flex-col items-center text-center px-4">
                         <span
                             class="text-brand-primary font-black text-6xl md:text-[90px] lg:text-[100px] leading-none mb-2 tracking-tighter whitespace-nowrap">17
@@ -438,19 +528,11 @@
                             class="text-brand-primary font-bold uppercase tracking-[0.15em] text-sm md:text-base">Curitiba</span>
                     </div>
                 </div>
-
-                <div class="pt-8 w-full flex flex-col sm:flex-row items-center justify-center gap-6" data-aos="fade-up"
-                    data-aos-duration="1500" data-aos-delay="2100">
-                    <button onclick="abrirPopup()"
-                        class="w-full sm:w-auto inline-flex items-center justify-center bg-brand-primary text-brand-bg py-4 px-6 md:py-5 md:px-8 whitespace-nowrap rounded-xl font-black uppercase tracking-[0.2em] text-sm md:text-base hover:bg-brand-primaryHover hover:scale-105 transition-all duration-300 shadow-xl cursor-pointer">
-                        Solicitar Convite
-                    </button>
-                </div>
             </div>
         </div>
     </header>
 
-    <div
+    <div id="destaques"
         class="w-full bg-brand-primary py-4 md:py-5 overflow-hidden border-y border-white/10 relative z-20 shadow-[0_0_30px_rgba(212,175,55,0.2)]">
         <div class="flex whitespace-nowrap animate-marquee w-max">
             <div class="flex items-center gap-12 px-6">
@@ -493,9 +575,11 @@
         <div class="container mx-auto px-6 max-w-[1300px] relative z-10">
             <div class="grid lg:grid-cols-12 gap-16 items-center mb-24">
                 <div class="lg:col-span-12 max-w-4xl mx-auto text-center">
-                    <div data-aos="fade-up" data-aos-delay="100" class="flex items-center justify-center gap-4 w-full mb-4">
+                    <div data-aos="fade-up" data-aos-delay="100"
+                        class="flex items-center justify-center gap-4 w-full mb-4">
                         <div class="h-px w-12 bg-gradient-to-r from-transparent to-brand-primary/50"></div>
-                        <span class="text-brand-primary text-[10px] font-bold uppercase tracking-[0.4em] drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]">Identificação</span>
+                        <span
+                            class="text-brand-primary text-[10px] font-bold uppercase tracking-[0.4em] drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]">Identificação</span>
                         <div class="h-px w-12 bg-gradient-to-l from-transparent to-brand-primary/50"></div>
                     </div>
                     <h2 data-aos="fade-up" data-aos-delay="250"
@@ -505,7 +589,9 @@
                     </h2>
                     <p data-aos="fade-up" data-aos-delay="350"
                         class="text-xl md:text-2xl text-brand-textSecondary font-light leading-relaxed max-w-3xl mx-auto mb-8">
-                        Todo dia você muda <strong class="text-brand-textPrimary font-medium">corpos, hábitos e vidas</strong>. Mas quando olha pro próprio negócio, <strong class="text-white font-medium">algo não fecha.</strong>
+                        Todo dia você muda <strong class="text-brand-textPrimary font-medium">corpos, hábitos e
+                            vidas</strong>. Mas quando olha pro próprio negócio, <strong
+                            class="text-white font-medium">algo não fecha.</strong>
                     </p>
                 </div>
             </div>
@@ -572,8 +658,10 @@
 
             <div class="text-center max-w-3xl mx-auto" data-aos="fade-up" data-aos-delay="950">
                 <p class="text-brand-textSecondary text-xl leading-relaxed font-light">
-                    Não é falta de dedicação. Não é falta de técnica. É que <strong class="text-brand-textPrimary font-medium">ninguém te ensinou</strong> a transformar o que você
-                    sabe em um negócio que <strong class="text-brand-textPrimary font-medium">cresce com consistência</strong>. É exatamente isso que o Summit 2026 vem fazer.
+                    Não é falta de dedicação. Não é falta de técnica. É que <strong
+                        class="text-brand-textPrimary font-medium">ninguém te ensinou</strong> a transformar o que você
+                    sabe em um negócio que <strong class="text-brand-textPrimary font-medium">cresce com
+                        consistência</strong>. É exatamente isso que o Summit 2026 vem fazer.
                 </p>
             </div>
 
@@ -586,7 +674,7 @@
         </div>
     </section>
 
-    <section id="programacao" class="py-32 bg-brand-bg relative overflow-hidden w-full">
+    <section id="conteudo" class="py-32 bg-brand-bg relative overflow-hidden w-full">
         <div class="absolute inset-0 bg-pattern-dots opacity-10 z-0 pointer-events-none"></div>
         <div
             class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-primary to-transparent opacity-80 z-20">
@@ -608,7 +696,9 @@
             <div class="text-center mb-24">
                 <div data-aos="fade-up" data-aos-delay="100" class="flex items-center justify-center gap-4 w-full mb-4">
                     <div class="h-px w-12 bg-gradient-to-r from-transparent to-brand-primary/50"></div>
-                    <span class="text-brand-primary text-[10px] font-bold uppercase tracking-[0.4em] drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]">O Que É O Summit</span>
+                    <span
+                        class="text-brand-primary text-[10px] font-bold uppercase tracking-[0.4em] drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]">O
+                        Que É O Summit</span>
                     <div class="h-px w-12 bg-gradient-to-l from-transparent to-brand-primary/50"></div>
                 </div>
                 <p data-aos="fade-up" data-aos-delay="250"
@@ -624,8 +714,10 @@
 
                 <p data-aos="fade-up" data-aos-delay="450"
                     class="text-2xl md:text-3xl font-light text-brand-textSecondary leading-snug max-w-4xl mx-auto mb-16 md:border-l-4 border-brand-primary/40 md:pl-8 text-left">
-                    Te dar o <strong class="text-brand-textPrimary font-semibold">método completo</strong> para crescer como profissional, com posicionamento, conteúdo, vendas e um
-                    modelo de negócio que funciona <strong class="text-brand-textPrimary font-semibold">todo mês</strong>.
+                    Te dar o <strong class="text-brand-textPrimary font-semibold">método completo</strong> para crescer
+                    como profissional, com posicionamento, conteúdo, vendas e um
+                    modelo de negócio que funciona <strong class="text-brand-textPrimary font-semibold">todo
+                        mês</strong>.
                 </p>
 
                 <div data-aos="fade-up" data-aos-delay="550"
@@ -646,7 +738,8 @@
             <div class="text-center mb-16 mt-32">
                 <div data-aos="fade-up" data-aos-delay="100" class="flex items-center justify-center gap-4 w-full mb-4">
                     <div class="h-px w-12 bg-gradient-to-r from-transparent to-brand-primary/50"></div>
-                    <span class="text-brand-primary text-[10px] font-bold uppercase tracking-[0.4em] drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]">Transformação</span>
+                    <span
+                        class="text-brand-primary text-[10px] font-bold uppercase tracking-[0.4em] drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]">Transformação</span>
                     <div class="h-px w-12 bg-gradient-to-l from-transparent to-brand-primary/50"></div>
                 </div>
                 <h2 data-aos="fade-up" data-aos-delay="250"
@@ -660,7 +753,8 @@
                 <div class="group relative" data-aos="fade-up" data-aos-delay="200">
                     <div
                         class="glass-premium p-8 rounded-3xl border border-white/5 hover:border-brand-primary/40 hover:-translate-y-2 transition-all duration-500 h-full">
-                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary group-hover:bg-brand-primary/10 group-hover:border-brand-primary/30 transition-all duration-500 mb-6">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary group-hover:bg-brand-primary/10 group-hover:border-brand-primary/30 transition-all duration-500 mb-6">
                             <i class="fas fa-bullseye text-lg"></i>
                         </div>
                         <h5 class="text-2xl font-bold text-brand-textPrimary mb-4">Ser o personal que as pessoas
@@ -673,7 +767,8 @@
                 <div class="group relative" data-aos="fade-up" data-aos-delay="300">
                     <div
                         class="glass-premium p-8 rounded-3xl border border-white/5 hover:border-brand-primary/40 hover:-translate-y-2 transition-all duration-500 h-full">
-                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary group-hover:bg-brand-primary/10 group-hover:border-brand-primary/30 transition-all duration-500 mb-6">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary group-hover:bg-brand-primary/10 group-hover:border-brand-primary/30 transition-all duration-500 mb-6">
                             <i class="fas fa-mobile-screen-button text-lg"></i>
                         </div>
                         <h5 class="text-2xl font-bold text-brand-textPrimary mb-4">Criar conteúdo que atrai alunos, não
@@ -687,12 +782,14 @@
                 <div class="group relative" data-aos="fade-up" data-aos-delay="400">
                     <div
                         class="glass-premium p-8 rounded-3xl border border-white/5 hover:border-brand-primary/40 hover:-translate-y-2 transition-all duration-500 h-full">
-                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary group-hover:bg-brand-primary/10 group-hover:border-brand-primary/30 transition-all duration-500 mb-6">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary group-hover:bg-brand-primary/10 group-hover:border-brand-primary/30 transition-all duration-500 mb-6">
                             <i class="fas fa-comments text-lg"></i>
                         </div>
                         <h5 class="text-2xl font-bold text-brand-textPrimary mb-4">Fechar alunos pelo WhatsApp sem se
                             sentir vendedor</h5>
-                        <p class="text-brand-textSecondary text-base font-light leading-relaxed">Um processo de venda que
+                        <p class="text-brand-textSecondary text-base font-light leading-relaxed">Um processo de venda
+                            que
                             parece uma conversa, simples, repetível e que você aplica na semana seguinte ao evento</p>
                     </div>
                 </div>
@@ -700,7 +797,8 @@
                 <div class="group relative" data-aos="fade-up" data-aos-delay="500">
                     <div
                         class="glass-premium p-8 rounded-3xl border border-white/5 hover:border-brand-primary/40 hover:-translate-y-2 transition-all duration-500 h-full">
-                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary group-hover:bg-brand-primary/10 group-hover:border-brand-primary/30 transition-all duration-500 mb-6">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary group-hover:bg-brand-primary/10 group-hover:border-brand-primary/30 transition-all duration-500 mb-6">
                             <i class="fas fa-robot text-lg"></i>
                         </div>
                         <h5 class="text-2xl font-bold text-brand-textPrimary mb-4">Usar inteligência artificial para
@@ -714,12 +812,14 @@
                 <div class="group relative" data-aos="fade-up" data-aos-delay="600">
                     <div
                         class="glass-premium p-8 rounded-3xl border border-white/5 hover:border-brand-primary/40 hover:-translate-y-2 transition-all duration-500 h-full">
-                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary group-hover:bg-brand-primary/10 group-hover:border-brand-primary/30 transition-all duration-500 mb-6">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary group-hover:bg-brand-primary/10 group-hover:border-brand-primary/30 transition-all duration-500 mb-6">
                             <i class="fas fa-coins text-lg"></i>
                         </div>
                         <h5 class="text-2xl font-bold text-brand-textPrimary mb-4">Ter renda previsível e parar de
                             depender do mês bom</h5>
-                        <p class="text-brand-textSecondary text-base font-light leading-relaxed">Modelos de precificação e
+                        <p class="text-brand-textSecondary text-base font-light leading-relaxed">Modelos de precificação
+                            e
                             recorrência que transformam sua agenda em um negócio estável com faturamento que cresce todo
                             mês</p>
                     </div>
@@ -728,7 +828,8 @@
                 <div class="group relative" data-aos="fade-up" data-aos-delay="700">
                     <div
                         class="glass-premium p-8 rounded-3xl border border-white/5 hover:border-brand-primary/40 hover:-translate-y-2 transition-all duration-500 h-full">
-                        <div class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary group-hover:bg-brand-primary/10 group-hover:border-brand-primary/30 transition-all duration-500 mb-6">
+                        <div
+                            class="w-12 h-12 rounded-xl bg-white/5 border border-white/10 flex items-center justify-center text-brand-primary group-hover:bg-brand-primary/10 group-hover:border-brand-primary/30 transition-all duration-500 mb-6">
                             <i class="fas fa-trophy text-lg"></i>
                         </div>
                         <h5 class="text-2xl font-bold text-brand-textPrimary mb-4">Entregar resultado na consultoria
@@ -748,377 +849,506 @@
             </div>
         </div>
     </section>
-
-    <section id="palestrantes"
-        class="py-32 bg-black relative overflow-hidden w-full border-t border-white/5 border-b border-white/5">
-        <div class="absolute inset-0 bg-texture-subtle opacity-50 z-0 pointer-events-none"></div>
-        <div class="absolute inset-0 bg-pattern-dots opacity-10 z-0 pointer-events-none"></div>
+    <section id="cronograma"
+        class="py-32 bg-brand-bg text-brand-textPrimary relative overflow-hidden w-full border-t border-white/5">
+        <div class="absolute inset-0 bg-grid-gold opacity-10 z-0 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-noise z-0 mix-blend-overlay pointer-events-none"></div>
         <div class="container mx-auto px-6 max-w-[1300px] relative z-10">
-            <div class="text-center mb-20">
+            <div class="text-center mb-16 md:mb-20">
                 <div data-aos="fade-up" data-aos-delay="100" class="flex items-center justify-center gap-4 w-full mb-4">
                     <div class="h-px w-12 bg-gradient-to-r from-transparent to-brand-primary/50"></div>
-                    <span class="text-brand-primary text-[10px] font-bold uppercase tracking-[0.4em] drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]">Line-Up</span>
+                    <span class="text-brand-primary text-[10px] font-bold uppercase tracking-[0.4em]">Programação</span>
                     <div class="h-px w-12 bg-gradient-to-l from-transparent to-brand-primary/50"></div>
                 </div>
                 <h2 data-aos="fade-up" data-aos-delay="250"
-                    class="text-4xl md:text-5xl font-black text-brand-textPrimary leading-tight">
-                    Palestrantes Confirmados
+                    class="text-4xl md:text-5xl font-black text-brand-textPrimary leading-tight">Cronograma completo
                 </h2>
+                <p data-aos="fade-up" data-aos-delay="350"
+                    class="text-brand-textSecondary text-base md:text-lg font-light max-w-2xl mx-auto mt-4">Dois dias de
+                    imersão com conteúdo, prática e networking.</p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-                <div class="relative group overflow-hidden rounded-[2rem] shadow-2xl border border-brand-primary/20" data-aos="fade-up" data-aos-delay="100">
-                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=600&auto=format&fit=crop&fm=webp"
-                        alt="Bruno"
-                        class="w-full aspect-[3/4] object-cover filter brightness-40 scale-110 transition-all duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent opacity-100 transition-opacity duration-500 z-10"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-6 z-20 flex flex-col justify-end h-full">
-                        <div class="transform translate-y-0 transition-transform duration-500 ease-out">
-                            <div class="mb-4">
-                                <div class="bg-brand-primary text-black text-[10px] font-black px-3 py-1.5 uppercase tracking-[0.2em] inline-block mb-3 rounded shadow-lg">
-                                    Negócios
-                                </div>
-                                <h4 class="text-white font-black text-3xl md:text-4xl leading-none tracking-tight">Bruno</h4>
+            <div class="schedule-days-grid">
+                <div class="schedule-day glass-premium rounded-[2rem] border border-white/10 overflow-hidden h-full flex flex-col"
+                    data-aos="fade-up" data-aos-delay="400">
+                    <div
+                        class="px-6 md:px-8 py-8 border-b border-white/10 bg-gradient-to-br from-brand-primary/10 to-transparent relative overflow-hidden">
+                        <div
+                            class="absolute top-0 right-0 w-48 h-48 bg-brand-primary/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 pointer-events-none">
+                        </div>
+                        <p class="text-brand-primary text-[10px] font-bold uppercase tracking-[0.35em] mb-3">Cronograma
+                        </p>
+                        <h3
+                            class="text-xl md:text-2xl lg:text-3xl font-black text-brand-textPrimary leading-tight mb-2">
+                            DIA 1 — O problema, o caminho e a decisão</h3>
+                        <div class="flex items-center gap-2 mt-4">
+                            <span
+                                class="inline-flex items-center justify-center bg-white/10 text-white text-xs font-mono px-3 py-1.5 rounded-lg backdrop-blur-sm border border-white/5"><i
+                                    class="far fa-clock mr-2 text-brand-primary"></i> 9h às 19h</span>
+                        </div>
+                    </div>
+
+                    <div class="p-5 md:p-8 space-y-4 flex-1 bg-black/40">
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-brand-primary/30 hover:shadow-[0_4px_20px_rgba(248,193,0,0.05)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
                             </div>
-                            <div class="opacity-100 transition-all duration-500 delay-100">
-                                <p class="text-brand-textSecondary text-sm font-light leading-relaxed border-t border-white/10 pt-4 mt-2">
-                                    Especialista em escala de negócios e previsibilidade de caixa. Responsável por estruturar a operação de grandes nomes do mercado.
-                                </p>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span
+                                    class="text-[10px] font-black text-brand-primary/40 group-hover:text-brand-primary tracking-widest shrink-0 transition-colors pt-1.5">01</span>
+                                <span
+                                    class="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">09h00
+                                    – 09h45</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Abertura — O mercado mudou. E você?</p>
+                                <p class="text-brand-textSecondary text-sm font-medium mt-1.5 flex items-center gap-2">
+                                    <i class="fas fa-microphone-alt text-brand-primary/60 text-[10px]"></i> André
+                                    Albuquerque</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-brand-primary/30 hover:shadow-[0_4px_20px_rgba(248,193,0,0.05)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                            </div>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span
+                                    class="text-[10px] font-black text-brand-primary/40 group-hover:text-brand-primary tracking-widest shrink-0 transition-colors pt-1.5">02</span>
+                                <span
+                                    class="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">09h45
+                                    – 10h30</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Personal fora da caixa: como sair do personal comum e se destacar</p>
+                                <p class="text-brand-textSecondary text-sm font-medium mt-1.5 flex items-center gap-2">
+                                    <i class="fas fa-microphone-alt text-brand-primary/60 text-[10px]"></i> Walter
+                                    Krause</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 py-4 px-5 rounded-2xl border border-dashed border-brand-primary/20 bg-brand-primary/[0.02] opacity-90 hover:opacity-100 transition-opacity">
+                            <span
+                                class="text-brand-primary/70 text-xs font-mono font-semibold tracking-wide bg-black/40 px-3 py-1 rounded-md border border-white/5">10h30
+                                – 10h45</span>
+                            <div class="flex items-center gap-2.5">
+                                <i class="fas fa-mug-hot text-brand-primary/60 text-sm"></i>
+                                <p class="text-white/70 text-sm font-medium italic">Intervalo</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-brand-primary/30 hover:shadow-[0_4px_20px_rgba(248,193,0,0.05)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                            </div>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span
+                                    class="text-[10px] font-black text-brand-primary/40 group-hover:text-brand-primary tracking-widest shrink-0 transition-colors pt-1.5">03</span>
+                                <span
+                                    class="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">10h45
+                                    – 11h30</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Conteúdo que vende: do post ao cliente</p>
+                                <p class="text-brand-textSecondary text-sm font-medium mt-1.5 flex items-center gap-2">
+                                    <i class="fas fa-microphone-alt text-brand-primary/60 text-[10px]"></i> Aurélio
+                                    Alfriele</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-brand-primary/30 hover:shadow-[0_4px_20px_rgba(248,193,0,0.05)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                            </div>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span
+                                    class="text-[10px] font-black text-brand-primary/40 group-hover:text-brand-primary tracking-widest shrink-0 transition-colors pt-1.5">04</span>
+                                <span
+                                    class="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">11h30
+                                    – 12h15</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Como fechar alunos pelo WhatsApp</p>
+                                <p class="text-brand-textSecondary text-sm font-medium mt-1.5 flex items-center gap-2">
+                                    <i class="fas fa-microphone-alt text-brand-primary/60 text-[10px]"></i> Rafael
+                                    Tonietto</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 py-4 px-5 rounded-2xl border border-dashed border-brand-primary/20 bg-brand-primary/[0.02] opacity-90 hover:opacity-100 transition-opacity">
+                            <span
+                                class="text-brand-primary/70 text-xs font-mono font-semibold tracking-wide bg-black/40 px-3 py-1 rounded-md border border-white/5">12h15
+                                – 13h30</span>
+                            <div class="flex items-center gap-2.5">
+                                <i class="fas fa-utensils text-brand-primary/60 text-sm"></i>
+                                <p class="text-white/70 text-sm font-medium italic">Almoço</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-brand-primary/30 hover:shadow-[0_4px_20px_rgba(248,193,0,0.05)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                            </div>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span
+                                    class="text-[10px] font-black text-brand-primary/40 group-hover:text-brand-primary tracking-widest shrink-0 transition-colors pt-1.5">05</span>
+                                <span
+                                    class="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">13h30
+                                    – 14h15</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Workshop — Diagnóstico do seu negócio ao vivo</p>
+                                <p class="text-brand-textSecondary text-sm font-medium mt-1.5 flex items-center gap-2">
+                                    <i class="fas fa-microphone-alt text-brand-primary/60 text-[10px]"></i> Artur
+                                    Monteiro</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 py-4 px-5 rounded-2xl border border-dashed border-brand-primary/20 bg-brand-primary/[0.02] opacity-90 hover:opacity-100 transition-opacity">
+                            <span
+                                class="text-brand-primary/70 text-xs font-mono font-semibold tracking-wide bg-black/40 px-3 py-1 rounded-md border border-white/5">14h15
+                                – 14h30</span>
+                            <div class="flex items-center gap-2.5">
+                                <i class="fas fa-mug-hot text-brand-primary/60 text-sm"></i>
+                                <p class="text-white/70 text-sm font-medium italic">Coffee break</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-brand-primary/30 hover:shadow-[0_4px_20px_rgba(248,193,0,0.05)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                            </div>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span
+                                    class="text-[10px] font-black text-brand-primary/40 group-hover:text-brand-primary tracking-widest shrink-0 transition-colors pt-1.5">06</span>
+                                <span
+                                    class="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">14h30
+                                    – 15h15</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Treino muda o corpo. Método muda a carreira.</p>
+                                <p class="text-brand-textSecondary text-sm font-medium mt-1.5 flex items-center gap-2">
+                                    <i class="fas fa-microphone-alt text-brand-primary/60 text-[10px]"></i> André
+                                    Albuquerque</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-brand-primary/30 hover:shadow-[0_4px_20px_rgba(248,193,0,0.05)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                            </div>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span
+                                    class="text-[10px] font-black text-brand-primary/40 group-hover:text-brand-primary tracking-widest shrink-0 transition-colors pt-1.5">07</span>
+                                <span
+                                    class="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">15h15
+                                    – 16h00</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Painel com especialistas — perguntas ao vivo.</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-brand-primary/30 hover:shadow-[0_4px_20px_rgba(248,193,0,0.05)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                            </div>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span
+                                    class="text-[10px] font-black text-brand-primary/40 group-hover:text-brand-primary tracking-widest shrink-0 transition-colors pt-1.5">08</span>
+                                <span
+                                    class="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">16h00
+                                    – 16h45</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Cases reais — de R$2k para R$20k/mês</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-brand-primary/30 hover:shadow-[0_4px_20px_rgba(248,193,0,0.05)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                            </div>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span
+                                    class="text-[10px] font-black text-brand-primary/40 group-hover:text-brand-primary tracking-widest shrink-0 transition-colors pt-1.5">09</span>
+                                <span
+                                    class="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">16h45
+                                    – 18h00</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Pitch — Mentoria Scala Fitness + abertura de vagas</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-brand-primary/10 bg-brand-primary/[0.03] hover:bg-brand-primary/[0.06] hover:border-brand-primary/40 hover:shadow-[0_4px_20px_rgba(248,193,0,0.08)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                            </div>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span class="w-[18px] shrink-0"></span> <span
+                                    class="bg-brand-primary/20 text-brand-primary border border-brand-primary/30 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">18h00
+                                    – 19h00</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Mesa de vendas + networking</p>
+                                <p class="text-brand-primary/80 text-sm font-medium mt-1.5 flex items-center gap-2"><i
+                                        class="fas fa-glass-cheers text-brand-primary/60 text-[10px]"></i> Encerramento
+                                    Dia 1</p>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <div class="relative group overflow-hidden rounded-[2rem] shadow-2xl border border-white/5" data-aos="fade-up" data-aos-delay="200">
-                    <img src="https://images.unsplash.com/photo-1557862921-37829c790f19?q=80&w=600&auto=format&fit=crop&fm=webp"
-                        alt="Aurélio"
-                        class="w-full aspect-[3/4] object-cover filter brightness-90 group-hover:brightness-40 group-hover:scale-110 transition-all duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-6 z-20 flex flex-col justify-end h-full">
-                        <div class="transform translate-y-[80px] group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                            <div class="mb-4">
-                                <div class="bg-brand-primary text-black text-[10px] font-black px-3 py-1.5 uppercase tracking-[0.2em] inline-block mb-3 rounded shadow-lg">
-                                    Biomecânica
-                                </div>
-                                <h4 class="text-white font-black text-3xl md:text-4xl leading-none tracking-tight">Aurélio</h4>
-                            </div>
-                            <div class="opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-                                <p class="text-brand-textSecondary text-sm font-light leading-relaxed border-t border-white/10 pt-4 mt-2">
-                                    Referência nacional em biomecânica aplicada. Transforma conceitos complexos em aplicações práticas que geram resultados reais para os alunos.
-                                </p>
-                            </div>
+                <div class="schedule-day glass-premium rounded-[2rem] border border-white/10 overflow-hidden h-full flex flex-col"
+                    data-aos="fade-up" data-aos-delay="500">
+                    <div
+                        class="px-6 md:px-8 py-8 border-b border-white/10 bg-gradient-to-br from-brand-primary/10 to-transparent relative overflow-hidden">
+                        <div
+                            class="absolute top-0 right-0 w-48 h-48 bg-brand-primary/20 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 pointer-events-none">
+                        </div>
+                        <p class="text-brand-primary text-[10px] font-bold uppercase tracking-[0.35em] mb-3">Cronograma
+                        </p>
+                        <h3
+                            class="text-xl md:text-2xl lg:text-3xl font-black text-brand-textPrimary leading-tight mb-2">
+                            DIA 2 — Aprofundamento + fechamento dos indecisos</h3>
+                        <div class="flex items-center gap-2 mt-4">
+                            <span
+                                class="inline-flex items-center justify-center bg-white/10 text-white text-xs font-mono px-3 py-1.5 rounded-lg backdrop-blur-sm border border-white/5"><i
+                                    class="far fa-clock mr-2 text-brand-primary"></i> 9h às 17h</span>
                         </div>
                     </div>
-                </div>
 
-                <div class="relative group overflow-hidden rounded-[2rem] shadow-2xl border border-white/5" data-aos="fade-up" data-aos-delay="300">
-                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=600&auto=format&fit=crop&fm=webp"
-                        alt="Santiago"
-                        class="w-full aspect-[3/4] object-cover filter brightness-90 group-hover:brightness-40 group-hover:scale-110 transition-all duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-6 z-20 flex flex-col justify-end h-full">
-                        <div class="transform translate-y-[80px] group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                            <div class="mb-4">
-                                <div class="bg-brand-primary text-black text-[10px] font-black px-3 py-1.5 uppercase tracking-[0.2em] inline-block mb-3 rounded shadow-lg">
-                                    Fisiologia
-                                </div>
-                                <h4 class="text-white font-black text-3xl md:text-4xl leading-none tracking-tight">Santiago</h4>
+                    <div class="p-5 md:p-8 space-y-4 flex-1 bg-black/40">
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-brand-primary/30 hover:shadow-[0_4px_20px_rgba(248,193,0,0.05)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
                             </div>
-                            <div class="opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-                                <p class="text-brand-textSecondary text-sm font-light leading-relaxed border-t border-white/10 pt-4 mt-2">
-                                    Doutor em Fisiologia do Exercício. Desmistifica a ciência para você prescrever treinos baseados em evidências com total segurança.
-                                </p>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span
+                                    class="text-[10px] font-black text-brand-primary/40 group-hover:text-brand-primary tracking-widest shrink-0 transition-colors pt-1.5">10</span>
+                                <span
+                                    class="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">09h00
+                                    – 09h30</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Abertura Dia 2 — Recapitulação + vagas já preenchidas</p>
                             </div>
                         </div>
-                    </div>
-                </div>
 
-                <div class="relative group overflow-hidden rounded-[2rem] shadow-2xl border border-white/5" data-aos="fade-up" data-aos-delay="400">
-                    <img src="https://images.unsplash.com/photo-1566492031773-4f4e44671857?q=80&w=600&auto=format&fit=crop&fm=webp"
-                        alt="Zanon"
-                        class="w-full aspect-[3/4] object-cover filter brightness-90 group-hover:brightness-40 group-hover:scale-110 transition-all duration-700">
-                    <div class="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent opacity-90 group-hover:opacity-100 transition-opacity duration-500 z-10"></div>
-                    <div class="absolute bottom-0 left-0 right-0 p-6 z-20 flex flex-col justify-end h-full">
-                        <div class="transform translate-y-[80px] group-hover:translate-y-0 transition-transform duration-500 ease-out">
-                            <div class="mb-4">
-                                <div class="bg-brand-primary text-black text-[10px] font-black px-3 py-1.5 uppercase tracking-[0.2em] inline-block mb-3 rounded shadow-lg">
-                                    Vendas
-                                </div>
-                                <h4 class="text-white font-black text-3xl md:text-4xl leading-none tracking-tight">Zanon</h4>
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-brand-primary/30 hover:shadow-[0_4px_20px_rgba(248,193,0,0.05)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
                             </div>
-                            <div class="opacity-0 group-hover:opacity-100 transition-all duration-500 delay-100">
-                                <p class="text-brand-textSecondary text-sm font-light leading-relaxed border-t border-white/10 pt-4 mt-2">
-                                    Maior especialista em vendas para personal trainers do Brasil. Criador do método de conversão que já gerou milhões em contratos.
-                                </p>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span
+                                    class="text-[10px] font-black text-brand-primary/40 group-hover:text-brand-primary tracking-widest shrink-0 transition-colors pt-1.5">11</span>
+                                <span
+                                    class="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">09h30
+                                    – 10h20</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Marketing digital para personal — o que realmente funciona em 2026</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 py-4 px-5 rounded-2xl border border-dashed border-brand-primary/20 bg-brand-primary/[0.02] opacity-90 hover:opacity-100 transition-opacity">
+                            <span
+                                class="text-brand-primary/70 text-xs font-mono font-semibold tracking-wide bg-black/40 px-3 py-1 rounded-md border border-white/5">10h20
+                                – 10h40</span>
+                            <div class="flex items-center gap-2.5">
+                                <i class="fas fa-mug-hot text-brand-primary/60 text-sm"></i>
+                                <p class="text-white/70 text-sm font-medium italic">Coffee break</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-brand-primary/30 hover:shadow-[0_4px_20px_rgba(248,193,0,0.05)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                            </div>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span
+                                    class="text-[10px] font-black text-brand-primary/40 group-hover:text-brand-primary tracking-widest shrink-0 transition-colors pt-1.5">12</span>
+                                <span
+                                    class="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">10h40
+                                    – 11h30</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Musculação emagrecedora — como entregar resultado na consultoria online</p>
+                                <p class="text-brand-textSecondary text-sm font-medium mt-1.5 flex items-center gap-2">
+                                    <i class="fas fa-microphone-alt text-brand-primary/60 text-[10px]"></i> Santiago
+                                    Paes</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-brand-primary/30 hover:shadow-[0_4px_20px_rgba(248,193,0,0.05)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                            </div>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span
+                                    class="text-[10px] font-black text-brand-primary/40 group-hover:text-brand-primary tracking-widest shrink-0 transition-colors pt-1.5">13</span>
+                                <span
+                                    class="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">11h30
+                                    – 12h15</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Treino ao vivo + branding — "O treino que você postaria"</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 py-4 px-5 rounded-2xl border border-dashed border-brand-primary/20 bg-brand-primary/[0.02] opacity-90 hover:opacity-100 transition-opacity">
+                            <span
+                                class="text-brand-primary/70 text-xs font-mono font-semibold tracking-wide bg-black/40 px-3 py-1 rounded-md border border-white/5">12h15
+                                – 13h30</span>
+                            <div class="flex items-center gap-2.5">
+                                <i class="fas fa-utensils text-brand-primary/60 text-sm"></i>
+                                <p class="text-white/70 text-sm font-medium italic">Almoço</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-brand-primary/30 hover:shadow-[0_4px_20px_rgba(248,193,0,0.05)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                            </div>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span
+                                    class="text-[10px] font-black text-brand-primary/40 group-hover:text-brand-primary tracking-widest shrink-0 transition-colors pt-1.5">14</span>
+                                <span
+                                    class="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">13h30
+                                    – 14h20</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Precificação e valor percebido</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-brand-primary/30 hover:shadow-[0_4px_20px_rgba(248,193,0,0.05)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                            </div>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span
+                                    class="text-[10px] font-black text-brand-primary/40 group-hover:text-brand-primary tracking-widest shrink-0 transition-colors pt-1.5">15</span>
+                                <span
+                                    class="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">14h20
+                                    – 15h10</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Escalabilidade — construindo um negócio, não um emprego</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="flex flex-col sm:flex-row items-center justify-center gap-3 sm:gap-4 py-4 px-5 rounded-2xl border border-dashed border-brand-primary/20 bg-brand-primary/[0.02] opacity-90 hover:opacity-100 transition-opacity">
+                            <span
+                                class="text-brand-primary/70 text-xs font-mono font-semibold tracking-wide bg-black/40 px-3 py-1 rounded-md border border-white/5">15h10
+                                – 15h30</span>
+                            <div class="flex items-center gap-2.5">
+                                <i class="fas fa-mug-hot text-brand-primary/60 text-sm"></i>
+                                <p class="text-white/70 text-sm font-medium italic">Coffee break</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-white/5 bg-white/[0.02] hover:bg-white/[0.04] hover:border-brand-primary/30 hover:shadow-[0_4px_20px_rgba(248,193,0,0.05)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                            </div>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span
+                                    class="text-[10px] font-black text-brand-primary/40 group-hover:text-brand-primary tracking-widest shrink-0 transition-colors pt-1.5">16</span>
+                                <span
+                                    class="bg-brand-primary/10 text-brand-primary border border-brand-primary/20 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">15h30
+                                    – 16h30</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Retomada da Mentoria Scala + fechamento dos indecisos</p>
+                            </div>
+                        </div>
+
+                        <div
+                            class="group flex flex-col sm:flex-row sm:items-center gap-4 sm:gap-6 p-5 rounded-2xl border border-brand-primary/10 bg-brand-primary/[0.03] hover:bg-brand-primary/[0.06] hover:border-brand-primary/40 hover:shadow-[0_4px_20px_rgba(248,193,0,0.08)] transition-all duration-300 relative overflow-hidden">
+                            <div
+                                class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                            </div>
+                            <div class="flex items-center sm:items-start gap-4 sm:w-44 shrink-0">
+                                <span class="w-[18px] shrink-0"></span> <span
+                                    class="bg-brand-primary/20 text-brand-primary border border-brand-primary/30 rounded-md px-2.5 py-1 text-xs font-mono font-semibold tracking-wide whitespace-nowrap shadow-inner">16h30
+                                    – 17h00</span>
+                            </div>
+                            <div class="flex-1 min-w-0">
+                                <p
+                                    class="text-brand-textPrimary text-base md:text-lg font-semibold leading-snug group-hover:text-white transition-colors duration-300">
+                                    Encerramento + foto coletiva + mesa de vendas</p>
+                                <p class="text-brand-primary/80 text-sm font-medium mt-1.5 flex items-center gap-2"><i
+                                        class="fas fa-camera text-brand-primary/60 text-[10px]"></i> Despedida</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
 
-            <div class="mt-20 text-center" data-aos="fade-up" data-aos-delay="500">
+            <div class="mt-16 text-center" data-aos="fade-up" data-aos-delay="600">
                 <button onclick="abrirPopup()"
-                    class="w-full sm:w-auto inline-flex items-center justify-center bg-brand-primary text-brand-bg py-4 px-6 md:py-5 md:px-8 whitespace-nowrap rounded-xl font-black uppercase tracking-[0.2em] text-sm md:text-base hover:bg-brand-primaryHover hover:scale-105 transition-all duration-300 shadow-xl cursor-pointer">
-                    Conferir Programação Completa
-                </button>
+                    class="w-full sm:w-auto inline-flex items-center justify-center bg-brand-primary text-brand-bg py-4 px-6 md:py-5 md:px-8 rounded-xl font-black uppercase tracking-[0.2em] text-sm md:text-base hover:scale-105 transition-all duration-300 shadow-[0_0_30px_rgba(248,193,0,0.2)] hover:shadow-[0_0_40px_rgba(248,193,0,0.4)] cursor-pointer">Garantir
+                    minha vaga</button>
             </div>
-        </div>
-    </section>
-
-
-    <section id="ingressos"
-        class="py-32 bg-[#0a0a0a] text-brand-textPrimary relative overflow-hidden w-full border-t border-white/5">
-        <div class="absolute inset-0 bg-pattern-dots opacity-10 z-0 pointer-events-none"></div>
-        <div
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-brand-primary/5 rounded-full blur-[200px] pointer-events-none z-0">
-        </div>
-        <div class="container mx-auto px-6 max-w-[1300px] relative z-10">
-            <div class="text-center mb-16">
-                <div data-aos="fade-up" data-aos-delay="100" class="flex items-center justify-center gap-4 w-full mb-4">
-                    <div class="h-px w-12 bg-gradient-to-r from-transparent to-brand-primary/50"></div>
-                    <span class="text-brand-primary text-[10px] font-bold uppercase tracking-[0.4em] drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]">Passaportes</span>
-                    <div class="h-px w-12 bg-gradient-to-l from-transparent to-brand-primary/50"></div>
-                </div>
-                <h2 data-aos="fade-up" data-aos-delay="250"
-                    class="text-4xl md:text-5xl font-black text-brand-textPrimary leading-tight mb-6">
-                    Ingressos limitados
-                </h2>
-            </div>
-
-            <div class="grid lg:grid-cols-3 gap-8 lg:gap-10 items-stretch w-full mt-10">
-
-                <!-- Smart -->
-                <div class="group relative rounded-[2rem] flex flex-col h-full bg-brand-surface/40 backdrop-blur-md border border-white/10 hover:border-brand-primary/30 hover:-translate-y-2 transition-all duration-500 overflow-hidden"
-                    data-aos="fade-up" data-aos-delay="550">
-                    <div class="absolute inset-0 bg-gradient-to-br from-white/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                    <div class="p-8 md:p-10 flex-1 flex flex-col relative z-10">
-                        <div class="mb-8">
-                            <span class="text-[10px] uppercase tracking-[0.3em] text-brand-textMuted font-bold block mb-3">Plano Inicial</span>
-                            <h3 class="text-3xl font-black text-brand-textPrimary uppercase tracking-tight group-hover:text-white transition-colors">Smart</h3>
-                        </div>
-                        <div class="mb-8">
-                            <div class="flex items-baseline gap-2 mb-1">
-                                <span class="text-brand-textMuted text-sm font-light">12x</span>
-                                <span class="text-4xl lg:text-5xl font-bold text-white leading-none tracking-tighter">R$ 24<span class="text-2xl text-brand-textSecondary">,70</span></span>
-                            </div>
-                            <span class="text-[11px] text-brand-textMuted uppercase tracking-widest font-medium">ou R$ 247 à vista</span>
-                        </div>
-                        <div class="h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent mb-8"></div>
-                        <ul class="space-y-5 text-sm text-brand-textSecondary font-light flex-1 mb-10">
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:border-brand-primary/30 transition-colors">
-                                    <i class="fas fa-check text-[8px] text-brand-textMuted group-hover:text-brand-primary transition-colors"></i>
-                                </div>
-                                <span class="leading-relaxed">Acesso ao evento</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:border-brand-primary/30 transition-colors">
-                                    <i class="fas fa-check text-[8px] text-brand-textMuted group-hover:text-brand-primary transition-colors"></i>
-                                </div>
-                                <span class="leading-relaxed">Certificado</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:border-brand-primary/30 transition-colors">
-                                    <i class="fas fa-check text-[8px] text-brand-textMuted group-hover:text-brand-primary transition-colors"></i>
-                                </div>
-                                <span class="leading-relaxed">Pasta para anotações</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:border-brand-primary/30 transition-colors">
-                                    <i class="fas fa-check text-[8px] text-brand-textMuted group-hover:text-brand-primary transition-colors"></i>
-                                </div>
-                                <span class="leading-relaxed">Caneta</span>
-                            </li>
-                        </ul>
-                        <button onclick="abrirPopup()"
-                            class="w-full relative overflow-hidden group/btn inline-flex items-center justify-center bg-transparent text-brand-textPrimary py-4 px-6 rounded-xl font-bold uppercase tracking-[0.15em] text-sm transition-all duration-300 border border-white/15 hover:border-white/40 cursor-pointer">
-                            <span class="relative z-10 group-hover/btn:text-white transition-colors">Garantir Meu Lugar</span>
-                            <div class="absolute inset-0 bg-white/5 translate-y-[100%] group-hover/btn:translate-y-0 transition-transform duration-300 ease-in-out"></div>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Gold -->
-                <div class="group relative rounded-[2rem] flex flex-col h-full bg-brand-surface border border-brand-primary/40 shadow-[0_0_40px_rgba(248,193,0,0.15)] hover:shadow-[0_0_60px_rgba(248,193,0,0.25)] lg:scale-[1.05] hover:-translate-y-2 lg:hover:-translate-y-4 transition-all duration-500 overflow-hidden z-20"
-                    data-aos="fade-up" data-aos-delay="700">
-                    <div class="absolute inset-0 bg-gradient-to-b from-brand-primary/10 to-transparent opacity-50 pointer-events-none"></div>
-                    <div class="absolute top-0 left-0 w-full h-[2px] bg-gradient-to-r from-transparent via-brand-primary to-transparent opacity-100"></div>
-                    
-                    <div class="absolute top-6 right-6">
-                        <div class="relative">
-                            <div class="absolute inset-0 bg-brand-primary blur-md opacity-40 animate-pulse"></div>
-                            <span class="relative bg-brand-primary text-black text-[9px] font-black uppercase tracking-[0.2em] py-1.5 px-3 rounded-md shadow-lg whitespace-nowrap">Mais Escolhido</span>
-                        </div>
-                    </div>
-
-                    <div class="p-8 md:p-10 flex-1 flex flex-col relative z-10">
-                        <div class="mb-8">
-                            <span class="text-[10px] uppercase tracking-[0.3em] text-brand-primary/80 font-bold block mb-3">Experiência Completa</span>
-                            <h3 class="text-3xl font-black uppercase text-transparent bg-clip-text bg-gradient-to-r from-[#F8C100] to-[#E8A941] tracking-tight">Gold</h3>
-                        </div>
-                        <div class="mb-8">
-                            <div class="flex items-baseline gap-2 mb-1">
-                                <span class="text-brand-textMuted text-sm font-light">12x</span>
-                                <span class="text-4xl lg:text-5xl font-bold text-white leading-none tracking-tighter">R$ 34<span class="text-2xl text-brand-primary">,70</span></span>
-                            </div>
-                            <span class="text-[11px] text-brand-textMuted uppercase tracking-widest font-medium">ou R$ 347 à vista</span>
-                        </div>
-                        <div class="h-px w-full bg-gradient-to-r from-brand-primary/30 via-brand-primary/10 to-transparent mb-8"></div>
-                        <ul class="space-y-5 text-sm text-brand-textPrimary font-light flex-1 mb-10">
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0 border border-brand-primary/30">
-                                    <i class="fas fa-check text-[8px] text-brand-primary"></i>
-                                </div>
-                                <span class="leading-relaxed">Acesso ao evento</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0 border border-brand-primary/30">
-                                    <i class="fas fa-check text-[8px] text-brand-primary"></i>
-                                </div>
-                                <span class="leading-relaxed">Certificado</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0 border border-brand-primary/30">
-                                    <i class="fas fa-check text-[8px] text-brand-primary"></i>
-                                </div>
-                                <span class="leading-relaxed">Pasta</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0 border border-brand-primary/30">
-                                    <i class="fas fa-check text-[8px] text-brand-primary"></i>
-                                </div>
-                                <span class="leading-relaxed">Caderninho de anotações</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0 border border-brand-primary/30">
-                                    <i class="fas fa-check text-[8px] text-brand-primary"></i>
-                                </div>
-                                <span class="leading-relaxed">Caneta</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0 border border-brand-primary/30">
-                                    <i class="fas fa-check text-[8px] text-brand-primary"></i>
-                                </div>
-                                <span class="leading-relaxed font-medium">MiniBand PTA</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0 border border-brand-primary/30">
-                                    <i class="fas fa-check text-[8px] text-brand-primary"></i>
-                                </div>
-                                <span class="leading-relaxed font-medium">Curso biomecânica na prática</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-brand-primary/10 flex items-center justify-center shrink-0 border border-brand-primary/30">
-                                    <i class="fas fa-check text-[8px] text-brand-primary"></i>
-                                </div>
-                                <span class="leading-relaxed font-medium">Open Bar (20h às 22h)</span>
-                            </li>
-                        </ul>
-                        <button onclick="abrirPopup()"
-                            class="w-full relative overflow-hidden group/btn inline-flex items-center justify-center bg-brand-primary text-black py-4 px-6 rounded-xl font-black uppercase tracking-[0.15em] text-sm hover:scale-[1.02] transition-all duration-300 shadow-[0_0_20px_rgba(248,193,0,0.3)] hover:shadow-[0_0_30px_rgba(248,193,0,0.5)] cursor-pointer">
-                            <span class="relative z-10">Garantir Meu Lugar</span>
-                            <div class="absolute inset-0 bg-white/20 translate-y-[100%] group-hover/btn:translate-y-0 transition-transform duration-300 ease-in-out"></div>
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Backstage -->
-                <div class="group relative rounded-[2rem] flex flex-col h-full bg-gradient-to-b from-[#111] to-[#050505] border border-white/5 hover:border-white/15 hover:-translate-y-2 transition-all duration-500 overflow-hidden"
-                    data-aos="fade-up" data-aos-delay="850">
-                    <div class="absolute inset-0 bg-noise opacity-20 mix-blend-overlay pointer-events-none"></div>
-                    <div class="p-8 md:p-10 flex-1 flex flex-col relative z-10">
-                        <div class="mb-8">
-                            <span class="text-[10px] uppercase tracking-[0.3em] text-white/50 font-bold block mb-3">Acesso Premium</span>
-                            <h3 class="text-3xl font-black text-white uppercase tracking-tight group-hover:text-brand-textPrimary transition-colors text-shadow-sm">Backstage</h3>
-                        </div>
-                        <div class="mb-8">
-                            <div class="flex items-baseline gap-2 mb-1">
-                                <span class="text-brand-textMuted text-sm font-light">12x</span>
-                                <span class="text-4xl lg:text-5xl font-bold text-white leading-none tracking-tighter">R$ 77<span class="text-2xl text-white/50">,70</span></span>
-                            </div>
-                            <span class="text-[11px] text-white/40 uppercase tracking-widest font-medium">ou R$ 779 à vista</span>
-                        </div>
-                        <div class="h-px w-full bg-gradient-to-r from-white/10 via-white/5 to-transparent mb-8"></div>
-                        <ul class="space-y-5 text-sm text-brand-textSecondary font-light flex-1 mb-10">
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:border-white/30 transition-colors">
-                                    <i class="fas fa-check text-[8px] text-white/50 group-hover:text-white transition-colors"></i>
-                                </div>
-                                <span class="leading-relaxed">Acesso ao evento</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:border-white/30 transition-colors">
-                                    <i class="fas fa-check text-[8px] text-white/50 group-hover:text-white transition-colors"></i>
-                                </div>
-                                <span class="leading-relaxed">Certificado</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:border-white/30 transition-colors">
-                                    <i class="fas fa-check text-[8px] text-white/50 group-hover:text-white transition-colors"></i>
-                                </div>
-                                <span class="leading-relaxed">Pasta</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:border-white/30 transition-colors">
-                                    <i class="fas fa-check text-[8px] text-white/50 group-hover:text-white transition-colors"></i>
-                                </div>
-                                <span class="leading-relaxed">Caderninho de anotações</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:border-white/30 transition-colors">
-                                    <i class="fas fa-check text-[8px] text-white/50 group-hover:text-white transition-colors"></i>
-                                </div>
-                                <span class="leading-relaxed text-white font-medium">Caneta de Osso</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:border-white/30 transition-colors">
-                                    <i class="fas fa-check text-[8px] text-white/50 group-hover:text-white transition-colors"></i>
-                                </div>
-                                <span class="leading-relaxed text-white font-medium">Livro Hipertrofia Máxima</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:border-white/30 transition-colors">
-                                    <i class="fas fa-check text-[8px] text-white/50 group-hover:text-white transition-colors"></i>
-                                </div>
-                                <span class="leading-relaxed">Curso biomecânica na prática</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:border-white/30 transition-colors">
-                                    <i class="fas fa-check text-[8px] text-white/50 group-hover:text-white transition-colors"></i>
-                                </div>
-                                <span class="leading-relaxed">Open Bar (20h às 22h)</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:border-white/30 transition-colors">
-                                    <i class="fas fa-check text-[8px] text-white/50 group-hover:text-white transition-colors"></i>
-                                </div>
-                                <span class="leading-relaxed">MiniBand PTA</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:border-white/30 transition-colors">
-                                    <i class="fas fa-check text-[8px] text-white/50 group-hover:text-white transition-colors"></i>
-                                </div>
-                                <span class="leading-relaxed text-white font-medium">Coffee break incluso</span>
-                            </li>
-                            <li class="flex items-start gap-4">
-                                <div class="mt-1 w-4 h-4 rounded-full bg-white/5 flex items-center justify-center shrink-0 border border-white/10 group-hover:border-white/30 transition-colors">
-                                    <i class="fas fa-check text-[8px] text-white/50 group-hover:text-white transition-colors"></i>
-                                </div>
-                                <span class="leading-relaxed text-white font-medium">Acesso exclusivo aos professores no backstage</span>
-                            </li>
-                        </ul>
-                        <button onclick="abrirPopup()"
-                            class="w-full relative overflow-hidden group/btn inline-flex items-center justify-center bg-white text-black py-4 px-6 rounded-xl font-black uppercase tracking-[0.15em] text-sm transition-all duration-300 hover:scale-[1.02] shadow-[0_0_15px_rgba(255,255,255,0.1)] hover:shadow-[0_0_25px_rgba(255,255,255,0.2)] cursor-pointer">
-                            <span class="relative z-10">Garantir Meu Lugar</span>
-                            <div class="absolute inset-0 bg-black/10 translate-y-[100%] group-hover/btn:translate-y-0 transition-transform duration-300 ease-in-out"></div>
-                        </button>
-                    </div>
-                </div>
-
-            </div>
-
-            <p class="text-[10px] text-center text-white/50 mt-12 uppercase tracking-widest"><i
-                    class="fas fa-lock mr-1"></i> Transação 100% Segura e Criptografada</p>
         </div>
     </section>
 
@@ -1131,7 +1361,8 @@
             <div class="text-center mb-16">
                 <div data-aos="fade-up" data-aos-delay="100" class="flex items-center justify-center gap-4 w-full mb-4">
                     <div class="h-px w-12 bg-gradient-to-r from-transparent to-brand-primary/50"></div>
-                    <span class="text-brand-primary text-[10px] font-bold uppercase tracking-[0.4em] drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]">FAQ</span>
+                    <span
+                        class="text-brand-primary text-[10px] font-bold uppercase tracking-[0.4em] drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]">FAQ</span>
                     <div class="h-px w-12 bg-gradient-to-l from-transparent to-brand-primary/50"></div>
                 </div>
                 <h2 data-aos="fade-up" data-aos-delay="250"
@@ -1141,92 +1372,147 @@
             </div>
 
             <div class="space-y-4 max-w-3xl mx-auto">
-                <div class="faq-item group glass-premium rounded-2xl border border-white/10 hover:border-brand-primary/30 transition-all duration-300 overflow-hidden relative" data-aos="fade-up" data-aos-delay="300">
-                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center"></div>
-                    <div class="faq-trigger flex items-center justify-between p-6 md:p-8 gap-6 cursor-pointer relative z-10" onclick="toggleFaq(this)">
+                <div class="faq-item group glass-premium rounded-2xl border border-white/10 hover:border-brand-primary/30 transition-all duration-300 overflow-hidden relative"
+                    data-aos="fade-up" data-aos-delay="300">
+                    <div
+                        class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                    </div>
+                    <div class="faq-trigger flex items-center justify-between p-6 md:p-8 gap-6 cursor-pointer relative z-10"
+                        onclick="toggleFaq(this)">
                         <div class="flex items-center gap-5">
-                            <span class="faq-num text-[10px] font-black tracking-widest text-brand-primary/40 group-hover:text-brand-primary transition-colors duration-300">01</span>
-                            <h4 class="text-xl md:text-2xl font-bold text-brand-textPrimary leading-snug group-hover:text-white transition-colors duration-300">Sou iniciante. O Summit é para mim?</h4>
+                            <span
+                                class="faq-num text-[10px] font-black tracking-widest text-brand-primary/40 group-hover:text-brand-primary transition-colors duration-300">01</span>
+                            <h4
+                                class="text-xl md:text-2xl font-bold text-brand-textPrimary leading-snug group-hover:text-white transition-colors duration-300">
+                                Sou iniciante. O Summit é para mim?</h4>
                         </div>
-                        <div class="faq-icon w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-brand-textSecondary group-hover:bg-brand-primary group-hover:text-black group-hover:border-brand-primary transition-all duration-300 shrink-0 shadow-[0_0_0_rgba(248,193,0,0)] group-hover:shadow-[0_0_15px_rgba(248,193,0,0.3)]">
+                        <div
+                            class="faq-icon w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-brand-textSecondary group-hover:bg-brand-primary group-hover:text-black group-hover:border-brand-primary transition-all duration-300 shrink-0 shadow-[0_0_0_rgba(248,193,0,0)] group-hover:shadow-[0_0_15px_rgba(248,193,0,0.3)]">
                             <i class="fas fa-plus text-sm"></i>
                         </div>
                     </div>
                     <div class="faq-answer">
-                        <p class="text-brand-textSecondary text-base leading-relaxed px-6 md:px-8 pb-6 md:pb-8 border-t border-white/5 pt-5 bg-black/20">
-                            Sim. O Summit foi desenhado tanto para quem está começando quanto para quem já atende e quer crescer. Se você quer construir seu negócio do jeito certo desde o início, ou <strong class="text-brand-textPrimary font-medium">corrigir o rumo</strong>, esse é o lugar.
+                        <p
+                            class="text-brand-textSecondary text-base leading-relaxed px-6 md:px-8 pb-6 md:pb-8 border-t border-white/5 pt-5 bg-black/20">
+                            Sim. O Summit foi desenhado tanto para quem está começando quanto para quem já atende e quer
+                            crescer. Se você quer construir seu negócio do jeito certo desde o início, ou <strong
+                                class="text-brand-textPrimary font-medium">corrigir o rumo</strong>, esse é o lugar.
                         </p>
                     </div>
                 </div>
 
-                <div class="faq-item group glass-premium rounded-2xl border border-white/10 hover:border-brand-primary/30 transition-all duration-300 overflow-hidden relative" data-aos="fade-up" data-aos-delay="400">
-                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center"></div>
-                    <div class="faq-trigger flex items-center justify-between p-6 md:p-8 gap-6 cursor-pointer relative z-10" onclick="toggleFaq(this)">
+                <div class="faq-item group glass-premium rounded-2xl border border-white/10 hover:border-brand-primary/30 transition-all duration-300 overflow-hidden relative"
+                    data-aos="fade-up" data-aos-delay="400">
+                    <div
+                        class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                    </div>
+                    <div class="faq-trigger flex items-center justify-between p-6 md:p-8 gap-6 cursor-pointer relative z-10"
+                        onclick="toggleFaq(this)">
                         <div class="flex items-center gap-5">
-                            <span class="faq-num text-[10px] font-black tracking-widest text-brand-primary/40 group-hover:text-brand-primary transition-colors duration-300">02</span>
-                            <h4 class="text-xl md:text-2xl font-bold text-brand-textPrimary leading-snug group-hover:text-white transition-colors duration-300">Já fui ao Summit anterior. Vale a pena ir de novo?</h4>
+                            <span
+                                class="faq-num text-[10px] font-black tracking-widest text-brand-primary/40 group-hover:text-brand-primary transition-colors duration-300">02</span>
+                            <h4
+                                class="text-xl md:text-2xl font-bold text-brand-textPrimary leading-snug group-hover:text-white transition-colors duration-300">
+                                Já fui ao Summit anterior. Vale a pena ir de novo?</h4>
                         </div>
-                        <div class="faq-icon w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-brand-textSecondary group-hover:bg-brand-primary group-hover:text-black group-hover:border-brand-primary transition-all duration-300 shrink-0 shadow-[0_0_0_rgba(248,193,0,0)] group-hover:shadow-[0_0_15px_rgba(248,193,0,0.3)]">
+                        <div
+                            class="faq-icon w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-brand-textSecondary group-hover:bg-brand-primary group-hover:text-black group-hover:border-brand-primary transition-all duration-300 shrink-0 shadow-[0_0_0_rgba(248,193,0,0)] group-hover:shadow-[0_0_15px_rgba(248,193,0,0.3)]">
                             <i class="fas fa-plus text-sm"></i>
                         </div>
                     </div>
                     <div class="faq-answer">
-                        <p class="text-brand-textSecondary text-base leading-relaxed px-6 md:px-8 pb-6 md:pb-8 border-t border-white/5 pt-5 bg-black/20">
-                            O Summit 2026 é <strong class="text-brand-textPrimary font-medium">completamente diferente</strong> do anterior. O foco mudou: saímos de atualização técnica para método completo de negócio. Se você esteve em 2024, vai perceber que essa é a evolução que faltava.
+                        <p
+                            class="text-brand-textSecondary text-base leading-relaxed px-6 md:px-8 pb-6 md:pb-8 border-t border-white/5 pt-5 bg-black/20">
+                            O Summit 2026 é <strong class="text-brand-textPrimary font-medium">completamente
+                                diferente</strong> do anterior. O foco mudou: saímos de atualização técnica para método
+                            completo de negócio. Se você esteve em 2024, vai perceber que essa é a evolução que faltava.
                         </p>
                     </div>
                 </div>
 
-                <div class="faq-item group glass-premium rounded-2xl border border-white/10 hover:border-brand-primary/30 transition-all duration-300 overflow-hidden relative" data-aos="fade-up" data-aos-delay="500">
-                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center"></div>
-                    <div class="faq-trigger flex items-center justify-between p-6 md:p-8 gap-6 cursor-pointer relative z-10" onclick="toggleFaq(this)">
+                <div class="faq-item group glass-premium rounded-2xl border border-white/10 hover:border-brand-primary/30 transition-all duration-300 overflow-hidden relative"
+                    data-aos="fade-up" data-aos-delay="500">
+                    <div
+                        class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                    </div>
+                    <div class="faq-trigger flex items-center justify-between p-6 md:p-8 gap-6 cursor-pointer relative z-10"
+                        onclick="toggleFaq(this)">
                         <div class="flex items-center gap-5">
-                            <span class="faq-num text-[10px] font-black tracking-widest text-brand-primary/40 group-hover:text-brand-primary transition-colors duration-300">03</span>
-                            <h4 class="text-xl md:text-2xl font-bold text-brand-textPrimary leading-snug group-hover:text-white transition-colors duration-300">O conteúdo vai ser gravado?</h4>
+                            <span
+                                class="faq-num text-[10px] font-black tracking-widest text-brand-primary/40 group-hover:text-brand-primary transition-colors duration-300">03</span>
+                            <h4
+                                class="text-xl md:text-2xl font-bold text-brand-textPrimary leading-snug group-hover:text-white transition-colors duration-300">
+                                O conteúdo vai ser gravado?</h4>
                         </div>
-                        <div class="faq-icon w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-brand-textSecondary group-hover:bg-brand-primary group-hover:text-black group-hover:border-brand-primary transition-all duration-300 shrink-0 shadow-[0_0_0_rgba(248,193,0,0)] group-hover:shadow-[0_0_15px_rgba(248,193,0,0.3)]">
+                        <div
+                            class="faq-icon w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-brand-textSecondary group-hover:bg-brand-primary group-hover:text-black group-hover:border-brand-primary transition-all duration-300 shrink-0 shadow-[0_0_0_rgba(248,193,0,0)] group-hover:shadow-[0_0_15px_rgba(248,193,0,0.3)]">
                             <i class="fas fa-plus text-sm"></i>
                         </div>
                     </div>
                     <div class="faq-answer">
-                        <p class="text-brand-textSecondary text-base leading-relaxed px-6 md:px-8 pb-6 md:pb-8 border-t border-white/5 pt-5 bg-black/20">
-                            O Summit é <strong class="text-brand-textPrimary font-medium">presencial</strong>. Parte do valor está em estar na sala, no networking e nas conexões que você faz nesses 2 dias. Nada substitui isso.
+                        <p
+                            class="text-brand-textSecondary text-base leading-relaxed px-6 md:px-8 pb-6 md:pb-8 border-t border-white/5 pt-5 bg-black/20">
+                            O Summit é <strong class="text-brand-textPrimary font-medium">presencial</strong>. Parte do
+                            valor está em estar na sala, no networking e nas conexões que você faz nesses 2 dias. Nada
+                            substitui isso.
                         </p>
                     </div>
                 </div>
 
-                <div class="faq-item group glass-premium rounded-2xl border border-white/10 hover:border-brand-primary/30 transition-all duration-300 overflow-hidden relative" data-aos="fade-up" data-aos-delay="600">
-                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center"></div>
-                    <div class="faq-trigger flex items-center justify-between p-6 md:p-8 gap-6 cursor-pointer relative z-10" onclick="toggleFaq(this)">
+                <div class="faq-item group glass-premium rounded-2xl border border-white/10 hover:border-brand-primary/30 transition-all duration-300 overflow-hidden relative"
+                    data-aos="fade-up" data-aos-delay="600">
+                    <div
+                        class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                    </div>
+                    <div class="faq-trigger flex items-center justify-between p-6 md:p-8 gap-6 cursor-pointer relative z-10"
+                        onclick="toggleFaq(this)">
                         <div class="flex items-center gap-5">
-                            <span class="faq-num text-[10px] font-black tracking-widest text-brand-primary/40 group-hover:text-brand-primary transition-colors duration-300">04</span>
-                            <h4 class="text-xl md:text-2xl font-bold text-brand-textPrimary leading-snug group-hover:text-white transition-colors duration-300">Qual a diferença entre os planos?</h4>
+                            <span
+                                class="faq-num text-[10px] font-black tracking-widest text-brand-primary/40 group-hover:text-brand-primary transition-colors duration-300">04</span>
+                            <h4
+                                class="text-xl md:text-2xl font-bold text-brand-textPrimary leading-snug group-hover:text-white transition-colors duration-300">
+                                Qual a diferença entre os planos?</h4>
                         </div>
-                        <div class="faq-icon w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-brand-textSecondary group-hover:bg-brand-primary group-hover:text-black group-hover:border-brand-primary transition-all duration-300 shrink-0 shadow-[0_0_0_rgba(248,193,0,0)] group-hover:shadow-[0_0_15px_rgba(248,193,0,0.3)]">
+                        <div
+                            class="faq-icon w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-brand-textSecondary group-hover:bg-brand-primary group-hover:text-black group-hover:border-brand-primary transition-all duration-300 shrink-0 shadow-[0_0_0_rgba(248,193,0,0)] group-hover:shadow-[0_0_15px_rgba(248,193,0,0.3)]">
                             <i class="fas fa-plus text-sm"></i>
                         </div>
                     </div>
                     <div class="faq-answer">
-                        <p class="text-brand-textSecondary text-base leading-relaxed px-6 md:px-8 pb-6 md:pb-8 border-t border-white/5 pt-5 bg-black/20">
-                            Todos os planos dão acesso completo ao evento e ao conteúdo. A diferença está nos <strong class="text-brand-textPrimary font-medium">materiais e experiências extras</strong>; no Backstage, você também tem acesso exclusivo aos professores fora do palco.
+                        <p
+                            class="text-brand-textSecondary text-base leading-relaxed px-6 md:px-8 pb-6 md:pb-8 border-t border-white/5 pt-5 bg-black/20">
+                            Todos os planos dão acesso completo ao evento e ao conteúdo. A diferença está nos <strong
+                                class="text-brand-textPrimary font-medium">materiais e experiências extras</strong>; no
+                            Backstage, você também tem acesso exclusivo aos professores fora do palco.
                         </p>
                     </div>
                 </div>
 
-                <div class="faq-item group glass-premium rounded-2xl border border-white/10 hover:border-brand-primary/30 transition-all duration-300 overflow-hidden relative" data-aos="fade-up" data-aos-delay="700">
-                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center"></div>
-                    <div class="faq-trigger flex items-center justify-between p-6 md:p-8 gap-6 cursor-pointer relative z-10" onclick="toggleFaq(this)">
+                <div class="faq-item group glass-premium rounded-2xl border border-white/10 hover:border-brand-primary/30 transition-all duration-300 overflow-hidden relative"
+                    data-aos="fade-up" data-aos-delay="700">
+                    <div
+                        class="absolute left-0 top-0 bottom-0 w-1 bg-brand-primary scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-center">
+                    </div>
+                    <div class="faq-trigger flex items-center justify-between p-6 md:p-8 gap-6 cursor-pointer relative z-10"
+                        onclick="toggleFaq(this)">
                         <div class="flex items-center gap-5">
-                            <span class="faq-num text-[10px] font-black tracking-widest text-brand-primary/40 group-hover:text-brand-primary transition-colors duration-300">05</span>
-                            <h4 class="text-xl md:text-2xl font-bold text-brand-textPrimary leading-snug group-hover:text-white transition-colors duration-300">Onde será o evento?</h4>
+                            <span
+                                class="faq-num text-[10px] font-black tracking-widest text-brand-primary/40 group-hover:text-brand-primary transition-colors duration-300">05</span>
+                            <h4
+                                class="text-xl md:text-2xl font-bold text-brand-textPrimary leading-snug group-hover:text-white transition-colors duration-300">
+                                Onde será o evento?</h4>
                         </div>
-                        <div class="faq-icon w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-brand-textSecondary group-hover:bg-brand-primary group-hover:text-black group-hover:border-brand-primary transition-all duration-300 shrink-0 shadow-[0_0_0_rgba(248,193,0,0)] group-hover:shadow-[0_0_15px_rgba(248,193,0,0.3)]">
+                        <div
+                            class="faq-icon w-10 h-10 rounded-full border border-white/15 flex items-center justify-center text-brand-textSecondary group-hover:bg-brand-primary group-hover:text-black group-hover:border-brand-primary transition-all duration-300 shrink-0 shadow-[0_0_0_rgba(248,193,0,0)] group-hover:shadow-[0_0_15px_rgba(248,193,0,0.3)]">
                             <i class="fas fa-plus text-sm"></i>
                         </div>
                     </div>
                     <div class="faq-answer">
-                        <p class="text-brand-textSecondary text-base leading-relaxed px-6 md:px-8 pb-6 md:pb-8 border-t border-white/5 pt-5 bg-black/20">
-                            Em <strong class="text-brand-textPrimary font-medium">Curitiba</strong>, nos dias <strong class="text-brand-textPrimary font-medium">17 e 18 de outubro</strong>. O endereço exato será divulgado após a confirmação da sua inscrição.
+                        <p
+                            class="text-brand-textSecondary text-base leading-relaxed px-6 md:px-8 pb-6 md:pb-8 border-t border-white/5 pt-5 bg-black/20">
+                            Em <strong class="text-brand-textPrimary font-medium">Curitiba</strong>, nos dias <strong
+                                class="text-brand-textPrimary font-medium">17 e 18 de outubro</strong>. O endereço exato
+                            será divulgado após a confirmação da sua inscrição.
                         </p>
                     </div>
                 </div>
@@ -1248,7 +1534,8 @@
         <div class="container mx-auto px-6 max-w-[1300px] relative z-10">
             <div data-aos="fade-up" data-aos-delay="100" class="flex items-center justify-center gap-4 w-full mb-4">
                 <div class="h-px w-12 bg-gradient-to-r from-transparent to-brand-primary/50"></div>
-                <span class="text-brand-primary text-[10px] font-bold uppercase tracking-[0.4em] drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]">Decisão</span>
+                <span
+                    class="text-brand-primary text-[10px] font-bold uppercase tracking-[0.4em] drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]">Decisão</span>
                 <div class="h-px w-12 bg-gradient-to-l from-transparent to-brand-primary/50"></div>
             </div>
             <h2 data-aos="fade-up" data-aos-delay="250"
@@ -1276,7 +1563,7 @@
         </div>
     </section>
 
-    <footer class="bg-brand-primary text-black pt-16 pb-24 relative z-20 overflow-hidden">
+    <footer id="rodape" class="bg-brand-primary text-black pt-16 pb-24 relative z-20 overflow-hidden">
         <div class="w-full overflow-hidden mb-20 select-none flex items-center mt-[-10px]">
             <div class="flex whitespace-nowrap animate-marquee w-max" style="animation-duration: 40s;">
                 <div class="flex items-center gap-10 px-5">
@@ -1330,11 +1617,11 @@
                         <li><a href="#conteudo"
                                 class="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">Benefícios</a>
                         </li>
-                        <li><a href="#palestrantes"
-                                class="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">Especialistas</a>
+                        <li><a href="#cronograma"
+                                class="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">Cronograma</a>
                         </li>
-                        <li><a href="#ingressos"
-                                class="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">Ingressos</a>
+                        <li><a href="#faq"
+                                class="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">FAQ</a>
                         </li>
                         <li><a href="patrocinadores.html"
                                 class="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">Patrocinadores</a>
@@ -1423,39 +1710,44 @@
             </button>
 
             <div class="text-center mb-8 popup-intro">
-                <div class="text-brand-primary text-[9px] font-bold uppercase tracking-[0.3em] mb-3">E-SUM · Summit PTA 2026</div>
+                <div class="text-brand-primary text-[9px] font-bold uppercase tracking-[0.3em] mb-3">E-SUM · Summit PTA
+                    2026</div>
                 <h3 class="font-light text-2xl text-brand-textPrimary tracking-wide mb-2">Reserve sua vaga</h3>
-                <p class="text-xs text-brand-textSecondary font-light">Preencha os dados abaixo. Enviaremos as instruções do E-SUM por email e WhatsApp.</p>
+                <p class="text-xs text-brand-textSecondary font-light">Preencha os dados abaixo. Enviaremos as
+                    instruções do E-SUM por email e WhatsApp.</p>
             </div>
 
-            <form class="space-y-5 mt-6 popup-form"
-                data-produto="E-SUM"
+            <form class="space-y-5 mt-6 popup-form" data-produto="E-SUM"
                 data-webhook="https://hook.us1.make.com/bj1q14346ezeybpcqjb9ctea89aoatvn?produto=E-SUM"
                 data-redirect="https://sndflw.com/i/summit2026">
                 <div>
-                    <label class="block text-[11px] font-medium text-brand-textSecondary uppercase tracking-widest mb-2">Nome</label>
+                    <label
+                        class="block text-[11px] font-medium text-brand-textSecondary uppercase tracking-widest mb-2">Nome</label>
                     <input type="text" name="nome" required placeholder="Seu nome completo"
                         class="lead-nome w-full px-4 py-3.5 rounded-xl bg-[#181818] border border-white/10 text-white placeholder-gray-600 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all duration-300 font-light text-sm">
                 </div>
                 <div>
-                    <label class="block text-[11px] font-medium text-brand-textSecondary uppercase tracking-widest mb-2">Email</label>
+                    <label
+                        class="block text-[11px] font-medium text-brand-textSecondary uppercase tracking-widest mb-2">Email</label>
                     <input type="email" name="email" required placeholder="seu@email.com"
                         class="lead-email w-full px-4 py-3.5 rounded-xl bg-[#181818] border border-white/10 text-white placeholder-gray-600 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all duration-300 font-light text-sm">
                 </div>
                 <div>
-                    <label class="block text-[11px] font-medium text-brand-textSecondary uppercase tracking-widest mb-2">Telefone</label>
+                    <label
+                        class="block text-[11px] font-medium text-brand-textSecondary uppercase tracking-widest mb-2">Telefone</label>
                     <div
                         class="flex rounded-xl overflow-hidden border border-white/10 focus-within:border-brand-primary focus-within:ring-1 focus-within:ring-brand-primary bg-[#181818] transition-all duration-300">
                         <span
                             class="inline-flex items-center px-4 py-3.5 bg-white/5 text-brand-textSecondary font-light select-none shrink-0 border-r border-white/5 text-sm">+55</span>
-                        <input type="tel" name="phone" required placeholder="(11) 99999-9999"
-                            maxlength="15" autocomplete="tel"
+                        <input type="tel" name="phone" required placeholder="(11) 99999-9999" maxlength="15"
+                            autocomplete="tel"
                             class="lead-phone flex-1 px-4 py-3.5 bg-transparent text-white placeholder-gray-600 outline-none min-w-0 mask-telefone font-light text-sm">
                     </div>
                     <p class="error-msg text-red-400 text-[10px] mt-2 hidden uppercase tracking-wider">Informe o DDD e o
                         número completo.</p>
                 </div>
-                <p class="form-send-error text-red-400 text-[10px] text-center hidden uppercase tracking-wider">Não foi possível enviar. Tente novamente.</p>
+                <p class="form-send-error text-red-400 text-[10px] text-center hidden uppercase tracking-wider">Não foi
+                    possível enviar. Tente novamente.</p>
                 <button type="submit"
                     class="w-full bg-brand-primary text-black font-sans font-bold py-4 rounded-xl uppercase tracking-[0.2em] text-xs hover:shadow-[0_0_30px_rgba(212,175,55,0.4)] hover:bg-brand-primaryHover transition-all duration-500 btn-submit mt-4">
                     Enviar cadastro E-SUM
@@ -1463,13 +1755,15 @@
             </form>
 
             <div class="popup-success hidden text-center space-y-6 py-4" aria-live="polite">
-                <div class="w-16 h-16 rounded-full bg-brand-primary/15 border border-brand-primary/30 flex items-center justify-center mx-auto">
+                <div
+                    class="w-16 h-16 rounded-full bg-brand-primary/15 border border-brand-primary/30 flex items-center justify-center mx-auto">
                     <i class="fas fa-check text-brand-primary text-xl"></i>
                 </div>
                 <div>
                     <p class="text-brand-primary text-[9px] font-bold uppercase tracking-[0.3em] mb-2">E-SUM</p>
                     <h3 class="font-light text-2xl text-brand-textPrimary tracking-wide mb-2">Cadastro recebido</h3>
-                    <p class="text-xs text-brand-textSecondary font-light leading-relaxed">Nossa equipe entra em contato em breve com os próximos passos.</p>
+                    <p class="text-xs text-brand-textSecondary font-light leading-relaxed">Nossa equipe entra em contato
+                        em breve com os próximos passos.</p>
                 </div>
 
 
@@ -1481,8 +1775,65 @@
         </div>
     </div>
 
+    <script src="https://www.youtube.com/iframe_api"></script>
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
+        const HERO_YOUTUBE_ID = 'TaEph0S9Uxw';
+        let heroYoutubePlayer = null;
+
+        function initHeroYoutubePlayer() {
+            if (heroYoutubePlayer || !document.getElementById('hero-youtube-player')) return;
+
+            heroYoutubePlayer = new YT.Player('hero-youtube-player', {
+                videoId: HERO_YOUTUBE_ID,
+                playerVars: {
+                    autoplay: 1,
+                    mute: 1,
+                    loop: 1,
+                    playlist: HERO_YOUTUBE_ID,
+                    controls: 0,
+                    rel: 0,
+                    modestbranding: 1,
+                    playsinline: 1,
+                    iv_load_policy: 3,
+                    disablekb: 1,
+                    fs: 0,
+                    cc_load_policy: 0,
+                    enablejsapi: 1,
+                    origin: window.location.origin,
+                },
+                events: {
+                    onReady: (e) => {
+                        e.target.mute();
+                        e.target.playVideo();
+                    },
+                    onStateChange: (e) => {
+                        if (e.data === YT.PlayerState.ENDED) {
+                            e.target.seekTo(0, true);
+                            e.target.playVideo();
+                        }
+                    },
+                },
+            });
+        }
+
+        if (window.YT && window.YT.Player) {
+            initHeroYoutubePlayer();
+        } else {
+            const prevReady = window.onYouTubeIframeAPIReady;
+            window.onYouTubeIframeAPIReady = function () {
+                if (typeof prevReady === 'function') prevReady();
+                initHeroYoutubePlayer();
+            };
+        }
+
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState !== 'visible' || !heroYoutubePlayer?.playVideo) return;
+            try {
+                heroYoutubePlayer.playVideo();
+            } catch (e) { }
+        });
+
         // Agora o AOS.init rodará sem dar erro de "not defined"
         AOS.init({ once: true, offset: 30, duration: 1000, easing: 'ease-out-cubic' });
 
@@ -1501,7 +1852,7 @@
             utmKeys.forEach(key => {
                 const fromUrl = getSearchParamInsensitive(params, key);
                 if (fromUrl) {
-                    try { sessionStorage.setItem(key, fromUrl); } catch (e) {}
+                    try { sessionStorage.setItem(key, fromUrl); } catch (e) { }
                 }
                 let value = fromUrl || '';
                 if (!value) {
