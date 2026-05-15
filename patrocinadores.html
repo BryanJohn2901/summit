@@ -95,6 +95,12 @@
 
         body { background-color: #000000; }
 
+        [data-patrocinio-cta][aria-disabled="true"] {
+            opacity: 0.55;
+            cursor: not-allowed;
+            pointer-events: none;
+        }
+
         .glass-premium {
             background: rgba(0, 0, 0, 0.6);
             backdrop-filter: blur(24px);
@@ -348,7 +354,7 @@
                 Sua marca no maior encontro de personal trainers <br class="hidden md:block"> <span class="font-bold text-gradient-gold">do Sul do Brasil.</span>
             </h1>
             <div data-aos="fade-up" data-aos-delay="200" data-aos-duration="1500">
-                <button type="button" onclick="abrirPopupPatrocinio()" class="inline-flex items-center justify-center bg-brand-primary text-brand-bg py-4 px-10 md:py-5 md:px-12 rounded-xl font-black uppercase tracking-[0.2em] text-sm md:text-base hover:scale-105 transition-all duration-300 shadow-[0_10px_40px_-10px_rgba(248,193,0,0.5)] cursor-pointer">
+                <button type="button" data-patrocinio-cta onclick="abrirPopupPatrocinio()" aria-disabled="true" class="inline-flex items-center justify-center bg-brand-primary text-brand-bg py-4 px-10 md:py-5 md:px-12 rounded-xl font-black uppercase tracking-[0.2em] text-sm md:text-base transition-all duration-300 shadow-[0_10px_40px_-10px_rgba(248,193,0,0.5)]">
                     Quero ser patrocinador
                 </button>
             </div>
@@ -537,8 +543,8 @@
                 <p class="prose-block text-brand-textSecondary font-light mb-12">
                     Conectamos marcas ao profissional de educação física que <strong>decide, compra e indica.</strong> O Summit PTA é o ponto de encontro entre quem vende e quem recomenda no mercado fitness.
                 </p>
-                <button type="button" onclick="abrirPopupPatrocinio()"
-                    class="inline-flex items-center justify-center bg-brand-primary text-brand-bg py-5 px-12 rounded-xl font-black uppercase tracking-[0.2em] text-sm md:text-base hover:scale-105 transition-all duration-300 shadow-[0_10px_40px_-10px_rgba(248,193,0,0.5)] cursor-pointer">
+                <button type="button" data-patrocinio-cta onclick="abrirPopupPatrocinio()" aria-disabled="true"
+                    class="inline-flex items-center justify-center bg-brand-primary text-brand-bg py-5 px-12 rounded-xl font-black uppercase tracking-[0.2em] text-sm md:text-base transition-all duration-300 shadow-[0_10px_40px_-10px_rgba(248,193,0,0.5)]">
                     Quero patrocinar
                 </button>
             </div>
@@ -827,6 +833,13 @@
             });
         }
 
+        const PATROCINIO_ATIVO = false;
+
+        document.querySelectorAll('[data-patrocinio-cta]').forEach((btn) => {
+            if (PATROCINIO_ATIVO) btn.removeAttribute('aria-disabled');
+            else btn.setAttribute('aria-disabled', 'true');
+        });
+
         const WHATSAPP_NUMBER = '5541988239396';
         const WHATSAPP_MESSAGE = 'Quero patrocinar o evento do summit 2026';
 
@@ -896,6 +909,7 @@
         }
 
         function abrirPopupPatrocinio() {
+            if (!PATROCINIO_ATIVO) return;
             if (!popupPatrocinio) return;
             syncTrackingFields();
             resetPopupCard(popupPatrocinio.querySelector('.popup-card'));
