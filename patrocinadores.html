@@ -742,15 +742,6 @@
         <i class="fas fa-arrow-up"></i>
     </a>
 
-    <div class="hidden" aria-hidden="true">
-        <input type="hidden" id="utm_source" name="utm_source" value="">
-        <input type="hidden" id="utm_term" name="utm_term" value="">
-        <input type="hidden" id="utm_campaign" name="utm_campaign" value="">
-        <input type="hidden" id="utm_medium" name="utm_medium" value="">
-        <input type="hidden" id="utm_content" name="utm_content" value="">
-        <input type="hidden" id="url" name="url" value="">
-    </div>
-
     <div id="popup-patrocinio" class="fixed inset-0 z-[100] hidden items-center justify-center p-4 bg-[#101010]/90 backdrop-blur-md transition-opacity duration-300" aria-hidden="true">
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-brand-primary/10 rounded-full blur-[120px] pointer-events-none"></div>
 
@@ -766,19 +757,25 @@
             </div>
 
             <form id="form_eventos" class="space-y-5 mt-6 popup-form" data-produto="PATROCINIO" data-webhook="https://hook.us1.make.com/bj1q14346ezeybpcqjb9ctea89aoatvn?produto=PATROCINIO">
+                <input type="hidden" id="utm_source" name="utm_source" value="">
+                <input type="hidden" id="utm_term" name="utm_term" value="">
+                <input type="hidden" id="utm_campaign" name="utm_campaign" value="">
+                <input type="hidden" id="utm_medium" name="utm_medium" value="">
+                <input type="hidden" id="utm_content" name="utm_content" value="">
+                <input type="hidden" id="url" name="url" value="">
                 <div>
                     <label class="block text-[11px] font-medium text-brand-textSecondary uppercase tracking-widest mb-2">Nome Completo</label>
-                    <input type="text" name="nome" required placeholder="Seu nome" class="lead-nome w-full px-4 py-3.5 rounded-xl bg-[#181818] border border-white/10 text-white placeholder-gray-600 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all duration-300 font-light text-sm">
+                    <input type="text" id="name" name="name" required placeholder="Seu nome" class="lead-nome w-full px-4 py-3.5 rounded-xl bg-[#181818] border border-white/10 text-white placeholder-gray-600 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all duration-300 font-light text-sm">
                 </div>
                 <div>
                     <label class="block text-[11px] font-medium text-brand-textSecondary uppercase tracking-widest mb-2">Email</label>
-                    <input type="email" name="email" required placeholder="seu@email.com" class="lead-email w-full px-4 py-3.5 rounded-xl bg-[#181818] border border-white/10 text-white placeholder-gray-600 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all duration-300 font-light text-sm">
+                    <input type="email" id="email" name="email" required placeholder="seu@email.com" class="lead-email w-full px-4 py-3.5 rounded-xl bg-[#181818] border border-white/10 text-white placeholder-gray-600 focus:border-brand-primary focus:ring-1 focus:ring-brand-primary outline-none transition-all duration-300 font-light text-sm">
                 </div>
                 <div>
                     <label class="block text-[11px] font-medium text-brand-textSecondary uppercase tracking-widest mb-2">Telefone</label>
                     <div class="flex rounded-xl overflow-hidden border border-white/10 focus-within:border-brand-primary focus-within:ring-1 focus-within:ring-brand-primary bg-[#181818] transition-all duration-300">
                         <span class="inline-flex items-center px-4 py-3.5 bg-white/5 text-brand-textSecondary font-light select-none shrink-0 border-r border-white/5 text-sm">+55</span>
-                        <input type="tel" name="phone" required placeholder="(41) 99999-9999" maxlength="15" autocomplete="tel" class="lead-phone flex-1 px-4 py-3.5 bg-transparent text-white placeholder-gray-600 outline-none min-w-0 mask-telefone font-light text-sm">
+                        <input type="tel" id="phone" name="phone" required placeholder="(41) 99999-9999" maxlength="15" autocomplete="tel" class="lead-phone flex-1 px-4 py-3.5 bg-transparent text-white placeholder-gray-600 outline-none min-w-0 mask-telefone font-light text-sm">
                     </div>
                     <p class="error-msg text-red-400 text-[10px] mt-2 hidden uppercase tracking-wider">Informe o DDD e o número completo.</p>
                 </div>
@@ -887,6 +884,26 @@
 
         const popupPatrocinio = document.getElementById('popup-patrocinio');
         const SUBMIT_BTN_HTML = 'Continuar para o WhatsApp';
+
+        function buildLeadQueryParams(lead) {
+            const q = new URLSearchParams();
+            if (lead.name) q.set('name', lead.name);
+            if (lead.email) q.set('email', lead.email);
+            if (lead.phone) q.set('phone', lead.phone);
+            q.set('utm_source', lead.utm_source || '');
+            q.set('utm_term', lead.utm_term || '');
+            q.set('utm_campaign', lead.utm_campaign || '');
+            q.set('utm_medium', lead.utm_medium || '');
+            q.set('utm_content', lead.utm_content || '');
+            q.set('url', lead.url || window.location.href);
+            return q;
+        }
+
+        function buildWebhookUrl(baseUrl, lead) {
+            const u = new URL(baseUrl);
+            buildLeadQueryParams(lead).forEach((value, key) => u.searchParams.set(key, value));
+            return u.href;
+        }
 
         function buildWhatsAppUrl(lead) {
             let text = WHATSAPP_MESSAGE;
@@ -998,10 +1015,10 @@
                 btnSubmit.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> Processando...';
                 btnSubmit.classList.add('opacity-70');
 
-                const payload = {
-                    nome,
+                const lead = {
+                    name: nome,
                     email,
-                    telefone,
+                    phone: telefone,
                     produto: this.dataset.produto || 'PATROCINIO',
                     utm_source,
                     utm_term,
@@ -1011,7 +1028,9 @@
                     url: pageUrl
                 };
 
-                const webhookUrl = this.dataset.webhook;
+                const payload = { ...lead };
+
+                const webhookUrl = buildWebhookUrl(this.dataset.webhook, lead);
                 const leadForWhatsApp = { name: nome, email, phone: telefone };
 
                 let ok = false;
