@@ -15,7 +15,7 @@ const ROOT = __dirname;
 const DIST = path.join(ROOT, 'dist');
 const ASSETS_SRC = path.join(ROOT, 'assets');
 const ASSETS_DIST = path.join(DIST, 'assets');
-const CANONICAL_BASE = 'https://pos.personaltraineracademy.com.br';
+const CANONICAL_BASE = 'https://summit.personaltraineracademy.com.br';
 
 const HTML_PAGES = [
   {
