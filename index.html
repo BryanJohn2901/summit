@@ -1705,41 +1705,41 @@
 
                 syncTrackingFields();
 
-                const utm_source = document.getElementById('utm_source')?.value || '';
-                const utm_term = document.getElementById('utm_term')?.value || '';
-                const utm_campaign = document.getElementById('utm_campaign')?.value || '';
-                const utm_medium = document.getElementById('utm_medium')?.value || '';
-                const utm_content = document.getElementById('utm_content')?.value || '';
-                const pageUrl = document.getElementById('url')?.value || window.location.href;
-
                 btnSubmit.disabled = true;
                 btnSubmit.innerHTML = '<i class="fas fa-circle-notch fa-spin mr-2"></i> Processando...';
                 btnSubmit.classList.add('opacity-70');
 
-                const produto = this.dataset.produto || '';
+                const payload = {
+                    nome: nome,
+                    email: email,
+                    telefone: telefone,
+                    utm_source: document.getElementById('utm_source')?.value || '',
+                    utm_term: document.getElementById('utm_term')?.value || '',
+                    utm_campaign: document.getElementById('utm_campaign')?.value || '',
+                    utm_medium: document.getElementById('utm_medium')?.value || '',
+                    utm_content: document.getElementById('utm_content')?.value || '',
+                    url: document.getElementById('url')?.value || window.location.href
+                };
 
-                const lead = {
+                const leadForWebhook = {
                     name: nome,
                     email: email,
                     phone: telefone,
-                    produto: produto,
-                    utm_source: utm_source,
-                    utm_term: utm_term,
-                    utm_campaign: utm_campaign,
-                    utm_medium: utm_medium,
-                    utm_content: utm_content,
-                    url: pageUrl
+                    utm_source: payload.utm_source,
+                    utm_term: payload.utm_term,
+                    utm_campaign: payload.utm_campaign,
+                    utm_medium: payload.utm_medium,
+                    utm_content: payload.utm_content,
+                    url: payload.url
                 };
 
-                const payload = { ...lead };
-
-                const webhookUrl = buildWebhookUrl(this.dataset.webhook, lead);
+                const webhookUrl = buildWebhookUrl(this.dataset.webhook, leadForWebhook);
                 const redirectUrl = (this.dataset.redirect || '').trim();
                 const card = this.closest('.popup-card');
                 const successEl = card?.querySelector('.popup-success');
                 const intro = card?.querySelector('.popup-intro');
 
-                const leadForRedirect = { ...lead };
+                const leadForRedirect = { ...leadForWebhook };
 
                 let ok = false;
                 try {
