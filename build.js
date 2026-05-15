@@ -16,6 +16,20 @@ const DIST = path.join(ROOT, 'dist');
 const ASSETS_SRC = path.join(ROOT, 'assets');
 const ASSETS_DIST = path.join(DIST, 'assets');
 const CANONICAL_BASE = 'https://summit.personaltraineracademy.com.br';
+const GTM_ID = 'GTM-55TLN64G';
+
+const GTM_HEAD = `<!-- Google Tag Manager -->
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','${GTM_ID}');</script>
+<!-- End Google Tag Manager -->`;
+
+const GTM_BODY = `<!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${GTM_ID}"
+height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+<!-- End Google Tag Manager (noscript) -->`;
 
 const HTML_PAGES = [
   {
@@ -157,6 +171,7 @@ function extractInlineScripts(html) {
     if (attrs.includes('application/ld+json')) continue;
     if (!body) continue;
     if (body.includes('tailwind.config')) continue;
+    if (body.includes('googletagmanager') || body.includes('GTM-')) continue;
     scripts.push(body);
   }
   return scripts.join('\n\n');
@@ -173,12 +188,24 @@ function removeInlineStyle(html) {
 }
 
 function removeInlineAppScripts(html) {
-  return html.replace(/<script(\s[^>]*)?>[\s\S]*?<\/script>/gi, (full, attrs) => {
+  return html.replace(/<script(\s[^>]*)?>[\s\S]*?<\/script>/gi, (full, attrs, body) => {
     const a = (attrs || '').toLowerCase();
     if (a.includes('src=')) return full;
     if (a.includes('application/ld+json')) return full;
+    if (full.includes('googletagmanager') || full.includes('GTM-')) return full;
     return '';
   });
+}
+
+function injectGtm(html) {
+  let out = html;
+  if (!/googletagmanager\.com\/gtm\.js/i.test(out)) {
+    out = out.replace(/<head>/i, `<head>\n    ${GTM_HEAD}`);
+  }
+  if (!/googletagmanager\.com\/ns\.html/i.test(out)) {
+    out = out.replace(/<body([^>]*)>/i, `<body$1>\n    ${GTM_BODY}`);
+  }
+  return out;
 }
 
 function applySeoHead(html, page) {
@@ -251,6 +278,7 @@ function applySeoHead(html, page) {
     <link rel="preconnect" href="https://unpkg.com" crossorigin>
     <link rel="preconnect" href="https://www.youtube.com" crossorigin>
     <link rel="preconnect" href="https://www.google.com" crossorigin>
+    <link rel="preconnect" href="https://www.googletagmanager.com" crossorigin>
     <link rel="dns-prefetch" href="https://hook.us1.make.com">`;
 
   out = out.replace(/<link rel="preconnect"[^>]*>\s*/gi, '');
@@ -341,7 +369,7 @@ async function processPage(page) {
     ignoreCustomFragments: [/\{\{[\s\S]*?\}\}/],
   });
 
-  fs.writeFileSync(path.join(DIST, page.out), minified);
+  fs.writeFileSync(path.join(DIST, page.out), injectGtm(minified));
   log(`HTML → dist/${page.out}`);
 }
 
