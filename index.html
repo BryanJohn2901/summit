@@ -355,6 +355,146 @@
             opacity: 1;
         }
 
+
+        #professores .professor-card__media {
+            position: relative;
+            aspect-ratio: 3 / 4;
+            max-width: 22rem;
+            margin-left: auto;
+            margin-right: auto;
+            width: 100%;
+            overflow: hidden;
+            border-radius: 1.25rem;
+            background: #000;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            transition: border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        #professores .professor-card:hover .professor-card__media {
+            border-color: rgba(248, 193, 0, 0.35);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+        }
+
+        #professores .professor-card__media img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            object-position: center bottom;
+            display: block;
+            transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        #professores .professor-card:hover .professor-card__media img {
+            transform: scale(1.04);
+        }
+
+        #professores .professor-card__overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+
+        #professores .professor-card--revealed .professor-card__overlay {
+            display: none;
+        }
+
+        #professores .professor-reveal-timer {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 0.35rem 0.5rem;
+            width: 100%;
+            max-width: 11rem;
+        }
+
+        #professores .professor-reveal-timer__unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.15rem;
+        }
+
+        #professores .professor-reveal-timer__value {
+            font-size: 1.25rem;
+            line-height: 1;
+            font-weight: 300;
+            font-family: ui-monospace, monospace;
+            color: #fff;
+        }
+
+        @media (min-width: 768px) {
+            #professores .professor-reveal-timer__value {
+                font-size: 1.5rem;
+            }
+        }
+
+        #professores .professor-reveal-timer__label {
+            font-size: 0.5rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: #F8C100;
+        }
+
+        #professores .professor-card__soon {
+            font-size: 0.75rem;
+            font-weight: 900;
+            letter-spacing: 0.35em;
+            text-transform: uppercase;
+            color: #F8C100;
+        }
+
+        @media (min-width: 768px) {
+            #professores .professor-card__soon {
+                font-size: 0.875rem;
+            }
+        }
+
+        @media (max-width: 767px) {
+            #nav .nav-inner {
+                padding: 0.625rem 0.75rem;
+                border-radius: 1rem;
+            }
+
+            #nav .nav-countdown {
+                gap: 0.35rem;
+            }
+
+            #nav .nav-countdown .countdown-value {
+                font-size: 0.95rem;
+            }
+
+            #nav .nav-countdown .countdown-label {
+                font-size: 0.45rem;
+                letter-spacing: 0.08em;
+            }
+
+            #nav .nav-countdown .countdown-sep {
+                font-size: 0.85rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+
+        @media (min-width: 768px) and (max-width: 1279px) {
+            #nav .nav-inner {
+                padding-left: 1.25rem;
+                padding-right: 1.25rem;
+            }
+
+            #nav .nav-countdown {
+                gap: 0.75rem;
+            }
+
+            #nav .nav-countdown .countdown-value {
+                font-size: 1.25rem;
+            }
+        }
     </style>
 </head>
 
@@ -364,59 +504,54 @@
     <div class="custom-cursor hidden lg:block" id="cursor"></div>
     <div class="custom-cursor-dot hidden lg:block" id="cursor-dot"></div>
 
-    <nav id="nav" class="fixed top-6 left-0 right-0 z-50 px-4 md:px-0 hidden md:block" data-aos="fade-down"
+    <nav id="nav" class="fixed top-2 sm:top-4 lg:top-6 left-0 right-0 z-50 px-3 sm:px-4 lg:px-0" data-aos="fade-down"
         data-aos-duration="1000">
         <div class="container mx-auto max-w-[1300px]">
             <div
-                class="relative flex items-center justify-between px-8 py-4 md:px-10 md:py-5 rounded-full glass-strong shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] transition-all duration-500 hover:border-brand-primary/20 hover:shadow-[0_12px_40px_0_rgba(212,175,55,0.08)]">
+                class="nav-inner relative flex items-center justify-between gap-1.5 sm:gap-2 lg:gap-4 px-3 py-2.5 sm:px-5 sm:py-3.5 md:px-6 lg:px-10 lg:py-5 rounded-2xl sm:rounded-full glass-strong shadow-[0_8px_32px_0_rgba(0,0,0,0.8)] transition-all duration-500 hover:border-brand-primary/20 hover:shadow-[0_12px_40px_0_rgba(212,175,55,0.08)]">
 
                 <a href="#" class="block hover:opacity-80 transition-opacity duration-300 flex items-center shrink-0">
                     <img src="assets/logoSummit.svg" alt="Summit Personal Trainer Academy"
-                        class="h-10 md:h-12 w-auto object-contain">
+                        class="h-8 sm:h-10 md:h-12 w-auto object-contain">
                 </a>
 
-                <div class="hidden md:flex items-center gap-6">
+                <div class="nav-countdown flex items-center gap-1 sm:gap-3 lg:gap-6 shrink min-w-0">
                     <div class="flex flex-col items-center">
-                        <span class="text-2xl md:text-3xl font-light text-brand-textPrimary font-mono leading-none"
-                            id="cd-days">00</span>
+                        <span class="countdown-value text-xl md:text-2xl lg:text-3xl font-light text-brand-textPrimary font-mono leading-none" id="cd-days">00</span>
                         <span
-                            class="text-[10px] md:text-xs uppercase tracking-widest text-brand-primary font-bold mt-1">Dias</span>
+                            class="countdown-label text-[10px] md:text-xs uppercase tracking-widest text-brand-primary font-bold mt-0.5 sm:mt-1">Dias</span>
                     </div>
-                    <span class="text-white/20 text-2xl md:text-3xl font-light mb-4">:</span>
+                    <span class="countdown-sep text-white/20 text-xl md:text-2xl lg:text-3xl font-light mb-4">:</span>
                     <div class="flex flex-col items-center">
-                        <span class="text-2xl md:text-3xl font-light text-brand-textPrimary font-mono leading-none"
-                            id="cd-hours">00</span>
+                        <span class="countdown-value text-xl md:text-2xl lg:text-3xl font-light text-brand-textPrimary font-mono leading-none" id="cd-hours">00</span>
                         <span
-                            class="text-[10px] md:text-xs uppercase tracking-widest text-brand-primary font-bold mt-1">Horas</span>
+                            class="countdown-label text-[10px] md:text-xs uppercase tracking-widest text-brand-primary font-bold mt-0.5 sm:mt-1">Horas</span>
                     </div>
-                    <span class="text-white/20 text-2xl md:text-3xl font-light mb-4">:</span>
+                    <span class="countdown-sep text-white/20 text-xl md:text-2xl lg:text-3xl font-light mb-4">:</span>
                     <div class="flex flex-col items-center">
-                        <span class="text-2xl md:text-3xl font-light text-brand-textPrimary font-mono leading-none"
-                            id="cd-minutes">00</span>
+                        <span class="countdown-value text-xl md:text-2xl lg:text-3xl font-light text-brand-textPrimary font-mono leading-none" id="cd-minutes">00</span>
                         <span
-                            class="text-[10px] md:text-xs uppercase tracking-widest text-brand-primary font-bold mt-1">Min</span>
+                            class="countdown-label text-[10px] md:text-xs uppercase tracking-widest text-brand-primary font-bold mt-0.5 sm:mt-1">Min</span>
                     </div>
-                    <span class="text-white/20 text-2xl md:text-3xl font-light mb-4">:</span>
+                    <span class="countdown-sep text-white/20 text-xl md:text-2xl lg:text-3xl font-light mb-4">:</span>
                     <div class="flex flex-col items-center">
-                        <span class="text-2xl md:text-3xl font-light text-brand-textPrimary font-mono leading-none"
-                            id="cd-seconds">00</span>
+                        <span class="countdown-value text-xl md:text-2xl lg:text-3xl font-light text-brand-textPrimary font-mono leading-none" id="cd-seconds">00</span>
                         <span
-                            class="text-[10px] md:text-xs uppercase tracking-widest text-brand-primary font-bold mt-1">Seg</span>
+                            class="countdown-label text-[10px] md:text-xs uppercase tracking-widest text-brand-primary font-bold mt-0.5 sm:mt-1">Seg</span>
                     </div>
                 </div>
 
                 <a href="patrocinadores.html"
-                    class="inline-flex items-center justify-center bg-brand-primary text-brand-bg py-2.5 px-5 md:py-3 md:px-6 whitespace-nowrap rounded-xl font-black uppercase tracking-[0.15em] text-xs md:text-sm hover:bg-brand-primaryHover hover:scale-105 transition-all duration-300 shadow-xl cursor-pointer">
-                    <span class="relative">
-                        Patrocinadores
-                    </span>
+                    class="inline-flex items-center justify-center bg-brand-primary text-brand-bg py-1.5 px-2.5 sm:py-2 sm:px-4 md:py-2.5 md:px-5 lg:py-3 lg:px-6 whitespace-nowrap rounded-lg sm:rounded-xl font-black uppercase tracking-[0.1em] sm:tracking-[0.12em] lg:tracking-[0.15em] text-[9px] sm:text-[10px] md:text-xs lg:text-sm hover:bg-brand-primaryHover hover:scale-105 transition-all duration-300 shadow-xl shrink-0">
+                    <span class="sm:hidden">Patroc.</span>
+                    <span class="hidden sm:inline">Patrocinadores</span>
                 </a>
 
             </div>
         </div>
     </nav>
 
-    <header id="hero" class="relative min-h-screen flex flex-col pt-20 overflow-hidden w-full">
+    <header id="hero" class="relative min-h-screen flex flex-col pt-[4.25rem] sm:pt-24 lg:pt-20 overflow-hidden w-full">
         <div class="absolute inset-0 z-0 overflow-hidden bg-brand-bg">
             <div class="hero-video-container pointer-events-none" aria-hidden="true">
                 <div id="hero-youtube-player" class="hero-youtube-player-slot"></div>
@@ -436,9 +571,8 @@
         </div>
 
         <div
-            class="container mx-auto px-6 max-w-[1300px] relative z-10 flex flex-col flex-1 min-h-0 w-full pt-6 md:pt-10">
-            <div
-                class="w-full lg:max-w-[95%] mx-auto flex flex-col items-center text-center space-y-6 md:space-y-7 flex-1 justify-center">
+            class="container mx-auto px-6 max-w-4xl relative z-10 flex flex-col flex-1 min-h-0 w-full pt-6 md:pt-10">
+            <div class="w-full mx-auto flex flex-col items-center text-center space-y-6 md:space-y-7 flex-1 justify-center">
 
                 <img src="assets/logoSummit.svg" alt="Summit Logo" class="h-20 w-auto object-contain md:hidden"
                     data-aos="fade-down" data-aos-duration="1500" data-aos-delay="100">
@@ -452,13 +586,13 @@
                     <div class="h-px w-12 bg-gradient-to-l from-transparent to-brand-primary/50"></div>
                 </div>
 
-                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] xl:text-5xl uppercase font-light tracking-tight leading-[1.15] text-brand-textPrimary max-w-5xl mx-auto"
+                <h1 class="text-2xl sm:text-3xl md:text-4xl lg:text-[2.75rem] xl:text-5xl uppercase font-light tracking-tight leading-[1.15] text-brand-textPrimary max-w-3xl mx-auto"
                     data-aos="fade-up" data-aos-duration="1500" data-aos-delay="900">
                     O evento que transforma
                     <span class="font-bold text-gradient-gold"> bons profissionais em profissionais reconhecidos.</span>
                 </h1>
 
-                <p class="text-base sm:text-lg md:text-xl text-brand-textSecondary max-w-5xl lg:max-w-6xl xl:max-w-[78rem] mx-auto font-light leading-snug md:leading-relaxed"
+                <p class="text-base sm:text-lg md:text-xl text-brand-textSecondary max-w-3xl lg:max-w-4xl mx-auto font-light leading-snug md:leading-relaxed"
                     data-aos="fade-up" data-aos-duration="1500" data-aos-delay="1300">
                     O Summit Personal Trainer Academy 2026 reúne os maiores nomes do mercado para te entregar, em 2
                     dias, o método completo de posicionamento, conteúdo e vendas que os personais que mais crescem no
@@ -476,28 +610,20 @@
 
             <div class="w-full pb-10 md:pb-14 lg:pb-16 mt-auto shrink-0" data-aos="fade-up" data-aos-duration="1500"
                 data-aos-delay="1700">
-                <div class="flex flex-col md:flex-row items-center justify-center w-full gap-12 md:gap-0">
-                    <div class="flex-1 flex flex-col items-center text-center px-4">
-                        <span
-                            class="text-brand-primary font-black text-6xl md:text-[90px] lg:text-[100px] leading-none mb-2 tracking-tighter whitespace-nowrap">17
-                            e 18</span>
-                        <span
-                            class="text-brand-primary font-bold uppercase tracking-[0.15em] text-sm md:text-base">Outubro</span>
+                <div class="flex flex-row items-stretch justify-center w-full max-w-lg sm:max-w-none mx-auto gap-1 sm:gap-4 md:gap-0">
+                    <div class="flex-1 flex flex-col items-center justify-center text-center px-1 sm:px-4 min-w-0">
+                        <span class="text-brand-primary font-black text-4xl sm:text-6xl md:text-[90px] lg:text-[100px] leading-none mb-1 sm:mb-2 tracking-tighter">17 e 18</span>
+                        <span class="text-brand-primary font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-[10px] sm:text-sm md:text-base">Outubro</span>
                     </div>
-                    <div class="hidden md:block w-px h-24 bg-brand-primary/40 mx-4"></div>
-                    <div class="flex-1 flex flex-col items-center text-center px-4">
-                        <span
-                            class="text-brand-primary font-black text-7xl md:text-[110px] leading-none mb-2 tracking-tighter">2</span>
-                        <span class="text-brand-primary font-bold uppercase tracking-[0.15em] text-sm md:text-base">Dias
-                            de Imersão</span>
+                    <div class="w-px self-stretch min-h-[3.5rem] sm:min-h-[5rem] md:min-h-[6rem] bg-brand-primary/40 shrink-0"></div>
+                    <div class="flex-1 flex flex-col items-center justify-center text-center px-1 sm:px-4 min-w-0">
+                        <span class="text-brand-primary font-black text-4xl sm:text-6xl md:text-[110px] leading-none mb-1 sm:mb-2 tracking-tighter">2</span>
+                        <span class="text-brand-primary font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-[10px] sm:text-sm md:text-base leading-tight">Dias de Imersão</span>
                     </div>
-                    <div class="hidden md:block w-px h-24 bg-brand-primary/40 mx-4"></div>
-                    <div class="flex-1 flex flex-col items-center text-center px-4">
-                        <span
-                            class="text-brand-primary font-black text-6xl md:text-[90px] leading-none mb-4 tracking-tighter"><i
-                                class="fas fa-map-marker-alt"></i></span>
-                        <span
-                            class="text-brand-primary font-bold uppercase tracking-[0.15em] text-sm md:text-base">Curitiba</span>
+                    <div class="w-px self-stretch min-h-[3.5rem] sm:min-h-[5rem] md:min-h-[6rem] bg-brand-primary/40 shrink-0"></div>
+                    <div class="flex-1 flex flex-col items-center justify-center text-center px-1 sm:px-4 min-w-0">
+                        <span class="text-brand-primary font-black text-4xl sm:text-6xl md:text-[90px] leading-none mb-1 sm:mb-4 tracking-tighter"><i class="fas fa-map-marker-alt"></i></span>
+                        <span class="text-brand-primary font-bold uppercase tracking-[0.1em] sm:tracking-[0.15em] text-[10px] sm:text-sm md:text-base">Curitiba</span>
                     </div>
                 </div>
             </div>
@@ -638,6 +764,118 @@
             </div>
 
             <div class="mt-16 text-center" data-aos="fade-up" data-aos-delay="400">
+                <button onclick="abrirPopup()"
+                    class="w-full sm:w-auto inline-flex items-center justify-center bg-brand-primary text-brand-bg py-4 px-6 md:py-5 md:px-8 whitespace-nowrap rounded-xl font-black uppercase tracking-[0.2em] text-sm md:text-base hover:bg-brand-primaryHover hover:scale-105 transition-all duration-300 shadow-xl cursor-pointer">
+                    Entre na Lista VIP
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section id="professores"
+        class="py-32 bg-black relative overflow-hidden w-full border-t border-white/5 border-b border-white/5">
+        <div class="absolute inset-0 bg-texture-subtle opacity-40 z-0 pointer-events-none"></div>
+        <div class="absolute inset-0 bg-pattern-dots opacity-10 z-0 pointer-events-none"></div>
+        <div
+            class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-primary to-transparent opacity-80 z-20">
+        </div>
+
+        <div class="container mx-auto px-6 max-w-[1300px] relative z-10">
+            <div class="text-center mb-16 md:mb-20">
+                <div data-aos="fade-up" data-aos-delay="100" class="flex items-center justify-center gap-4 w-full mb-4">
+                    <div class="h-px w-12 bg-gradient-to-r from-transparent to-brand-primary/50"></div>
+                    <span
+                        class="text-brand-primary text-[10px] font-bold uppercase tracking-[0.4em] drop-shadow-[0_0_10px_rgba(212,175,55,0.3)]">Professores</span>
+                    <div class="h-px w-12 bg-gradient-to-l from-transparent to-brand-primary/50"></div>
+                </div>
+                <h2 data-aos="fade-up" data-aos-delay="200"
+                    class="text-4xl md:text-5xl font-black text-brand-textPrimary leading-tight mb-6">
+                    Quem vai estar no palco <br class="hidden md:block">
+                    <span class="text-gradient-gold">com você</span>
+                </h2>
+                <p data-aos="fade-up" data-aos-delay="300"
+                    class="text-lg md:text-xl text-brand-textSecondary font-light max-w-2xl mx-auto leading-relaxed">
+                    Os maiores nomes do mercado fitness reunidos para te entregar método, posicionamento e vendas em 2 dias de imersão.
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-5 gap-5 md:gap-6 lg:gap-8 max-w-md sm:max-w-none mx-auto">
+                <article class="professor-card professor-card--countdown group" data-aos="fade-up" data-aos-delay="150" data-reveal-date="2026-05-25T08:00:00-03:00">
+                    <div class="professor-card__media">
+                        <img src="assets/prof03.png" alt="" width="600" height="800" loading="lazy" decoding="async">
+                        <div class="professor-card__overlay">
+                            <div class="professor-reveal-timer" aria-live="polite">
+                                <div class="professor-reveal-timer__unit">
+                                    <span class="professor-reveal-timer__value" data-reveal-part="days">00</span>
+                                    <span class="professor-reveal-timer__label">Dias</span>
+                                </div>
+                                <div class="professor-reveal-timer__unit">
+                                    <span class="professor-reveal-timer__value" data-reveal-part="hours">00</span>
+                                    <span class="professor-reveal-timer__label">Hrs</span>
+                                </div>
+                                <div class="professor-reveal-timer__unit">
+                                    <span class="professor-reveal-timer__value" data-reveal-part="minutes">00</span>
+                                    <span class="professor-reveal-timer__label">Min</span>
+                                </div>
+                                <div class="professor-reveal-timer__unit">
+                                    <span class="professor-reveal-timer__value" data-reveal-part="seconds">00</span>
+                                    <span class="professor-reveal-timer__label">Seg</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article class="professor-card professor-card--countdown group" data-aos="fade-up" data-aos-delay="230" data-reveal-date="2026-06-05T08:00:00-03:00">
+                    <div class="professor-card__media">
+                        <img src="assets/prof04.png" alt="" width="600" height="800" loading="lazy" decoding="async">
+                        <div class="professor-card__overlay">
+                            <div class="professor-reveal-timer" aria-live="polite">
+                                <div class="professor-reveal-timer__unit">
+                                    <span class="professor-reveal-timer__value" data-reveal-part="days">00</span>
+                                    <span class="professor-reveal-timer__label">Dias</span>
+                                </div>
+                                <div class="professor-reveal-timer__unit">
+                                    <span class="professor-reveal-timer__value" data-reveal-part="hours">00</span>
+                                    <span class="professor-reveal-timer__label">Hrs</span>
+                                </div>
+                                <div class="professor-reveal-timer__unit">
+                                    <span class="professor-reveal-timer__value" data-reveal-part="minutes">00</span>
+                                    <span class="professor-reveal-timer__label">Min</span>
+                                </div>
+                                <div class="professor-reveal-timer__unit">
+                                    <span class="professor-reveal-timer__value" data-reveal-part="seconds">00</span>
+                                    <span class="professor-reveal-timer__label">Seg</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </article>
+                <article class="professor-card group" data-aos="fade-up" data-aos-delay="310">
+                    <div class="professor-card__media">
+                        <img src="assets/prof01.png" alt="" width="600" height="800" loading="lazy" decoding="async">
+                        <div class="professor-card__overlay">
+                            <span class="professor-card__soon">Em breve</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="professor-card group" data-aos="fade-up" data-aos-delay="390">
+                    <div class="professor-card__media">
+                        <img src="assets/prof02.png" alt="" width="600" height="800" loading="lazy" decoding="async">
+                        <div class="professor-card__overlay">
+                            <span class="professor-card__soon">Em breve</span>
+                        </div>
+                    </div>
+                </article>
+                <article class="professor-card group" data-aos="fade-up" data-aos-delay="470">
+                    <div class="professor-card__media">
+                        <img src="assets/prof05.png" alt="" width="600" height="800" loading="lazy" decoding="async">
+                        <div class="professor-card__overlay">
+                            <span class="professor-card__soon">Em breve</span>
+                        </div>
+                    </div>
+                </article>
+            </div>
+            <div class="mt-16 text-center" data-aos="fade-up" data-aos-delay="500">
                 <button onclick="abrirPopup()"
                     class="w-full sm:w-auto inline-flex items-center justify-center bg-brand-primary text-brand-bg py-4 px-6 md:py-5 md:px-8 whitespace-nowrap rounded-xl font-black uppercase tracking-[0.2em] text-sm md:text-base hover:bg-brand-primaryHover hover:scale-105 transition-all duration-300 shadow-xl cursor-pointer">
                     Entre na Lista VIP
@@ -1069,6 +1307,9 @@
                         <li><a href="#sobre"
                                 class="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">A
                                 Imersão</a></li>
+                        <li><a href="#professores"
+                                class="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">Professores</a>
+                        </li>
                         <li><a href="#conteudo"
                                 class="hover:text-white hover:translate-x-1 inline-block transition-all duration-300">Benefícios</a>
                         </li>
@@ -1549,6 +1790,50 @@
                 cdMinutes.innerText = minutes.toString().padStart(2, '0');
                 cdSeconds.innerText = seconds.toString().padStart(2, '0');
             }, 1000);
+        }
+
+        // Professor reveal countdowns
+        const professorRevealCards = document.querySelectorAll('.professor-card--countdown[data-reveal-date]');
+
+        function updateProfessorRevealTimers() {
+            const now = Date.now();
+
+            professorRevealCards.forEach((card) => {
+                const target = new Date(card.dataset.revealDate).getTime();
+                const parts = {
+                    days: card.querySelector('[data-reveal-part="days"]'),
+                    hours: card.querySelector('[data-reveal-part="hours"]'),
+                    minutes: card.querySelector('[data-reveal-part="minutes"]'),
+                    seconds: card.querySelector('[data-reveal-part="seconds"]'),
+                };
+
+                if (!parts.days) return;
+
+                const distance = target - now;
+                if (distance <= 0) {
+                    card.classList.add('professor-card--revealed');
+                    parts.days.textContent = '00';
+                    parts.hours.textContent = '00';
+                    parts.minutes.textContent = '00';
+                    parts.seconds.textContent = '00';
+                    return;
+                }
+
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+                parts.days.textContent = String(days).padStart(2, '0');
+                parts.hours.textContent = String(hours).padStart(2, '0');
+                parts.minutes.textContent = String(minutes).padStart(2, '0');
+                parts.seconds.textContent = String(seconds).padStart(2, '0');
+            });
+        }
+
+        if (professorRevealCards.length) {
+            updateProfessorRevealTimers();
+            setInterval(updateProfessorRevealTimers, 1000);
         }
 
         // FAQ Accordion
