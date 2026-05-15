@@ -341,6 +341,20 @@
             background: rgba(0, 0, 0, 0.18);
         }
 
+        #conteudo .conteudo-section-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+            overflow: hidden;
+            pointer-events: none;
+            background-color: #000;
+            background-image: url('assets/63.svg');
+            background-repeat: no-repeat;
+            background-position: center center;
+            background-size: cover;
+            opacity: 1;
+        }
+
     </style>
 </head>
 
@@ -633,22 +647,8 @@
     </section>
 
     <section id="conteudo" class="py-32 bg-brand-bg relative overflow-hidden w-full">
-        <div class="absolute inset-0 bg-pattern-dots opacity-10 z-0 pointer-events-none"></div>
-        <div
-            class="absolute top-0 left-0 w-full h-[1px] bg-gradient-to-r from-transparent via-brand-primary to-transparent opacity-80 z-20">
-        </div>
-        <div class="absolute inset-0 z-0">
-            <div
-                class="absolute inset-0 bg-[url('assets/hero-bg.png')] bg-cover bg-center bg-no-repeat bg-fixed opacity-[0.05] mix-blend-screen">
-            </div>
-            <div class="absolute inset-0 bg-gradient-to-b from-brand-bg via-transparent to-brand-bg"></div>
-        </div>
-        <div
-            class="absolute top-0 right-0 w-[600px] h-[600px] bg-brand-primary/5 rounded-full blur-[150px] pointer-events-none z-0">
-        </div>
-        <div
-            class="absolute bottom-0 left-0 w-[600px] h-[600px] bg-brand-primary/5 rounded-full blur-[150px] pointer-events-none z-0">
-        </div>
+        <div class="conteudo-section-bg" aria-hidden="true"></div>
+        <div class="absolute inset-0 bg-pattern-dots opacity-10 z-[2] pointer-events-none"></div>
 
         <div class="container mx-auto px-6 max-w-[1300px] relative z-10">
             <div class="text-center mb-24">
